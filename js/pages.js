@@ -59,11 +59,6 @@ const sections = [...document.querySelectorAll('[data-page]')];
 function updateRunhead() {
   runhead.classList.toggle('is-scrolled', window.scrollY > 8);
 
-  // The EKG under the running head traces across as the page is read.
-  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  const read = scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 1;
-  runhead.style.setProperty('--read', (1 - read).toFixed(4));
-
   const line = window.innerHeight * 0.35;
   let current = sections[0];
   sections.forEach((section) => {
@@ -148,7 +143,6 @@ const peaLines = [
   'stretch break?',
   'you\'re doing great',
   'see you in 2027',
-  'ok, that tickles',
 ];
 let peaIndex = 0;
 
@@ -188,90 +182,8 @@ emailButton.addEventListener('click', async () => {
     emailHint.textContent = 'selected';
   }
   emailButton.classList.add('is-copied');
-  const heart = document.createElement('span');
-  heart.className = 'float-heart';
-  heart.setAttribute('aria-hidden', 'true');
-  heart.textContent = '♥';
-  emailButton.append(heart);
-  heart.addEventListener('animationend', () => heart.remove());
   setTimeout(() => {
     emailHint.textContent = 'copy';
     emailButton.classList.remove('is-copied');
   }, 2200);
-});
-
-/* ---------- Portrait: tap to check vitals on touch screens ---------- */
-
-const portrait = document.querySelector('.portrait');
-portrait.addEventListener('click', () => portrait.classList.toggle('is-checked'));
-
-/* ---------- The bacterium divides when poked ---------- */
-
-const microbe = document.querySelector('.microbe');
-const microbeLabel = document.querySelector('.microbe__label');
-let microbeTimer;
-
-microbe.addEventListener('click', () => {
-  clearTimeout(microbeTimer);
-  microbe.classList.add('is-dividing');
-  microbeLabel.textContent = 'binary fission!';
-  microbeTimer = setTimeout(() => {
-    microbe.classList.remove('is-dividing');
-    microbeLabel.textContent = 'poke me again';
-  }, 2400);
-});
-
-/* ---------- HappyPEA phone: check off the day ---------- */
-
-const phone = document.querySelector('.phone');
-const pillars = [...phone.querySelectorAll('.pillar')];
-const phoneDone = phone.querySelector('.phone__done');
-
-pillars.forEach((pillar) => {
-  pillar.addEventListener('click', () => {
-    const on = pillar.getAttribute('aria-pressed') !== 'true';
-    pillar.setAttribute('aria-pressed', String(on));
-    const allDone = pillars.every((p) => p.getAttribute('aria-pressed') === 'true');
-    phone.classList.toggle('is-complete', allDone);
-    phoneDone.textContent = allDone ? 'nice work today!' : '';
-  });
-});
-
-/* ---------- Replay the maze and the regression line ---------- */
-
-function replay(art) {
-  art.classList.remove('is-in');
-  void art.getBoundingClientRect();
-  markArt(art);
-}
-
-document.querySelectorAll('.maze, .scatter').forEach((art) => {
-  art.addEventListener('click', () => replay(art));
-  art.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      replay(art);
-    }
-  });
-});
-
-/* ---------- 300+ peas wave hello ---------- */
-
-const peas = document.querySelector('.peas');
-peas.addEventListener('click', () => {
-  peas.classList.remove('is-waving');
-  void peas.offsetWidth;
-  peas.classList.add('is-waving');
-});
-peas.addEventListener('animationend', (event) => {
-  if (event.target === peas.lastElementChild) peas.classList.remove('is-waving');
-});
-
-/* ---------- Band-aid on the Community title ---------- */
-
-const bandaid = document.querySelector('.bandaid');
-bandaid.addEventListener('click', () => {
-  const peeled = bandaid.getAttribute('aria-pressed') !== 'true';
-  bandaid.setAttribute('aria-pressed', String(peeled));
-  bandaid.setAttribute('aria-label', peeled ? 'Put the bandage back' : 'Peel the bandage');
 });

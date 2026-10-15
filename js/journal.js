@@ -227,13 +227,4 @@ window.addEventListener('deviceorientation', (event) => {
   startTilt();
 });
 
-// The stethoscope on the desk: tapping it makes the heart sticker beat faster.
-const stetho = document.querySelector('.stetho');
-let listenTimer;
-stetho.addEventListener('click', () => {
-  clearTimeout(listenTimer);
-  desk.classList.add('is-listening');
-  listenTimer = setTimeout(() => desk.classList.remove('is-listening'), 3000);
-});
-
 fillDetails();
