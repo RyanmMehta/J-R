@@ -1682,6 +1682,29 @@ section { position: relative; }
   .rx { margin-top: 48px; }
 }
 
+/* Narrower screens: give the top bar and the small projects more room */
+@media (max-width: 1000px) {
+  .runhead__section { display: none; }
+  .runhead__nav { gap: 20px; }
+}
+
+@media (max-width: 1100px) {
+  .projects { grid-template-columns: minmax(0, 36rem); }
+}
+
+/* Captions wrap evenly instead of leaving one word on its own line */
+.caption { text-wrap: balance; }
+.peas__key { text-wrap: balance; }
+
+@media (max-width: 760px) {
+  .doodle--heart { display: none; }
+}
+
+@media (max-width: 520px) {
+  .project { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .project__art { max-width: 11rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *,

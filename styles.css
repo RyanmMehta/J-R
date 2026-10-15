@@ -136,11 +136,12 @@ body {
   50% { --bob: -8px; }
 }
 
-.book:hover,
-.book:focus-visible {
-  --rx: 12deg;
-  --ry: -13deg;
-}
+/* While the book follows the pointer, JS eases the tilt every frame,
+   so the transform only needs a very short transition. */
+.book.is-tracking { transition: transform 0.12s linear; }
+
+/* The desk takes touch drags (to tilt the book) instead of panning */
+.desk { touch-action: none; }
 
 .book:focus-visible .cover {
   box-shadow: 0 0 0 3px var(--paper), 0 0 0 6px var(--cover-dark);
@@ -510,7 +511,7 @@ body {
 
 .cover__stamp {
   position: absolute;
-  top: 6.5cqw;
+  top: 4.6cqw;
   left: 9cqw;
   right: 0;
   margin: 0;
@@ -534,15 +535,15 @@ body {
 
 .cover__doodle .fill { fill: var(--cover-ink); stroke: none; }
 
-.cover__doodle--flask { width: 8cqw; top: 15cqw; right: 8cqw; transform: rotate(12deg); }
+.cover__doodle--flask { width: 8cqw; top: 18cqw; right: 8cqw; transform: rotate(12deg); }
 .cover__doodle--atom { width: 11cqw; bottom: 7cqw; left: 14cqw; transform: rotate(-10deg); }
-.cover__doodle--sparkle { width: 6cqw; top: 22cqw; left: 16cqw; }
+.cover__doodle--sparkle { width: 6cqw; top: 25cqw; left: 16cqw; }
 .cover__doodle--sparkle-sm { width: 3.6cqw; bottom: 15cqw; right: 10cqw; }
 
 /* Taped-on photo */
 .polaroid {
   position: absolute;
-  top: 15cqw;
+  top: 17.5cqw;
   left: 26cqw;
   width: 52cqw;
   margin: 0;
@@ -581,7 +582,7 @@ body {
 
 .heart-sticker {
   position: absolute;
-  top: 70cqw;
+  top: 72cqw;
   left: 72cqw;
   width: 9cqw;
   height: 9cqw;
@@ -600,7 +601,7 @@ body {
 /* Name plate */
 .label {
   position: absolute;
-  top: 92cqw;
+  top: 93cqw;
   left: 18cqw;
   right: 9cqw;
   padding: 4cqw 3cqw 4.2cqw;
@@ -630,15 +631,16 @@ body {
 }
 
 .label__name {
-  margin: 0.6cqw 0 0.4cqw;
+  margin: 1cqw 0 2.6cqw;
   font-family: "Caveat", cursive;
   font-weight: 700;
   font-size: 11.5cqw;
-  line-height: 1;
+  line-height: 1.05;
 }
 
 .label__tagline {
   margin: 0;
+  line-height: 1.4;
   font-size: 2.4cqw;
   letter-spacing: 0.04em;
   color: #66746a;
@@ -937,6 +939,13 @@ body {
 
   .desk.is-open .sticky-note { transform: rotate(-3deg) translateY(12px); }
 }
+
+
+/* Even out short handwritten lines so no single word is left on its own */
+.welcome__text,
+.hypothesis__text,
+.toc__note,
+.bookplate__return { text-wrap: balance; }
 
 @media (prefers-reduced-motion: reduce) {
   .book,

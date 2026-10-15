@@ -2,7 +2,7 @@
 
 Jenna Chuan's personal site, styled as a research journal.
 
-- `index.html` is the cover: a 3D lab notebook with her photo and name. Clicking it turns the cover and the first page, landing on a table of contents. Picking a chapter lifts the book away and opens the journal at that section.
+- `index.html` is the cover: a 3D lab notebook with her photo and name. The closed book turns to follow the mouse, a finger dragged across a phone screen, or the tilt of an Android phone. Clicking it turns the cover and the first page, landing on a table of contents. Picking a chapter lifts the book away and opens the journal at that section.
 - `journal.html` is the journal: the opening (portrait, name, tagline), then three chapters (Research, Building, Community), an appendix of honors and certifications, and contact details.
 
 Plain HTML, CSS and JavaScript. There's no build step and nothing to install.
