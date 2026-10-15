@@ -829,6 +829,66 @@ body {
   transform: rotate(5deg) translateY(12px);
 }
 
+/* ---------- Heartbeat: the sticker beats, faster while the stethoscope listens ---------- */
+
+.heart-sticker { animation: sticker-beat 2.4s ease-in-out infinite; }
+
+.desk:has(.stetho:hover) .heart-sticker,
+.desk.is-listening .heart-sticker { animation-duration: 0.85s; }
+
+@keyframes sticker-beat {
+  0%, 44%, 100% { transform: rotate(14deg) scale(1); }
+  10% { transform: rotate(14deg) scale(1.2); }
+  20% { transform: rotate(14deg) scale(1); }
+  30% { transform: rotate(14deg) scale(1.12); }
+}
+
+.stetho {
+  all: unset;
+  position: absolute;
+  top: calc(50% + var(--h) * 0.02);
+  left: calc(50% - var(--w) * 0.5 - 270px);
+  width: 230px;
+  cursor: pointer;
+  transform: rotate(-8deg);
+  transition: opacity 0.4s, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  animation: arrive 1s 0.8s cubic-bezier(0.55, 0.05, 0.3, 1) both;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.stetho svg { width: 100%; overflow: visible; filter: drop-shadow(0 8px 8px rgba(80, 60, 20, 0.18)); }
+.stetho__tube { fill: none; stroke: #4f6b55; stroke-width: 5; stroke-linecap: round; }
+.stetho__tip { fill: #3c5442; }
+.stetho__chest circle { fill: #e3e7ea; stroke: #a2abb6; stroke-width: 3; }
+.stetho__chest .stetho__diaphragm { fill: #f4f6f7; stroke-width: 1.5; }
+.stetho__chest { transform-box: fill-box; transform-origin: center; transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+.stetho:hover,
+.stetho:focus-visible { transform: rotate(-4deg) translateY(-4px); }
+.stetho:hover .stetho__chest,
+.desk.is-listening .stetho__chest { transform: scale(1.1); }
+.stetho:focus-visible { outline: 2px dashed var(--cover-dark); outline-offset: 6px; border-radius: 12px; }
+
+.stetho__label {
+  position: absolute;
+  right: -10px;
+  top: 4px;
+  font: 700 22px/1 "Caveat", cursive;
+  color: var(--heart);
+  opacity: 0;
+  transform: translateY(6px) rotate(-6deg);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.stetho:hover .stetho__label,
+.desk.is-listening .stetho__label { opacity: 1; transform: rotate(-6deg); }
+
+.desk.is-open .stetho { opacity: 0; pointer-events: none; }
+
+@media (max-width: 1000px) {
+  .stetho { display: none; }
+}
+
 /* ---------- Close button ---------- */
 
 .close-journal {
@@ -882,7 +942,9 @@ body {
   .book,
   .leaf,
   .scene,
-  .sticky-note {
+  .sticky-note,
+  .heart-sticker,
+  .stetho {
     animation: none !important;
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;

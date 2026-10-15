@@ -28,6 +28,7 @@
       <a href="#community">Community</a>
       <a href="#contact">Contact</a>
     </nav>
+    <svg class="runhead__ecg" viewBox="0 0 1000 20" preserveAspectRatio="none" aria-hidden="true"><path d="M0 12h40l4-3l3 3h6l3 6l4-16l4 14l3-4h8l6-3l6 3h38h40l4-3l3 3h6l3 6l4-16l4 14l3-4h8l6-3l6 3h38h40l4-3l3 3h6l3 6l4-16l4 14l3-4h8l6-3l6 3h38h40l4-3l3 3h6l3 6l4-16l4 14l3-4h8l6-3l6 3h38h40l4-3l3 3h6l3 6l4-16l4 14l3-4h8l6-3l6 3h38h40l4-3l3 3h6l3 6l4-16l4 14l3-4h8l6-3l6 3h38h40l4-3l3 3h6l3 6l4-16l4 14l3-4h8l6-3l6 3h38h40l4-3l3 3h6l3 6l4-16l4 14l3-4h8l6-3l6 3h38" pathLength="1"/></svg>
     <p class="runhead__page" aria-live="polite"><span class="runhead__section">Introduction</span> <span class="runhead__num">p. 02</span></p>
   </header>
 
@@ -37,8 +38,14 @@
       <figure class="portrait">
         <div class="portrait__frame">
           <img src="assets/portrait-placeholder.svg" alt="Portrait of Jenna Chuan" width="400" height="500">
+          <div class="vitals" aria-hidden="true">
+            <span class="vitals__heart">♥</span>
+            <span class="vitals__read"><b>72</b> bpm</span>
+            <svg class="vitals__trace" viewBox="0 0 60 16"><path d="M0 9h16l3-3 3 3h3l2 5 3-13 3 11 2-3h22"/></svg>
+            <span class="vitals__read">SpO<sub>2</sub> <b>99</b>%</span>
+          </div>
         </div>
-        <figcaption class="caption">Fig. 1 &nbsp;Jenna Chuan, Austin, Texas</figcaption>
+        <figcaption class="caption">Fig. 1 &nbsp;Jenna Chuan, Austin, Texas <span class="portrait__hint">· vitals: all good</span></figcaption>
       </figure>
 
       <div class="opening__text">
@@ -57,10 +64,17 @@
           <li><a href="#community"><span class="contents__num">III</span><span class="contents__label">Community</span><span class="contents__page">p. 18</span></a></li>
         </ol>
       </div>
+
+      <div class="doodles" aria-hidden="true">
+        <svg class="doodle doodle--heart" viewBox="0 0 120 70"><path d="M60 62C38 48 26 36 26 24a14 14 0 0 1 34-6 14 14 0 0 1 34 6c0 12-12 24-34 38z" pathLength="1"/><path class="ekg" d="M0 38h40l5-8 5 8h4l4 10 6-28 6 24 4-6h46" pathLength="1"/></svg>
+        <svg class="doodle doodle--pill" viewBox="0 0 70 40"><rect x="6" y="10" width="58" height="20" rx="10" transform="rotate(-18 35 20)" pathLength="1"/><path d="M35 3v34" transform="rotate(-18 35 20)" pathLength="1"/></svg>
+        <svg class="doodle doodle--dna" viewBox="0 0 40 90"><path d="M8 4C8 18 32 18 32 32S8 46 8 60s24 14 24 28M32 4C32 18 8 18 8 32s24 14 24 28S8 74 8 88" pathLength="1"/><path class="rungs" d="M12 11h16M10 25h20M12 53h16M10 67h20M12 81h16" pathLength="1"/></svg>
+      </div>
     </section>
 
     <!-- ============ I. Research ============ -->
     <section class="chapter" id="research" data-page="04" data-title="Research">
+      <svg class="pulse" data-draw viewBox="0 0 120 32" aria-hidden="true"><path d="M0 16h34l5-6 5 6h6l4 9 6-23 6 21 4-7h10l7-4 7 4h26" pathLength="1"/></svg>
       <header class="chapter__head" data-reveal>
         <p class="chapter__num caption">Chapter I</p>
         <h2 class="chapter__title">Research</h2>
@@ -141,11 +155,30 @@
               <div class="pigment pigment--pc"><span class="pigment__chip"></span><span class="pigment__name">Phycocyanin</span><span class="caption">blue, λ<sub>max</sub> ≈ 620 nm</span></div>
               <div class="pigment pigment--pe"><span class="pigment__chip"></span><span class="pigment__name">Phycoerythrin</span><span class="caption">pink, λ<sub>max</sub> ≈ 565 nm</span></div>
             </div>
+            <figure class="spectrum" data-draw aria-label="Sketch of the absorbance peaks of the two pigments">
+              <svg viewBox="0 0 320 112">
+                <path class="spectrum__axis" d="M24 92h276M24 92V10"/>
+                <g class="spectrum__ticks"><path d="M79 92v4M189 92v4M299 92v4"/><text x="79" y="108">500</text><text x="189" y="108">600</text><text x="299" y="108">700 nm</text></g>
+                <path class="spectrum__pe" d="M24.0 92.0 29.5 92.0 35.0 91.8 40.5 91.3 46.0 90.1 51.5 87.3 57.0 82.5 62.5 75.7 68.0 68.5 73.5 63.5 79.0 63.0 84.5 67.2 90.0 74.1 95.5 80.7 101.0 84.2 106.5 82.6 112.0 74.1 117.5 59.5 123.0 43.6 128.5 32.6 134.0 27.8 139.5 24.7 145.0 20.5 150.5 20.0 156.0 29.5 161.5 47.9 167.0 67.4 172.5 81.2 178.0 88.3 183.5 91.0 189.0 91.8 194.5 92.0 200.0 92.0 205.5 92.0 211.0 92.0 216.5 92.0 222.0 92.0 227.5 92.0 233.0 92.0 238.5 92.0 244.0 92.0 249.5 92.0 255.0 92.0 260.5 92.0 266.0 92.0 271.5 92.0 277.0 92.0 282.5 92.0 288.0 92.0 293.5 92.0 299.0 92.0" pathLength="1"/>
+                <path class="spectrum__pc" d="M24.0 92.0 29.5 92.0 35.0 92.0 40.5 92.0 46.0 92.0 51.5 92.0 57.0 92.0 62.5 92.0 68.0 92.0 73.5 92.0 79.0 92.0 84.5 92.0 90.0 92.0 95.5 92.0 101.0 92.0 106.5 92.0 112.0 91.9 117.5 91.8 123.0 91.5 128.5 91.0 134.0 90.0 139.5 88.5 145.0 86.3 150.5 83.5 156.0 80.0 161.5 76.1 167.0 71.6 172.5 66.3 178.0 60.0 183.5 52.3 189.0 43.7 194.5 34.8 200.0 27.0 205.5 21.7 211.0 20.0 216.5 22.5 222.0 28.8 227.5 38.0 233.0 48.6 238.5 59.2 244.0 68.8 249.5 76.5 255.0 82.3 260.5 86.3 266.0 88.9 271.5 90.4 277.0 91.2 282.5 91.6 288.0 91.8 293.5 91.9 299.0 92.0" pathLength="1"/>
+                <g class="spectrum__peaks"><path d="M151.5 20v72" class="pe"/><path d="M211 20v72" class="pc"/></g>
+              </svg>
+              <figcaption class="caption">Absorbance, sketched. Hover a pigment.</figcaption>
+            </figure>
           </div>
           <aside class="entry__margin">
             <button type="button" class="note" aria-expanded="false" aria-controls="note-3"><span class="note__mark">3</span>why blue and pink?</button>
             <div class="note__card" id="note-3" hidden>
               <p>The accent colors on this site come from these 2 proteins. SDS-PAGE, a gel that sorts proteins by size, showed how pure each extract was. Cleaner bands meant a purer pigment.</p>
+            </div>
+            <div class="microbe-spot">
+              <button type="button" class="microbe" aria-label="Poke the bacterium">
+                <svg viewBox="0 0 120 40" aria-hidden="true">
+                  <g class="microbe__cell microbe__cell--a"><path class="microbe__tail" d="M40 20c-6-5-10 5-16 0s-10-5-16 0"/><rect x="40" y="10" width="40" height="20" rx="10" class="microbe__body"/><circle cx="54" cy="18" r="1.6" class="microbe__dot"/><circle cx="66" cy="22" r="1.6" class="microbe__dot"/></g>
+                  <g class="microbe__cell microbe__cell--b"><rect x="40" y="10" width="40" height="20" rx="10" class="microbe__body"/><circle cx="60" cy="20" r="1.6" class="microbe__dot"/></g>
+                </svg>
+              </button>
+              <p class="microbe__label" aria-live="polite">poke me</p>
             </div>
           </aside>
           <div class="preview" id="pv-3">
@@ -247,6 +280,7 @@
 
     <!-- ============ II. Building ============ -->
     <section class="chapter" id="building" data-page="12" data-title="Building">
+      <svg class="pulse" data-draw viewBox="0 0 120 32" aria-hidden="true"><path d="M0 16h34l5-6 5 6h6l4 9 6-23 6 21 4-7h10l7-4 7 4h26" pathLength="1"/></svg>
       <header class="chapter__head" data-reveal>
         <p class="chapter__num caption">Chapter II</p>
         <h2 class="chapter__title">Building</h2>
@@ -259,13 +293,14 @@
             <svg class="phone__logo" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="23" r="13" class="skin"/><path d="M20 10c0-4 3-7 8-7-1 5-4 7-8 7z" class="leaf"/><circle cx="16" cy="23" r="1.4" class="face"/><circle cx="24" cy="23" r="1.4" class="face"/><path d="M17.5 27q2.5 2.4 5 0" class="smile"/></svg>
             <p class="phone__brand">HappyPEA</p>
             <p class="phone__soon">Launching 2027</p>
+            <p class="phone__done" aria-live="polite"></p>
             <ul class="phone__pillars">
-              <li><span class="dot dot--pc"></span>Fitness</li>
-              <li><span class="dot dot--pea"></span>Nutrition</li>
-              <li><span class="dot dot--pe"></span>Community</li>
+              <li><button type="button" class="pillar" aria-pressed="false"><span class="dot dot--pc"></span>Fitness<span class="pillar__check" aria-hidden="true">✓</span></button></li>
+              <li><button type="button" class="pillar" aria-pressed="false"><span class="dot dot--pea"></span>Nutrition<span class="pillar__check" aria-hidden="true">✓</span></button></li>
+              <li><button type="button" class="pillar" aria-pressed="false"><span class="dot dot--pe"></span>Community<span class="pillar__check" aria-hidden="true">✓</span></button></li>
             </ul>
           </div>
-          <figcaption class="caption">Fig. 2 &nbsp;HappyPEA, early concept</figcaption>
+          <figcaption class="caption">Fig. 2 &nbsp;HappyPEA, early concept. Tap the rows.</figcaption>
         </figure>
 
         <div class="feature__text" data-reveal>
@@ -303,7 +338,7 @@
 
       <div class="projects">
         <article class="project" data-reveal>
-          <figure class="project__art maze" data-reveal="place">
+          <figure class="project__art maze" data-reveal="place" role="button" tabindex="0" aria-label="Replay the maze">
             <svg viewBox="0 0 140 140" aria-hidden="true">
               <path class="maze__walls" d="M30 10H130V110M130 130H10V10M30 10V50M30 30H50M80 30V70M70 50H90M110 30V90M10 100H30M50 100H110M70 90V110"/>
               <path class="maze__trail" d="M20 0V60H60V20H100V80H40V120H140" pathLength="1"/>
@@ -320,7 +355,7 @@
         </article>
 
         <article class="project" data-reveal>
-          <figure class="project__art scatter" data-reveal="place">
+          <figure class="project__art scatter" data-reveal="place" role="button" tabindex="0" aria-label="Replay the regression line">
             <svg viewBox="0 0 160 120" aria-hidden="true">
               <path class="scatter__axis" d="M14 8v100h140"/>
               <g class="scatter__dots">
@@ -340,9 +375,10 @@
 
     <!-- ============ III. Community ============ -->
     <section class="chapter" id="community" data-page="18" data-title="Community">
+      <svg class="pulse" data-draw viewBox="0 0 120 32" aria-hidden="true"><path d="M0 16h34l5-6 5 6h6l4 9 6-23 6 21 4-7h10l7-4 7 4h26" pathLength="1"/></svg>
       <header class="chapter__head" data-reveal>
         <p class="chapter__num caption">Chapter III</p>
-        <h2 class="chapter__title">Community</h2>
+        <h2 class="chapter__title">Community <button type="button" class="bandaid" aria-label="Peel the bandage" aria-pressed="false"><span class="bandaid__heart" aria-hidden="true">♥</span><svg class="bandaid__strip" viewBox="0 0 80 28" aria-hidden="true"><rect x="1" y="1" width="78" height="26" rx="13" class="bandaid__tape"/><rect x="28" y="5" width="24" height="18" rx="3" class="bandaid__pad"/><g class="bandaid__holes"><circle cx="12" cy="10" r="1"/><circle cx="18" cy="14" r="1"/><circle cx="12" cy="18" r="1"/><circle cx="62" cy="10" r="1"/><circle cx="68" cy="14" r="1"/><circle cx="62" cy="18" r="1"/></g></svg></button></h2>
         <p class="chapter__intro">Most of my weeks include time with patients, volunteers, or students. These are the places I keep showing up.</p>
       </header>
 
@@ -350,12 +386,12 @@
         <div class="pea-org__count">
           <p class="pea-org__num">300<span>+</span></p>
           <p class="caption">students in PEA chapters across the country</p>
-          <div class="peas" aria-hidden="true">
+          <button type="button" class="peas" aria-label="Wave hello from PEA">
             <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
             <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
             <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-          </div>
-          <p class="caption peas__key">each pea is 10 students</p>
+          </button>
+          <p class="caption peas__key">each pea is 10 students. Click them to say hi.</p>
         </div>
         <div class="pea-org__text">
           <p class="caption">Executive board president &nbsp;·&nbsp; 2025 to now</p>
@@ -377,13 +413,13 @@
         <table class="log__table">
           <thead><tr><th scope="col">Place</th><th scope="col">What I do</th><th scope="col">When</th></tr></thead>
           <tbody>
-            <tr><td>St. David's Hospital, Austin</td><td>ER unit aide. Vitals, EKGs, wound care, and keeping nurses updated on patient needs.</td><td>2024 to now</td></tr>
-            <tr><td>Kesem Nationals</td><td>Health and wellness team intern. Onboarding materials, volunteer retention data, and a national database of nurse staffing agencies.</td><td>2025 to now</td></tr>
-            <tr><td>Freeman Medical Clinic, Austin</td><td>Certified medical assistant. Scheduling, health records, and help with daily procedures.</td><td>Summer 2025</td></tr>
-            <tr><td>Micah 6 Food Pantry</td><td>Volunteer.</td><td>2024 to now</td></tr>
-            <tr><td>UT Disability and Access</td><td>Volunteer note taker for students with disabilities.</td><td>2024 to now</td></tr>
-            <tr><td>Texas Kappa Rho</td><td>Member of the premedical society.</td><td>2024 to now</td></tr>
-            <tr><td>Harris Health System, Houston</td><td>Volunteer at the Valbona clinic and Ben Taub Hospital. Vitals, scheduling, and supplies.</td><td>2021 to 2023</td></tr>
+            <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h4v4h4v4h-4v4H6v-4H2V6h4z"/></svg>St. David's Hospital, Austin</td><td>ER unit aide. Vitals, EKGs, wound care, and keeping nurses updated on patient needs.</td><td>2024 to now</td></tr>
+            <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 14L8 3l6 11zM6 14l2-4 2 4"/></svg>Kesem Nationals</td><td>Health and wellness team intern. Onboarding materials, volunteer retention data, and a national database of nurse staffing agencies.</td><td>2025 to now</td></tr>
+            <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="3" width="10" height="12" rx="1"/><path d="M6 2h4v2H6zM5.5 8h5M5.5 11h3"/></svg>Freeman Medical Clinic, Austin</td><td>Certified medical assistant. Scheduling, health records, and help with daily procedures.</td><td>Summer 2025</td></tr>
+            <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 5C5 3 2 5 2 8.5S5 15 8 14c3 1 6-2 6-5.5S11 3 8 5zM8 5c0-2 1-3 3-3"/></svg>Micah 6 Food Pantry</td><td>Volunteer.</td><td>2024 to now</td></tr>
+            <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13l1-4 7-7 3 3-7 7zM10 3l3 3"/></svg>UT Disability and Access</td><td>Volunteer note taker for students with disabilities.</td><td>2024 to now</td></tr>
+            <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 14S2 10 2 6a3 3 0 0 1 6-1 3 3 0 0 1 6 1c0 4-6 8-6 8z"/></svg>Texas Kappa Rho</td><td>Member of the premedical society.</td><td>2024 to now</td></tr>
+            <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h12v8H7l-3 3v-3H2z"/></svg>Harris Health System, Houston</td><td>Volunteer at the Valbona clinic and Ben Taub Hospital. Vitals, scheduling, and supplies.</td><td>2021 to 2023</td></tr>
           </tbody>
         </table>
       </div>
@@ -413,6 +449,7 @@
 
     <!-- ============ Correspondence ============ -->
     <section class="contact" id="contact" data-page="28" data-title="Correspondence" data-reveal>
+      <div class="contact__main">
       <p class="caption">Correspondence</p>
       <h2 class="contact__title">Say hello.</h2>
       <p class="contact__lede">I'm always glad to talk about research, student wellness, or a good brain teaser.</p>
@@ -425,11 +462,22 @@
         <a href="assets/Jenna-Chuan-Resume.pdf" target="_blank" rel="noopener">Résumé (PDF) <span aria-hidden="true">↗</span></a>
       </div>
       <p class="contact__off"><span class="caption">Off the clock</span> Pilates, mangoes, banana bread, doodling, brain teasers, NYT Connections, and <cite>The Greatest Showman</cite>.</p>
+      </div>
+
+      <aside class="rx" data-reveal="place" aria-label="A prescription for one conversation">
+        <p class="rx__head"><span class="rx__symbol" aria-hidden="true">℞</span><span class="caption">Jenna Chuan<br>Austin, Texas</span></p>
+        <dl class="rx__lines">
+          <div><dt class="caption">For</dt><dd>You</dd></div>
+          <div><dt class="caption">Take</dt><dd>1 conversation, as needed</dd></div>
+          <div><dt class="caption">Refills</dt><dd>Unlimited</dd></div>
+        </dl>
+        <p class="rx__sign"><svg viewBox="0 0 160 40" aria-hidden="true"><path d="M8 28c6-10 10-20 12-18s-6 22-2 20 8-14 12-12-2 10 2 10 6-8 10-8 2 8 6 8 6-10 10-10-1 9 3 9 8-6 12-6M96 26c4-2 8-6 12-6s0 6 4 6 8-4 12-4 4 4 8 4 8-2 12-2" pathLength="1"/></svg><span class="caption">Signature</span></p>
+      </aside>
     </section>
   </main>
 
   <footer class="colophon">
-    <p class="caption">Set in Newsreader and IBM Plex Mono. Blue and pink courtesy of phycocyanin and phycoerythrin.</p>
+    <p class="caption">Made with <span class="beat" aria-label="love">♥</span> in Austin. Set in Newsreader and IBM Plex Mono. Blue and pink courtesy of phycocyanin and phycoerythrin.</p>
     <a class="caption" href="index.html">Close the journal <span aria-hidden="true">↩</span></a>
   </footer>
 
