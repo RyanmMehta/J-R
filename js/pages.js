@@ -1,148 +1,83 @@
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* ------------------------------------------------------------------
+   Things to do on the pages once the book has zoomed in: paper and
+   poster previews, margin notes, the HappyPEA pea, and copying the email.
+   Only the reading view is wired up; the copies inside the book are inert.
+   ------------------------------------------------------------------ */
 
-/* ---------- Scroll reveals ----------
-   Anything already on screen at load stays put. Anything below the fold
-   starts slightly lowered and settles in when it scrolls into view. */
-
-function markIn(el) {
-  el.classList.remove('is-pending');
-  el.querySelectorAll('.maze, .scatter').forEach(markArt);
-  if (el.matches('.maze, .scatter')) markArt(el);
-  if (el.matches('[data-draw]')) el.classList.add('is-in');
-}
-
-function markArt(art) {
-  if (art.classList.contains('is-in')) return;
-  art.classList.add('is-in');
-  const motion = art.querySelector('animateMotion');
-  if (motion && !reducedMotion) motion.beginElement();
-  // Without motion, park the maze dot at the exit.
-  if (motion && reducedMotion) art.querySelector('.maze__dot').setAttribute('transform', 'translate(140 120)');
-}
-
-document.querySelectorAll('.peas i').forEach((pea, i) => pea.style.setProperty('--i', i));
-
-const revealables = document.querySelectorAll('[data-reveal], [data-draw]');
-
-if ('IntersectionObserver' in window && !reducedMotion) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      markIn(entry.target);
-      observer.unobserve(entry.target);
-    });
-  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
-
-  revealables.forEach((el) => {
-    const top = el.getBoundingClientRect().top;
-    if (top < window.innerHeight * 0.9) {
-      markIn(el);
-    } else {
-      // Drawn lines stay visible while they wait; only reveals start hidden.
-      if (el.matches('[data-reveal]')) el.classList.add('is-pending');
-      observer.observe(el);
-    }
-  });
-} else {
-  revealables.forEach(markIn);
-}
-
-/* ---------- Running head ----------
-   Shows the current section and its page number, and underlines it in the nav. */
-
-const runhead = document.querySelector('.runhead');
-const runSection = document.querySelector('.runhead__section');
-const runNum = document.querySelector('.runhead__num');
-const navLinks = [...document.querySelectorAll('.runhead__nav a')];
-const sections = [...document.querySelectorAll('[data-page]')];
-
-function updateRunhead() {
-  runhead.classList.toggle('is-scrolled', window.scrollY > 8);
-
-  const line = window.innerHeight * 0.35;
-  let current = sections[0];
-  sections.forEach((section) => {
-    if (section.getBoundingClientRect().top <= line) current = section;
-  });
-
-  runSection.textContent = current.dataset.title;
-  runNum.textContent = `p. ${current.dataset.page}`;
-  navLinks.forEach((link) => {
-    const isCurrent = link.getAttribute('href') === `#${current.id}`;
-    if (isCurrent) link.setAttribute('aria-current', 'true');
-    else link.removeAttribute('aria-current');
-  });
-}
-
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if (ticking) return;
-  ticking = true;
-  requestAnimationFrame(() => { updateRunhead(); ticking = false; });
-}, { passive: true });
-updateRunhead();
+const readingView = document.querySelector('.reader');
 
 /* ---------- Paper and poster previews ----------
    Hovering a title shows its preview (CSS). Clicking or tapping pins it open. */
-
-document.querySelectorAll('.entry__toggle').forEach((toggle) => {
-  toggle.addEventListener('click', () => {
-    const entry = toggle.closest('.entry');
-    const open = !entry.classList.contains('is-previewing');
-    document.querySelectorAll('.entry.is-previewing').forEach((other) => {
-      if (other !== entry) setPreview(other, false);
-    });
-    setPreview(entry, open);
-  });
-});
 
 function setPreview(entry, open) {
   entry.classList.toggle('is-previewing', open);
   entry.querySelector('.entry__toggle').setAttribute('aria-expanded', String(open));
 }
 
+function closePreviews(except) {
+  readingView.querySelectorAll('.entry.is-previewing').forEach((entry) => {
+    if (entry !== except) setPreview(entry, false);
+  });
+}
+
+readingView.querySelectorAll('.entry__toggle').forEach((toggle) => {
+  toggle.addEventListener('click', () => {
+    const entry = toggle.closest('.entry');
+    const open = !entry.classList.contains('is-previewing');
+    closePreviews(entry);
+    setPreview(entry, open);
+  });
+});
+
 /* ---------- Margin notes ---------- */
 
-const notes = [...document.querySelectorAll('.note')];
+const notes = [...readingView.querySelectorAll('.note')];
 
 function setNote(button, open) {
   button.setAttribute('aria-expanded', String(open));
-  document.getElementById(button.getAttribute('aria-controls')).hidden = !open;
+  button.nextElementSibling.hidden = !open;
+}
+
+function closeNotes(except) {
+  notes.forEach((button) => { if (button !== except) setNote(button, false); });
 }
 
 notes.forEach((button) => {
   button.addEventListener('click', (event) => {
     event.stopPropagation();
     const open = button.getAttribute('aria-expanded') !== 'true';
-    notes.forEach((other) => { if (other !== button) setNote(other, false); });
+    closeNotes(button);
     setNote(button, open);
   });
 });
 
 document.addEventListener('click', (event) => {
   if (event.target.closest('.note__card')) return;
-  notes.forEach((button) => setNote(button, false));
-  if (!event.target.closest('.entry')) {
-    document.querySelectorAll('.entry.is-previewing').forEach((entry) => setPreview(entry, false));
-  }
+  closeNotes();
+  if (!event.target.closest('.entry')) closePreviews();
 });
 
 document.addEventListener('keydown', (event) => {
   if (event.key !== 'Escape') return;
-  notes.forEach((button) => setNote(button, false));
-  document.querySelectorAll('.entry.is-previewing').forEach((entry) => setPreview(entry, false));
+  closeNotes();
+  closePreviews();
+});
+
+// Leaving a section closes anything left open on it.
+readingView.querySelectorAll('.tab').forEach((tab) => {
+  tab.addEventListener('click', () => { closeNotes(); closePreviews(); });
 });
 
 /* ---------- The HappyPEA pea ---------- */
 
-const pea = document.querySelector('.pea');
-const bubble = document.querySelector('.pea__bubble');
+const pea = readingView.querySelector('.pea');
+const bubble = readingView.querySelector('.pea__bubble');
 const peaLines = [
-  'hi! I\'m the HappyPEA pea',
-  'have you had water today?',
-  'stretch break?',
-  'you\'re doing great',
-  'see you in 2027',
+  'Drink some water today',
+  'Take a stretch break',
+  'Check in with a friend',
+  'Launching in 2027',
+  'Hi from HappyPEA',
 ];
 let peaIndex = 0;
 
@@ -164,13 +99,12 @@ pea.addEventListener('animationend', (event) => {
 
 /* ---------- Copy email ---------- */
 
-const emailButton = document.querySelector('.contact__email');
+const emailButton = readingView.querySelector('.contact__email');
 const emailHint = emailButton.querySelector('.contact__hint');
 
 emailButton.addEventListener('click', async () => {
-  const email = emailButton.dataset.email;
   try {
-    await navigator.clipboard.writeText(email);
+    await navigator.clipboard.writeText(emailButton.dataset.email);
     emailHint.textContent = 'copied';
   } catch {
     // Clipboard blocked: select the address so it can be copied by hand.

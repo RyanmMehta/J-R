@@ -10,8 +10,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="pages.css">
 </head>
 <body>
   <main class="desk">
@@ -19,111 +20,137 @@
       <span aria-hidden="true">←</span> Close journal
     </button>
 
-    <div class="scene">
-      <div class="book" id="book" role="button" tabindex="0" aria-label="Open the research journal" aria-expanded="false">
+    <!-- The camera zooms the whole book in and out; the scene holds the 3D book -->
+    <div class="camera">
+      <div class="scene">
+        <div class="book" id="book" role="button" tabindex="0" aria-label="Open the research journal" aria-expanded="false">
 
-        <!-- Back cover and the visible thickness of the page block -->
-        <div class="back-cover" aria-hidden="true"></div>
-        <div class="fore-edge" aria-hidden="true"></div>
-        <div class="bottom-edge" aria-hidden="true"></div>
+          <div class="back-cover" aria-hidden="true"></div>
+          <div class="fore-edge" aria-hidden="true"></div>
+          <div class="bottom-edge" aria-hidden="true"></div>
 
-        <!-- Right-hand page under everything: the table of contents -->
-        <section class="page page--toc" aria-labelledby="toc-title" inert>
-          <div class="page__inner">
-            <p class="page__meta"><span>Entry No. 001</span><span>Date: ____</span></p>
-            <h1 class="toc__title" id="toc-title"><span class="highlight">Table of Contents</span></h1>
-            <ol class="toc">
-              <li><a href="journal.html#intro"><span class="toc__num">01</span><span class="toc__label">Introduction</span><span class="toc__dots"></span><span class="toc__page">p. 02</span></a></li>
-              <li><a href="journal.html#research"><span class="toc__num">02</span><span class="toc__label">Research</span><span class="toc__dots"></span><span class="toc__page">p. 04</span></a></li>
-              <li><a href="journal.html#building"><span class="toc__num">03</span><span class="toc__label">Building</span><span class="toc__dots"></span><span class="toc__page">p. 12</span></a></li>
-              <li><a href="journal.html#community"><span class="toc__num">04</span><span class="toc__label">Community</span><span class="toc__dots"></span><span class="toc__page">p. 18</span></a></li>
-              <li><a href="journal.html#appendix"><span class="toc__num">05</span><span class="toc__label">Appendix</span><span class="toc__dots"></span><span class="toc__page">p. 24</span></a></li>
-              <li><a href="journal.html#contact"><span class="toc__num">06</span><span class="toc__label">Correspondence</span><span class="toc__dots"></span><span class="toc__page">p. 28</span></a></li>
-            </ol>
-            <p class="toc__note">* results may vary. lots of banana bread was involved.</p>
-            <span class="page__number">1</span>
+          <!-- Last right-hand page, under every leaf -->
+          <div class="page page--base" data-slot="contact-r" aria-hidden="true"></div>
+
+          <div class="ribbon" aria-hidden="true"></div>
+
+          <!-- Leaves from the back of the book to the front. Each leaf's front is a
+               right-hand page and its back is the next spread's left-hand page.
+               Empty faces are filled from the reading layer below by js/book.js. -->
+          <div class="leaf" style="--i: 7">
+            <div class="face face--front page" data-slot="appendix-r" aria-hidden="true"></div>
+            <div class="face face--back page" data-slot="contact-l" aria-hidden="true"></div>
           </div>
-          <div class="paperclip" aria-hidden="true"></div>
-        </section>
+          <div class="leaf" style="--i: 6">
+            <div class="face face--front page" data-slot="community-r" aria-hidden="true"></div>
+            <div class="face face--back page" data-slot="appendix-l" aria-hidden="true"></div>
+          </div>
+          <div class="leaf" style="--i: 5">
+            <div class="face face--front page" data-slot="building-r" aria-hidden="true"></div>
+            <div class="face face--back page" data-slot="community-l" aria-hidden="true"></div>
+          </div>
+          <div class="leaf" style="--i: 4">
+            <div class="face face--front page" data-slot="research-r" aria-hidden="true"></div>
+            <div class="face face--back page" data-slot="building-l" aria-hidden="true"></div>
+          </div>
+          <div class="leaf" style="--i: 3">
+            <div class="face face--front page" data-slot="intro-r" aria-hidden="true"></div>
+            <div class="face face--back page" data-slot="research-l" aria-hidden="true"></div>
+          </div>
 
-        <div class="ribbon" aria-hidden="true"></div>
+          <!-- Table of contents (front) and the left page of the Introduction (back) -->
+          <div class="leaf" style="--i: 2">
+            <section class="face face--front page page--toc" aria-labelledby="toc-title" inert>
+              <div class="page__inner">
+                <p class="page__meta"><span>Entry No. 001</span><span>Contents</span></p>
+                <h1 class="toc__title" id="toc-title"><span class="highlight">Table of Contents</span></h1>
+                <ol class="toc">
+                  <li><a href="#intro" data-go="intro"><span class="toc__num">01</span><span class="toc__label">Introduction</span><span class="toc__dots"></span><span class="toc__page">p. 02</span></a></li>
+                  <li><a href="#research" data-go="research"><span class="toc__num">02</span><span class="toc__label">Research</span><span class="toc__dots"></span><span class="toc__page">p. 04</span></a></li>
+                  <li><a href="#building" data-go="building"><span class="toc__num">03</span><span class="toc__label">Building</span><span class="toc__dots"></span><span class="toc__page">p. 06</span></a></li>
+                  <li><a href="#community" data-go="community"><span class="toc__num">04</span><span class="toc__label">Community</span><span class="toc__dots"></span><span class="toc__page">p. 08</span></a></li>
+                  <li><a href="#appendix" data-go="appendix"><span class="toc__num">05</span><span class="toc__label">Appendix</span><span class="toc__dots"></span><span class="toc__page">p. 10</span></a></li>
+                  <li><a href="#contact" data-go="contact"><span class="toc__num">06</span><span class="toc__label">Correspondence</span><span class="toc__dots"></span><span class="toc__page">p. 12</span></a></li>
+                </ol>
+                <span class="page__number">1</span>
+              </div>
+              <div class="paperclip" aria-hidden="true"></div>
+            </section>
+            <div class="face face--back page" data-slot="intro-l" aria-hidden="true"></div>
+          </div>
 
-        <!-- First leaf: bookplate on the front, welcome note on the back -->
-        <div class="leaf leaf--flyleaf">
-          <div class="face face--front page" aria-hidden="true">
-            <div class="page__inner bookplate">
-              <div class="bookplate__frame">
-                <p class="bookplate__ex">Ex Libris</p>
-                <p class="bookplate__label">This journal belongs to</p>
-                <p class="bookplate__name" data-fill="name">Jenna Chuan</p>
-                <p class="bookplate__return">If found, please return to the lab ⚗</p>
+          <!-- Flyleaf: bookplate on the front, welcome note on the back -->
+          <div class="leaf leaf--flyleaf" style="--i: 1">
+            <div class="face face--front page" aria-hidden="true">
+              <div class="page__inner bookplate">
+                <div class="bookplate__frame">
+                  <p class="bookplate__ex">Ex Libris</p>
+                  <p class="bookplate__label">This journal belongs to</p>
+                  <p class="bookplate__name">Jenna Chuan</p>
+                </div>
               </div>
             </div>
-          </div>
-          <section class="face face--back page page--welcome" aria-label="Welcome note" inert>
-            <div class="page__inner">
-              <p class="page__meta"><span>Entry No. 000</span><span>Lab notes</span></p>
-              <h2 class="welcome__title">Hello there!</h2>
-              <p class="welcome__text">Hi, I'm Jenna. This journal holds my research, the things I'm building, and the communities I'm part of. Pick a page on the right to start reading.</p>
-              <div class="hypothesis">
-                <p class="hypothesis__label">Hypothesis</p>
-                <p class="hypothesis__text">You'll find something interesting in here.</p>
+            <section class="face face--back page page--welcome" aria-label="Welcome note" inert>
+              <div class="page__inner">
+                <p class="page__meta"><span>Entry No. 000</span><span>Lab notes</span></p>
+                <h2 class="welcome__title">Hello there!</h2>
+                <p class="welcome__text">Hi, I'm Jenna. This journal holds my research, the things I'm building, and the communities I'm part of. Pick a section on the right to start reading.</p>
+                <svg class="doodle doodle--welcome" viewBox="0 0 120 80" aria-hidden="true">
+                  <path d="M30 10v22L12 66a6 6 0 0 0 5 9h46a6 6 0 0 0 5-9L50 32V10" />
+                  <path d="M26 10h28" />
+                  <path d="M18 56h44" />
+                  <circle cx="34" cy="64" r="3" />
+                  <circle cx="46" cy="60" r="2" />
+                  <path d="M82 8C82 19 106 19 106 30S82 41 82 52 106 63 106 74M106 8C106 19 82 19 82 30S106 41 106 52 82 63 82 74M88 9h12M86 30h16M86 52h16M88 73h12" />
+                </svg>
+                <p class="welcome__sign">Jenna</p>
               </div>
-              <svg class="doodle doodle--welcome" viewBox="0 0 120 80" aria-hidden="true">
-                <path d="M30 10v22L12 66a6 6 0 0 0 5 9h46a6 6 0 0 0 5-9L50 32V10" />
-                <path d="M26 10h28" />
-                <path d="M18 56h44" />
-                <circle cx="34" cy="64" r="3" />
-                <circle cx="46" cy="60" r="2" />
-                <path d="M82 8C82 19 106 19 106 30S82 41 82 52 106 63 106 74M106 8C106 19 82 19 82 30S106 41 106 52 82 63 82 74M88 9h12M86 30h16M86 52h16M88 73h12" />
+            </section>
+          </div>
+
+          <!-- Front cover: photo and name outside, endpapers inside -->
+          <div class="leaf leaf--cover" style="--i: 0">
+            <div class="face face--front cover">
+              <div class="cover__spine" aria-hidden="true"></div>
+              <p class="cover__stamp">Lab Notebook · No. 01</p>
+              <svg class="cover__doodle cover__doodle--flask" viewBox="0 0 40 48" aria-hidden="true">
+                <path d="M14 4v14L4 38a4 4 0 0 0 3.6 6h24.8A4 4 0 0 0 36 38L26 18V4M11 4h18M9 32h22" />
               </svg>
-              <p class="welcome__sign" data-fill="first-name">Jenna</p>
+              <svg class="cover__doodle cover__doodle--atom" viewBox="0 0 48 48" aria-hidden="true">
+                <ellipse cx="24" cy="24" rx="20" ry="8" />
+                <ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(60 24 24)" />
+                <ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(-60 24 24)" />
+                <circle cx="24" cy="24" r="2.5" class="fill" />
+              </svg>
+              <svg class="cover__doodle cover__doodle--sparkle" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2c1 6 4 9 10 10-6 1-9 4-10 10-1-6-4-9-10-10 6-1 9-4 10-10z" class="fill" />
+              </svg>
+              <svg class="cover__doodle cover__doodle--sparkle-sm" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2c1 6 4 9 10 10-6 1-9 4-10 10-1-6-4-9-10-10 6-1 9-4 10-10z" class="fill" />
+              </svg>
+
+              <figure class="polaroid">
+                <span class="tape tape--left" aria-hidden="true"></span>
+                <span class="tape tape--right" aria-hidden="true"></span>
+                <img class="polaroid__photo" src="assets/jenna-chuan.jpg" alt="Portrait of Jenna Chuan" width="630" height="678">
+              </figure>
+
+              <div class="label">
+                <p class="label__kicker">Research Journal</p>
+                <p class="label__name">Jenna Chuan</p>
+                <p class="label__tagline">Biology · Dean's Scholars · UT Austin</p>
+              </div>
+
+              <span class="heart-sticker" aria-hidden="true">♥</span>
             </div>
-          </section>
-        </div>
-
-        <!-- Front cover: photo and name outside, endpapers inside -->
-        <div class="leaf leaf--cover">
-          <div class="face face--front cover">
-            <div class="cover__spine" aria-hidden="true"></div>
-            <p class="cover__stamp">Lab Notebook · No. <span data-fill="volume">01</span></p>
-            <svg class="cover__doodle cover__doodle--flask" viewBox="0 0 40 48" aria-hidden="true">
-              <path d="M14 4v14L4 38a4 4 0 0 0 3.6 6h24.8A4 4 0 0 0 36 38L26 18V4M11 4h18M9 32h22" />
-            </svg>
-            <svg class="cover__doodle cover__doodle--atom" viewBox="0 0 48 48" aria-hidden="true">
-              <ellipse cx="24" cy="24" rx="20" ry="8" />
-              <ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(60 24 24)" />
-              <ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(-60 24 24)" />
-              <circle cx="24" cy="24" r="2.5" class="fill" />
-            </svg>
-            <svg class="cover__doodle cover__doodle--sparkle" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 2c1 6 4 9 10 10-6 1-9 4-10 10-1-6-4-9-10-10 6-1 9-4 10-10z" class="fill" />
-            </svg>
-            <svg class="cover__doodle cover__doodle--sparkle-sm" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 2c1 6 4 9 10 10-6 1-9 4-10 10-1-6-4-9-10-10 6-1 9-4 10-10z" class="fill" />
-            </svg>
-
-            <figure class="polaroid">
-              <span class="tape tape--left" aria-hidden="true"></span>
-              <span class="tape tape--right" aria-hidden="true"></span>
-              <img class="polaroid__photo" src="assets/portrait-placeholder.svg" alt="Portrait of Jenna Chuan" data-fill="photo">
-            </figure>
-
-            <div class="label">
-              <p class="label__kicker">Research Journal</p>
-              <p class="label__name" data-fill="name">Jenna Chuan</p>
-              <p class="label__tagline" data-fill="tagline">Biology · Dean's Scholars · UT Austin</p>
-            </div>
-
-            <span class="heart-sticker" aria-hidden="true">♥</span>
+            <div class="face face--back endpaper" aria-hidden="true"></div>
           </div>
-          <div class="face face--back endpaper" aria-hidden="true"></div>
         </div>
       </div>
     </div>
 
     <div class="sticky-note" aria-hidden="true">
-      <p>click to <br>open me!</p>
+      <p>click to <br>open</p>
       <svg class="sticky-note__arrow" viewBox="0 0 80 60">
         <path d="M74 8C60 4 34 6 22 28c-4 8-6 14-6 22" />
         <path d="M8 40l8 12 9-11" />
@@ -131,6 +158,394 @@
     </div>
   </main>
 
-  <script src="js/journal.js"></script>
+  <!-- ==================================================================
+       Reading layer. This is the real text of each section, shown when the
+       book zooms in. js/book.js copies each page into the book as well, so
+       the pages that turn are the same pages that are read.
+       ================================================================== -->
+  <div class="reader" aria-hidden="true">
+    <div class="reader__inner">
+      <nav class="tabs" aria-label="Sections">
+        <button type="button" class="tab" data-go="contents" style="--tab: #ece6d7">Contents</button>
+        <button type="button" class="tab" data-go="intro" style="--tab: #e4ebe0">Introduction</button>
+        <button type="button" class="tab" data-go="research" style="--tab: #dde7f2">Research</button>
+        <button type="button" class="tab" data-go="building" style="--tab: #e7efdc">Building</button>
+        <button type="button" class="tab" data-go="community" style="--tab: #f5e0e6">Community</button>
+        <button type="button" class="tab" data-go="appendix" style="--tab: #efe7d6">Appendix</button>
+        <button type="button" class="tab" data-go="contact" style="--tab: #e4ebe0">Contact</button>
+      </nav>
+
+      <!-- ============ Introduction ============ -->
+      <article class="spread" id="intro" data-title="Introduction" aria-label="Introduction">
+        <div class="pg pg--l"><div class="pg__in">
+          <p class="pg-meta"><span>Entry No. 002</span><span>Introduction</span></p>
+          <figure class="portrait">
+            <div class="portrait__frame">
+              <img src="assets/jenna-chuan.jpg" alt="Portrait of Jenna Chuan" width="630" height="678">
+            </div>
+            <figcaption class="cap">Fig. 1 &nbsp;Jenna Chuan, Austin, Texas</figcaption>
+          </figure>
+          <span class="pg-num">2</span>
+        </div></div>
+        <div class="pg pg--r"><div class="pg__in">
+          <p class="pg-meta"><span>Research journal</span><span>Vol. 01</span></p>
+          <h1 class="intro__name">Jenna Chuan</h1>
+          <p class="intro__tagline">Exploring <span class="stroke">health<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 13c38-7 92-10 194-5" pathLength="1"/></svg></span> through research, technology, and community.</p>
+          <p class="intro__lede">I study biology in the Dean's Scholars Honors Program at UT Austin, with a minor in business. I do clinical research in Houston, I'm co-founding a wellness app for students, and I lead a nonprofit that supports student mental health.</p>
+          <ol class="mini-contents" aria-label="Chapters">
+            <li><a href="#research" data-go="research"><span class="mini-contents__num">I</span><span>Research</span><span class="mini-contents__page">p. 04</span></a></li>
+            <li><a href="#building" data-go="building"><span class="mini-contents__num">II</span><span>Building</span><span class="mini-contents__page">p. 06</span></a></li>
+            <li><a href="#community" data-go="community"><span class="mini-contents__num">III</span><span>Community</span><span class="mini-contents__page">p. 08</span></a></li>
+          </ol>
+          <span class="pg-num">3</span>
+        </div></div>
+      </article>
+
+      <!-- ============ Research ============ -->
+      <article class="spread" id="research" data-title="Research" aria-label="Research">
+        <div class="pg pg--l"><div class="pg__in">
+          <p class="pg-meta"><span>Chapter I</span><span>2020 to now</span></p>
+          <h2 class="ch-title">Research</h2>
+          <p class="ch-intro">My research started with a regression model in high school and moved through RNA biology and protein purification to clinical work in pain medicine and cancer care.</p>
+          <p class="cap hint">Hover over or tap a title to see the paper or poster.</p>
+
+          <div class="entry">
+            <p class="cap entry__meta"><span>Entry 01</span> · 2026 to now</p>
+            <h3 class="entry__title"><button type="button" class="entry__toggle" aria-expanded="false">Goal-concordant care at LBJ Hospital</button></h3>
+            <p class="cap entry__where">MD Anderson Cancer Center and LBJ Hospital · with Dr. Hilary Ma</p>
+            <p class="entry__text">I'm adapting an MD Anderson questionnaire on goal-concordant care so LBJ Hospital can use it for quality improvement, and reviewing the literature on prognosis awareness.</p>
+            <div class="note-wrap">
+              <button type="button" class="note" aria-expanded="false">goal-concordant?</button>
+              <div class="note__card" hidden><p>Care that matches the goals a patient says matter most to them. The questionnaire asks patients about those goals so the care team can compare them with the plan.</p></div>
+            </div>
+            <div class="preview">
+              <figure class="pv pv--form" aria-label="Preview of the questionnaire">
+                <p class="pv__mast">LBJ Hospital · Quality improvement</p>
+                <p class="pv__title">Goal-concordant care questionnaire</p>
+                <p class="pv__sub">Adapted from MD Anderson Cancer Center</p>
+                <div class="pv__q"><span class="bar w80"></span><span class="boxes"><i></i><i></i><i></i><i></i></span></div>
+                <div class="pv__q"><span class="bar w60"></span><span class="boxes"><i></i><i class="on"></i><i></i><i></i></span></div>
+                <div class="pv__q"><span class="bar w70"></span><span class="boxes"><i></i><i></i><i class="on"></i><i></i></span></div>
+                <div class="pv__q"><span class="bar w50"></span><span class="boxes"><i class="on"></i><i></i><i></i><i></i></span></div>
+                <figcaption class="pv__cap">Questionnaire draft, 2026</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="entry">
+            <p class="cap entry__meta"><span>Entry 02</span> · 2026 to now</p>
+            <h3 class="entry__title"><button type="button" class="entry__toggle" aria-expanded="false">Interventional pain medicine</button></h3>
+            <p class="cap entry__where">UTHealth Houston, Anesthesiology, Critical Care and Pain Medicine · with Dr. Jamal Hasoon</p>
+            <p class="entry__text">I made the figures and drafted the diagnostic practices results for a national survey on interventional pain care. I co-authored 2 papers in <cite>Orthopedic Reviews</cite>: a case series on cocaine-positive urine drug screens and a study of telemedicine use after COVID-19.</p>
+            <div class="note-wrap">
+              <button type="button" class="note" aria-expanded="false">case series?</button>
+              <div class="note__card" hidden><p>A detailed report on a small group of patients, here 4, who share a clinical situation. It records how each case was handled so other clinicians can learn from it.</p></div>
+            </div>
+            <div class="preview">
+              <figure class="pv pv--paper" aria-label="Preview of the case series">
+                <p class="pv__mast">Orthopedic Reviews</p>
+                <p class="pv__sub">Case series · Sep 2026</p>
+                <p class="pv__title">Clinical Responses to Cocaine-Positive Urine Drug Screens in Patients Receiving Chronic Opioid Therapy: A Four-Patient Case Series</p>
+                <div class="pv__cols">
+                  <div><span class="bar"></span><span class="bar"></span><span class="bar w80"></span><span class="bar"></span><span class="bar w60"></span></div>
+                  <div><span class="bar"></span><span class="bar w90"></span><span class="bar"></span><span class="bar w70"></span><span class="bar"></span></div>
+                </div>
+                <figcaption class="pv__cap">doi 10.52965/001c.171215</figcaption>
+              </figure>
+            </div>
+          </div>
+          <span class="pg-num">4</span>
+        </div></div>
+
+        <div class="pg pg--r"><div class="pg__in">
+          <div class="entry">
+            <p class="cap entry__meta"><span>Entry 03</span> · 2024 to 2025</p>
+            <h3 class="entry__title"><button type="button" class="entry__toggle" aria-expanded="false">Blue and pink pigments from algae</button></h3>
+            <p class="cap entry__where">Freshman Research Initiative, Biomanufacturing Lab · with BioMADE</p>
+            <p class="entry__text">We extracted phycocyanin and phycoerythrin, 2 pigment-proteins from algae, and worked on their yield and colorfastness for textile dyes. I used freeze-thaw extraction, ammonium sulfate fractionation and SDS-PAGE, and presented the results as a poster.</p>
+            <div class="pigments">
+              <div class="pigments__chips">
+                <p class="pigment pigment--pc"><span class="pigment__chip"></span><span><span class="pigment__name">Phycocyanin</span><span class="cap">λ<sub>max</sub> ≈ 620 nm</span></span></p>
+                <p class="pigment pigment--pe"><span class="pigment__chip"></span><span><span class="pigment__name">Phycoerythrin</span><span class="cap">λ<sub>max</sub> ≈ 565 nm</span></span></p>
+              </div>
+              <figure class="spectrum" aria-label="Sketch of the absorbance peaks of the two pigments">
+                <svg viewBox="0 0 320 112">
+                  <path class="spectrum__axis" d="M24 92h276"/>
+                  <g class="spectrum__ticks"><path d="M79 92v4M189 92v4M299 92v4"/><text x="79" y="110">500</text><text x="189" y="110">600</text><text x="290" y="110">700 nm</text></g>
+                  <path class="spectrum__pe" d="M24.0 92.0 29.5 92.0 35.0 91.8 40.5 91.3 46.0 90.1 51.5 87.3 57.0 82.5 62.5 75.7 68.0 68.5 73.5 63.5 79.0 63.0 84.5 67.2 90.0 74.1 95.5 80.7 101.0 84.2 106.5 82.6 112.0 74.1 117.5 59.5 123.0 43.6 128.5 32.6 134.0 27.8 139.5 24.7 145.0 20.5 150.5 20.0 156.0 29.5 161.5 47.9 167.0 67.4 172.5 81.2 178.0 88.3 183.5 91.0 189.0 91.8 194.5 92.0 200.0 92.0 205.5 92.0 211.0 92.0 216.5 92.0 222.0 92.0 227.5 92.0 233.0 92.0 238.5 92.0 244.0 92.0 249.5 92.0 255.0 92.0 260.5 92.0 266.0 92.0 271.5 92.0 277.0 92.0 282.5 92.0 288.0 92.0 293.5 92.0 299.0 92.0" pathLength="1"/>
+                  <path class="spectrum__pc" d="M24.0 92.0 29.5 92.0 35.0 92.0 40.5 92.0 46.0 92.0 51.5 92.0 57.0 92.0 62.5 92.0 68.0 92.0 73.5 92.0 79.0 92.0 84.5 92.0 90.0 92.0 95.5 92.0 101.0 92.0 106.5 92.0 112.0 91.9 117.5 91.8 123.0 91.5 128.5 91.0 134.0 90.0 139.5 88.5 145.0 86.3 150.5 83.5 156.0 80.0 161.5 76.1 167.0 71.6 172.5 66.3 178.0 60.0 183.5 52.3 189.0 43.7 194.5 34.8 200.0 27.0 205.5 21.7 211.0 20.0 216.5 22.5 222.0 28.8 227.5 38.0 233.0 48.6 238.5 59.2 244.0 68.8 249.5 76.5 255.0 82.3 260.5 86.3 266.0 88.9 271.5 90.4 277.0 91.2 282.5 91.6 288.0 91.8 293.5 91.9 299.0 92.0" pathLength="1"/>
+                </svg>
+                <figcaption class="cap">Absorbance peaks, sketched</figcaption>
+              </figure>
+            </div>
+            <div class="note-wrap">
+              <button type="button" class="note" aria-expanded="false">why blue and pink?</button>
+              <div class="note__card" hidden><p>The accent colors in this journal come from these 2 proteins. SDS-PAGE, a gel that sorts proteins by size, showed how pure each extract was.</p></div>
+            </div>
+            <div class="preview">
+              <figure class="pv pv--poster" aria-label="Preview of the pigment poster">
+                <p class="pv__band">Maximizing the Yield and Colorfastness of Phycocyanin and Phycoerythrin Pigment-Protein Complexes</p>
+                <div class="pv__grid">
+                  <div><span class="bar"></span><span class="bar w80"></span><span class="bar"></span><span class="bar w60"></span><span class="bar w90"></span></div>
+                  <svg class="gel" viewBox="0 0 90 70" aria-hidden="true">
+                    <rect x="1" y="1" width="88" height="68" rx="3" class="gel__bed"/>
+                    <g class="gel__wells"><rect x="8" y="6" width="12" height="3"/><rect x="28" y="6" width="12" height="3"/><rect x="48" y="6" width="12" height="3"/><rect x="68" y="6" width="12" height="3"/></g>
+                    <g class="gel__ladder"><rect x="8" y="18" width="12" height="2"/><rect x="8" y="28" width="12" height="2"/><rect x="8" y="38" width="12" height="2"/><rect x="8" y="50" width="12" height="2"/></g>
+                    <rect x="28" y="40" width="12" height="3.5" class="gel__pc"/>
+                    <rect x="48" y="33" width="12" height="3.5" class="gel__pe"/>
+                    <rect x="68" y="40" width="12" height="3" class="gel__pc"/><rect x="68" y="33" width="12" height="3" class="gel__pe"/>
+                  </svg>
+                  <div><span class="vials"><i class="pc"></i><i class="pe"></i></span><span class="bar"></span><span class="bar w70"></span><span class="bar w90"></span></div>
+                </div>
+                <figcaption class="pv__cap">Research poster, FRI Biomanufacturing</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="entry">
+            <p class="cap entry__meta"><span>Entry 04</span> · 2023</p>
+            <h3 class="entry__title"><button type="button" class="entry__toggle" aria-expanded="false">U1 snRNA mutations and snRNP assembly</button></h3>
+            <p class="cap entry__where">Welch Summer Scholar Program</p>
+            <p class="entry__text">I studied how mutations at the U1C binding site of U1 snRNA change U1 snRNP formation and spliceosome assembly. The project won its category at UT's Fall Undergraduate Research Symposium in 2024.</p>
+            <div class="note-wrap">
+              <button type="button" class="note" aria-expanded="false">snRNP?</button>
+              <div class="note__card" hidden><p>Small nuclear ribonucleoprotein: a short RNA bound to proteins. U1 snRNP starts splicing by finding the place where a non-coding stretch of messenger RNA begins.</p></div>
+            </div>
+            <div class="preview">
+              <figure class="pv pv--poster" aria-label="Preview of the U1 snRNA poster">
+                <p class="pv__band">Effect of U1 snRNA Mutations at the U1C Binding Site in U1 snRNP Biogenesis</p>
+                <div class="pv__grid">
+                  <div><span class="bar"></span><span class="bar w70"></span><span class="bar"></span><span class="bar w80"></span><span class="bar w60"></span></div>
+                  <svg class="hairpin" viewBox="0 0 90 70" aria-hidden="true">
+                    <path d="M30 66V30a15 15 0 0 1 30 0v36"/>
+                    <path d="M30 58h30M30 50h30M30 42h30M30 34h30" class="hairpin__pairs"/>
+                    <circle cx="60" cy="46" r="4" class="hairpin__mut"/>
+                  </svg>
+                  <div><span class="pv__ribbon">Category winner</span><span class="bar"></span><span class="bar w80"></span><span class="bar w90"></span></div>
+                </div>
+                <figcaption class="pv__cap">Poster, Fall Undergraduate Research Symposium 2024</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="entry">
+            <p class="cap entry__meta"><span>Entry 05</span> · 2020 to 2023</p>
+            <h3 class="entry__title"><button type="button" class="entry__toggle" aria-expanded="false">Modeling COVID-19 by county</button></h3>
+            <p class="cap entry__where">Summer STEM Institute</p>
+            <p class="entry__text">In high school I built a multiple linear regression model in Python to predict COVID-19 rates by county. The paper was published in the <cite>International Journal of High School Research</cite>.</p>
+            <div class="preview">
+              <figure class="pv pv--paper" aria-label="Preview of the COVID-19 paper">
+                <p class="pv__mast">Intl. Journal of High School Research</p>
+                <p class="pv__sub">Vol. 5 · Issue 1 · 2023</p>
+                <p class="pv__title">Modeling Socioeconomic, Demographic, and Chronic Medical Conditions Correlated with COVID-19 Incidence</p>
+                <svg class="pv__plot" viewBox="0 0 120 54" aria-hidden="true">
+                  <path d="M6 4v44h110" class="axis"/>
+                  <g class="dots"><circle cx="16" cy="42" r="1.6"/><circle cx="24" cy="38" r="1.6"/><circle cx="30" cy="40" r="1.6"/><circle cx="38" cy="33" r="1.6"/><circle cx="46" cy="35" r="1.6"/><circle cx="54" cy="28" r="1.6"/><circle cx="62" cy="30" r="1.6"/><circle cx="70" cy="22" r="1.6"/><circle cx="80" cy="24" r="1.6"/><circle cx="88" cy="17" r="1.6"/><circle cx="98" cy="15" r="1.6"/><circle cx="106" cy="10" r="1.6"/></g>
+                  <path d="M12 43L110 10" class="fit"/>
+                </svg>
+                <figcaption class="pv__cap">Published paper, IJHSR</figcaption>
+              </figure>
+            </div>
+          </div>
+          <span class="pg-num">5</span>
+        </div></div>
+      </article>
+
+      <!-- ============ Building ============ -->
+      <article class="spread" id="building" data-title="Building" aria-label="Building">
+        <div class="pg pg--l"><div class="pg__in">
+          <p class="pg-meta"><span>Chapter II</span><span>Projects</span></p>
+          <h2 class="ch-title">Building</h2>
+          <p class="ch-intro">I like turning what I learn about health into things people can use. Right now that means a wellness app for students, project management at HealthMaze, and more Python and machine learning.</p>
+
+          <div class="feature">
+            <p class="cap">Co-founder · launching 2027</p>
+            <h3 class="feature__title">HappyPEA</h3>
+            <p class="feature__text">HappyPEA is the digital wellness platform we're building at the Personal Effectiveness Association. It takes PEA's work on fitness, nutrition, and community and puts it in an app for students. We plan to launch in 2027.</p>
+            <div class="pea-spot">
+              <button type="button" class="pea" aria-label="Say hi to the HappyPEA pea">
+                <svg viewBox="0 0 80 84" aria-hidden="true">
+                  <path class="pea__sprout" d="M40 22c0-8 4-14 13-16-1 9-6 14-13 16z"/>
+                  <path class="pea__stem" d="M40 26v-6"/>
+                  <ellipse class="pea__shadow" cx="40" cy="80" rx="18" ry="3"/>
+                  <g class="pea__body">
+                    <circle cx="40" cy="50" r="26" class="pea__skin"/>
+                    <ellipse cx="31" cy="40" rx="6" ry="4" class="pea__shine"/>
+                    <g class="pea__eyes"><ellipse cx="32" cy="50" rx="2.6" ry="3.2"/><ellipse cx="48" cy="50" rx="2.6" ry="3.2"/></g>
+                    <ellipse cx="25" cy="57" rx="4" ry="2.4" class="pea__cheek"/>
+                    <ellipse cx="55" cy="57" rx="4" ry="2.4" class="pea__cheek"/>
+                    <path d="M35 58q5 5 10 0" class="pea__smile"/>
+                  </g>
+                </svg>
+              </button>
+              <p class="pea__bubble" aria-live="polite">Hi from HappyPEA</p>
+            </div>
+            <div class="note-wrap">
+              <button type="button" class="note" aria-expanded="false">why a pea?</button>
+              <div class="note__card" hidden><p>The name comes from PEA, the Personal Effectiveness Association.</p></div>
+            </div>
+          </div>
+          <span class="pg-num">6</span>
+        </div></div>
+
+        <div class="pg pg--r"><div class="pg__in">
+          <p class="pg-meta"><span>Chapter II</span><span>Building</span></p>
+          <div class="build">
+            <figure class="phone">
+              <div class="phone__screen">
+                <svg class="phone__logo" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="23" r="13" class="skin"/><path d="M20 10c0-4 3-7 8-7-1 5-4 7-8 7z" class="leaf"/><circle cx="16" cy="23" r="1.4" class="face"/><circle cx="24" cy="23" r="1.4" class="face"/><path d="M17.5 27q2.5 2.4 5 0" class="smile"/></svg>
+                <p class="phone__brand">HappyPEA</p>
+                <p class="phone__soon">Launching 2027</p>
+                <ul class="phone__pillars">
+                  <li><span class="dot dot--pc"></span>Fitness</li>
+                  <li><span class="dot dot--pea"></span>Nutrition</li>
+                  <li><span class="dot dot--pe"></span>Community</li>
+                </ul>
+              </div>
+              <figcaption class="cap">Fig. 2 &nbsp;HappyPEA, early concept</figcaption>
+            </figure>
+
+            <div class="projects">
+              <div class="project">
+                <figure class="project__art maze">
+                  <svg viewBox="0 0 140 140" aria-hidden="true">
+                    <path class="maze__walls" d="M30 10H130V110M130 130H10V10M30 10V50M30 30H50M80 30V70M70 50H90M110 30V90M10 100H30M50 100H110M70 90V110"/>
+                    <path class="maze__trail" d="M20 0V60H60V20H100V80H40V120H140" pathLength="1"/>
+                  </svg>
+                </figure>
+                <p class="cap">Project manager · 2026 to now</p>
+                <h3 class="project__title">HealthMaze</h3>
+                <p class="project__text">I've been a project manager at HealthMaze since May 2026.</p>
+              </div>
+              <div class="project">
+                <figure class="project__art scatter">
+                  <svg viewBox="0 0 160 120" aria-hidden="true">
+                    <path class="scatter__axis" d="M14 8v100h140"/>
+                    <g class="scatter__dots">
+                      <circle cx="26" cy="94" r="3"/><circle cx="36" cy="86" r="3"/><circle cx="44" cy="90" r="3"/><circle cx="52" cy="78" r="3"/><circle cx="62" cy="80" r="3"/><circle cx="70" cy="68" r="3"/><circle cx="80" cy="72" r="3"/><circle cx="88" cy="58" r="3"/><circle cx="98" cy="62" r="3"/><circle cx="108" cy="48" r="3"/><circle cx="118" cy="50" r="3"/><circle cx="128" cy="38" r="3"/><circle cx="138" cy="30" r="3"/>
+                    </g>
+                    <path class="scatter__fit" d="M20 98L146 28" pathLength="1"/>
+                  </svg>
+                </figure>
+                <p class="cap">Certificate · May 2026</p>
+                <h3 class="project__title">AI and machine learning</h3>
+                <p class="project__text">I finished the Post Graduate Program in Artificial Intelligence and Machine Learning: Business Applications at Texas McCombs. Python has been part of my work since that first regression model.</p>
+              </div>
+            </div>
+          </div>
+          <span class="pg-num">7</span>
+        </div></div>
+      </article>
+
+      <!-- ============ Community ============ -->
+      <article class="spread" id="community" data-title="Community" aria-label="Community">
+        <div class="pg pg--l"><div class="pg__in">
+          <p class="pg-meta"><span>Chapter III</span><span>Service</span></p>
+          <h2 class="ch-title">Community</h2>
+          <p class="ch-intro">Most of my weeks include time with patients, volunteers, or students. These are the places I keep showing up.</p>
+
+          <div class="pea-org">
+            <p class="pea-org__num">300<span>+</span></p>
+            <p class="cap">Students in PEA chapters across the country</p>
+            <div class="peas" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <p class="cap peas__key">Each pea is 10 students</p>
+            <p class="cap pea-org__role">Executive board president · 2025 to now</p>
+            <h3 class="feature__title">Personal Effectiveness Association</h3>
+            <p class="feature__text">PEA is a 501(c)(3) nonprofit founded to address student mental health through fitness, nutrition, and community. As executive board president I oversee our network of chapters nationwide. HappyPEA came out of PEA.</p>
+          </div>
+          <span class="pg-num">8</span>
+        </div></div>
+
+        <div class="pg pg--r"><div class="pg__in">
+          <div class="log__head">
+            <h3 class="cap log__title">Field log</h3>
+            <div class="note-wrap note-wrap--right">
+              <button type="button" class="note" aria-expanded="false">hola · 你好 · hi</button>
+              <div class="note__card" hidden><p>I've talked with patients and staff in English, Spanish, and Mandarin, including as a volunteer at Harris Health's Valbona clinic and Ben Taub Hospital in Houston.</p></div>
+            </div>
+          </div>
+          <table class="log">
+            <thead><tr><th scope="col">Place</th><th scope="col">What I do</th><th scope="col">When</th></tr></thead>
+            <tbody>
+              <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h4v4h4v4h-4v4H6v-4H2V6h4z"/></svg>St. David's Hospital, Austin</td><td>ER unit aide. Vitals, EKGs, wound care, and keeping nurses updated on patient needs.</td><td>2024 to now</td></tr>
+              <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 14L8 3l6 11zM6 14l2-4 2 4"/></svg>Kesem Nationals</td><td>Health and wellness team intern. Onboarding materials, volunteer retention data, and a national database of nurse staffing agencies.</td><td>2025 to now</td></tr>
+              <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="3" width="10" height="12" rx="1"/><path d="M6 2h4v2H6zM5.5 8h5M5.5 11h3"/></svg>Freeman Medical Clinic, Austin</td><td>Certified medical assistant. Scheduling, health records, and help with daily procedures.</td><td>Summer 2025</td></tr>
+              <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 5C5 3 2 5 2 8.5S5 15 8 14c3 1 6-2 6-5.5S11 3 8 5zM8 5c0-2 1-3 3-3"/></svg>Micah 6 Food Pantry</td><td>Volunteer.</td><td>2024 to now</td></tr>
+              <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13l1-4 7-7 3 3-7 7zM10 3l3 3"/></svg>UT Disability and Access</td><td>Volunteer note taker for students with disabilities.</td><td>2024 to now</td></tr>
+              <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 14S2 10 2 6a3 3 0 0 1 6-1 3 3 0 0 1 6 1c0 4-6 8-6 8z"/></svg>Texas Kappa Rho</td><td>Member of the premedical society.</td><td>2024 to now</td></tr>
+              <tr><td><svg class="log__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h12v8H7l-3 3v-3H2z"/></svg>Harris Health System, Houston</td><td>Volunteer at the Valbona clinic and Ben Taub Hospital. Vitals, scheduling, and supplies.</td><td>2021 to 2023</td></tr>
+            </tbody>
+          </table>
+          <span class="pg-num">9</span>
+        </div></div>
+      </article>
+
+      <!-- ============ Appendix ============ -->
+      <article class="spread" id="appendix" data-title="Appendix" aria-label="Appendix">
+        <div class="pg pg--l"><div class="pg__in">
+          <p class="pg-meta"><span>Appendix</span><span>Publications</span></p>
+          <h2 class="ch-title">Appendix</h2>
+          <h3 class="cap list-title">Publications</h3>
+          <ol class="biblio">
+            <li><span class="biblio__year">2026</span><p>Utilization of Telemedicine Services in an Academic Chronic Pain Practice Following the COVID-19 Pandemic: A Retrospective Study. <cite>Orthopedic Reviews</cite>, October 2026.</p></li>
+            <li><span class="biblio__year">2026</span><p>Clinical Responses to Cocaine-Positive Urine Drug Screens in Patients Receiving Chronic Opioid Therapy: A Four-Patient Case Series. <cite>Orthopedic Reviews</cite>, September 2026. <a href="https://doi.org/10.52965/001c.171215" target="_blank" rel="noopener">doi:10.52965/001c.171215</a></p></li>
+            <li><span class="biblio__year">2023</span><p>Effect of U1 snRNA Mutations at the U1C Binding Site in U1 snRNP Biogenesis. Welch Summer Scholar Program Bound Volumes, The Welch Foundation, 2023.</p></li>
+            <li><span class="biblio__year">2023</span><p>Modeling Socioeconomic, Demographic, and Chronic Medical Conditions Correlated with COVID-19 Incidence. <cite>International Journal of High School Research</cite> 5(1), 2023.</p></li>
+          </ol>
+          <span class="pg-num">10</span>
+        </div></div>
+
+        <div class="pg pg--r"><div class="pg__in">
+          <h3 class="cap list-title">Honors</h3>
+          <ul class="ledger">
+            <li><span>Award of Excellence, International Undergraduate Research Results Forum</span><span class="ledger__note">UT College of Natural Sciences and China Medical University, Taiwan</span><span class="ledger__year">2025</span></li>
+            <li><span>Category winner, Gene Expression and Regulation</span><span class="ledger__note">Fall Undergraduate Research Symposium, UT Austin</span><span class="ledger__year">2024</span></li>
+            <li><span>Valedictorian</span><span class="ledger__note">Memorial High School</span><span class="ledger__year">2024</span></li>
+            <li><span>Presidential Service Award</span><span class="ledger__year">2020–2024</span></li>
+            <li><span>Dean's Scholars Honors Program</span><span class="ledger__note">The University of Texas at Austin</span></li>
+          </ul>
+          <h3 class="cap list-title">Certifications</h3>
+          <ul class="ledger">
+            <li><span>AI and Machine Learning: Business Applications</span><span class="ledger__note">Texas McCombs School of Business</span><span class="ledger__year">2026</span></li>
+            <li><span>Certified Clinical Medical Assistant (CCMA)</span><span class="ledger__note">National Healthcareer Association</span><span class="ledger__year">2025</span></li>
+            <li><span>Basic Life Support (BLS)</span><span class="ledger__note">American Heart Association</span></li>
+          </ul>
+          <span class="pg-num">11</span>
+        </div></div>
+      </article>
+
+      <!-- ============ Correspondence ============ -->
+      <article class="spread" id="contact" data-title="Correspondence" aria-label="Correspondence">
+        <div class="pg pg--l"><div class="pg__in">
+          <p class="pg-meta"><span>Correspondence</span><span>Contact</span></p>
+          <h2 class="contact__title">Say hello.</h2>
+          <p class="ch-intro">I'm glad to talk about research, clinical work, or student wellness.</p>
+          <ul class="contact__links">
+            <li><button type="button" class="contact__email" data-email="jpc4223@utexas.edu"><span class="contact__value">jpc4223@utexas.edu</span><span class="cap contact__hint">copy</span></button></li>
+            <li><a href="https://www.linkedin.com/in/jenna-chuan/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a></li>
+            <li><a href="assets/Jenna-Chuan-Resume.pdf" target="_blank" rel="noopener">Résumé (PDF) <span aria-hidden="true">↗</span></a></li>
+          </ul>
+          <span class="pg-num">12</span>
+        </div></div>
+
+        <div class="pg pg--r"><div class="pg__in">
+          <h3 class="cap list-title">Off the clock</h3>
+          <p class="contact__off">Pilates, mangoes, banana bread, doodling, brain teasers, NYT Connections, and <cite>The Greatest Showman</cite>.</p>
+          <p class="contact__sign">Jenna</p>
+          <h3 class="cap list-title">Colophon</h3>
+          <p class="colophon">Set in Newsreader, IBM Plex Mono and Caveat. The blue and pink are phycocyanin and phycoerythrin, the pigments from entry 03.</p>
+          <button type="button" class="close-book" data-go="closed">Close the journal <span aria-hidden="true">↩</span></button>
+          <span class="pg-num">13</span>
+        </div></div>
+      </article>
+    </div>
+  </div>
+
+  <script src="js/book.js"></script>
+  <script src="js/pages.js"></script>
 </body>
 </html>

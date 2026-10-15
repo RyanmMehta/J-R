@@ -1,11 +1,17 @@
 # R@JC
 
-Jenna Chuan's personal site, styled as a research journal.
-
-- `index.html` is the cover: a 3D lab notebook with her photo and name. The closed book turns to follow the mouse, a finger dragged across a phone screen, or the tilt of an Android phone. Clicking it turns the cover and the first page, landing on a table of contents. Picking a chapter lifts the book away and opens the journal at that section.
-- `journal.html` is the journal: the opening (portrait, name, tagline), then three chapters (Research, Building, Community), an appendix of honors and certifications, and contact details.
+Jenna Chuan's personal site, built as one research journal you read by turning its pages.
 
 Plain HTML, CSS and JavaScript. There's no build step and nothing to install.
+
+## How it works
+
+1. **Cover.** The closed book follows the mouse, a finger dragged across a phone screen, or the tilt of an Android phone. Clicking it turns the cover and the first page to the table of contents.
+2. **Turning to a section.** Picking a chapter turns the pages forward to that section's two-page spread. The book lies flat and the camera zooms in until the spread fills the screen.
+3. **Reading.** Once zoomed in, the real text takes over, so it's sharp, selectable and scrollable. The pages in the 3D book are copies of these same pages, so the hand-off is seamless.
+4. **Index tabs.** Clicking a tab on the page edge (along the bottom on phones) zooms back out, turns forward or back to that section, and zooms in again. Contents goes back to the table of contents. Escape and the arrow keys work too.
+
+Links like `index.html#research` open straight to a section. Sections: `intro`, `research`, `building`, `community`, `appendix`, `contact`, plus `contents`.
 
 ## Run locally
 
@@ -15,22 +21,19 @@ python3 -m http.server 5173
 
 Then open http://localhost:5173.
 
-## Swapping in real images
-
-- **Portrait:** put the photo in `assets/` and point both pages at it: the `photo` field in `js/journal.js` (cover) and the `<img>` in the opening of `journal.html`.
-- **Paper and poster previews:** each research entry in `journal.html` has a `<figure class="pv">` drawn in HTML. Replace its contents with an `<img>` of the real poster or first page.
-- **Résumé:** `assets/Jenna-Chuan-Resume.pdf`.
-
 ## Where things live
 
-- `styles.css` and `js/journal.js`: the cover. Size and timing settings are at the top of `styles.css` (`--w` page width, `--t` thickness, `--flip` turn time).
-- `journal.css` and `js/pages.js`: the journal. Colors and fonts are tokens at the top of `journal.css`. The blue and pink accents are phycocyanin and phycoerythrin, the two algal pigments from her Freshman Research Initiative project.
+- `index.html`: the book (cover, flyleaf, contents and six leaves) and, below it, the reading layer with each section's two pages. Edit section text in the reading layer only; `js/book.js` copies each page into the book when the page loads.
+- `styles.css`: the desk, the 3D book, the cover, the contents and welcome pages. Book size and timing settings are at the top (`--w` page width, `--t` thickness, `--flip` turn time).
+- `pages.css`: the section pages and the reading view. Every size on a page is a multiple of `--u`, 1% of the page width, which is what lets a page look identical in the book and when zoomed in. The blue and pink accents are phycocyanin and phycoerythrin, the two algal pigments from entry 03.
+- `js/book.js`: opening, turning, zooming, tabs, deep links and the tilt.
+- `js/pages.js`: paper and poster previews on research titles, margin notes, the HappyPEA pea and copying the email address.
+- `assets/`: the portrait (`jenna-chuan.jpg`) and the résumé PDF.
 
-## Interactions in the journal
+## Fitting content on a page
 
-- Hovering over a research title shows a preview of the paper or poster. Clicking or tapping pins it open (on phones it opens under the entry).
-- The handwritten notes in the margin open a short explanation.
-- Images and project art settle into place as they scroll into view. The maze traces its path and the regression line draws itself.
-- The pea next to HappyPEA bounces and says something when clicked.
-- The running head at the top shows the current chapter and its page number from the table of contents.
-- If the visitor's device asks for reduced motion, everything appears without animating.
+On wide screens each page has a fixed shape (1 : 1.4), like a real page. If you add text to a section, check that it still fits on its page at a 1440 × 900 window. On phones and narrow windows the pages stack and grow to fit, so length matters less there.
+
+## Swapping in real posters and papers
+
+Each research entry has a `<figure class="pv">` drawn in HTML as a preview. Replace its contents with an `<img>` of the real poster or the paper's first page.

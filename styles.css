@@ -3,9 +3,8 @@
    The book is built from flat layers placed in 3D with CSS transforms.
    Everything inside the book is sized in cqw (1cqw = 1% of the page
    width), so the art and type scale together on any screen.
+   pages.css styles the section pages and the zoomed-in reading view.
    ------------------------------------------------------------------ */
-
-@view-transition { navigation: auto; }
 
 @property --bob {
   syntax: "<length>";
@@ -88,13 +87,17 @@ body {
   from { opacity: 0; transform: translateY(40px); }
 }
 
-/* Leaving for the journal: the open book lifts toward the reader and fades */
-.desk.is-leaving .scene { animation: lift-away 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-.desk.is-leaving .close-journal { opacity: 0; transition: opacity 0.3s; }
-
-@keyframes lift-away {
-  to { opacity: 0; transform: translateY(-16px) scale(1.06); }
+/* The camera is a full-screen layer around the book. Zooming into a page
+   scales and moves the camera, so the whole 3D book grows together. */
+.camera {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transform-origin: 0 0;
 }
+
+.camera.is-hidden { visibility: hidden; }
 
 .book {
   --rx: 16deg;
@@ -134,7 +137,7 @@ body {
 
 /* Open: lie flat-ish and slide right so the two-page spread is centred */
 .book.is-open {
-  --rx: 6deg;
+  --rx: 5deg;
   --ry: 0deg;
   --rz: 0deg;
   --tilt-x: 0deg;
@@ -144,11 +147,14 @@ body {
   transform: translateX(50%) rotateX(var(--rx));
 }
 
+/* Before zooming in, the open book lies completely flat */
+.book.is-open.is-flat { --rx: 0deg; }
+
 /* Every flat layer of the book */
 .back-cover,
 .fore-edge,
 .bottom-edge,
-.page--toc,
+.page--base,
 .ribbon,
 .leaf {
   position: absolute;
@@ -200,33 +206,35 @@ body {
 /* ---------- Pages ---------- */
 
 .page {
+  --gutter: linear-gradient(90deg, rgba(90, 70, 40, 0.2), rgba(90, 70, 40, 0.05) 6%, transparent 14%);
   overflow: hidden;
   background-color: var(--paper);
   background-image:
+    var(--gutter),
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 5cqw 5cqw;
-  background-position: -1px -1px;
+  background-size: 100% 100%, 5cqw 5cqw, 5cqw 5cqw;
+  background-position: 0 0, -1px -1px, -1px -1px;
 }
 
-.page--toc {
+/* Right-hand pages have the spine on their left, left-hand pages on their right */
+.page.face--front,
+.page--base { border-radius: 0 6px 6px 0; }
+
+.page.face--back {
+  --gutter: linear-gradient(270deg, rgba(90, 70, 40, 0.2), rgba(90, 70, 40, 0.05) 6%, transparent 14%);
+  border-radius: 6px 0 0 6px;
+}
+
+.page--toc { overflow: visible; }
+
+/* The last right-hand page, under every leaf */
+.page--base {
   top: var(--inset);
   bottom: var(--inset);
   left: 0;
   right: var(--inset);
-  border-radius: 0 6px 6px 0;
-  transform: translateZ(calc(var(--t) - 2px));
-  overflow: visible;
-}
-
-/* Gutter shadow by the spine */
-.page--toc::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(90deg, rgba(90, 70, 40, 0.22), rgba(90, 70, 40, 0.06) 7%, transparent 16%);
-  pointer-events: none;
+  transform: translateZ(calc(var(--t) - 6.6px));
 }
 
 .page__inner {
@@ -265,6 +273,8 @@ body {
   line-height: 1;
   color: var(--ink);
 }
+
+.toc__title:focus { outline: none; }
 
 .highlight {
   padding: 0 1.5cqw;
@@ -323,14 +333,6 @@ body {
   color: var(--ink-soft);
 }
 
-.toc__note {
-  margin: 7cqw 0 0;
-  font-family: "Caveat", cursive;
-  font-size: 4.6cqw;
-  color: var(--ink-soft);
-  transform: rotate(-2deg);
-}
-
 .paperclip {
   position: absolute;
   top: -3.5cqw;
@@ -344,10 +346,11 @@ body {
   transition: opacity 0.3s;
 }
 
-/* Only clip it on once the book is open, so it never pokes out of the cover */
-.book.is-open .paperclip {
+/* Only clip it on while the contents page is showing, so it never pokes out
+   from under the cover or another page */
+.book[data-spread="1"] .paperclip {
   opacity: 1;
-  transition-delay: calc(var(--flip) + var(--stagger) - 0.3s);
+  transition-delay: 0.3s;
 }
 
 .paperclip::after {
@@ -359,41 +362,32 @@ body {
   border-radius: 0 0 2cqw 2cqw;
 }
 
-/* ---------- Leaves (the parts that turn) ---------- */
+/* ---------- Leaves (the parts that turn) ----------
+   Leaf --i counts from the front cover (0) to the back of the book (7).
+   On the right-hand stack the front cover sits highest; once turned to the
+   left, the most recently turned leaf sits highest. js/book.js sets
+   --dur and --delay on each leaf so a run of pages riffles in order. */
 
 .leaf {
-  top: 0;
+  --zr: calc(var(--t) - var(--i) * 0.7px);
+  --zl: calc(var(--t) - 6px + var(--i) * 0.7px);
+  top: var(--inset);
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: calc(100% - var(--inset));
+  height: calc(100% - 2 * var(--inset));
   transform-style: preserve-3d;
   transform-origin: left center;
-  transition: transform var(--flip) var(--ease-flip);
+  transform: translateZ(var(--zr)) rotateY(0deg);
+  transition: transform var(--dur, var(--flip)) var(--ease-flip) var(--delay, 0s);
 }
+
+.leaf.is-flipped { transform: translateZ(var(--zl)) rotateY(-179.6deg); }
 
 .leaf--cover {
-  transform: translateZ(var(--t)) rotateY(0deg);
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
-
-.leaf--flyleaf {
-  top: var(--inset);
-  height: calc(100% - 2 * var(--inset));
-  width: calc(100% - var(--inset));
-  transform: translateZ(calc(var(--t) - 1px)) rotateY(0deg);
-}
-
-/* Open: the cover tucks under the flyleaf on the left-hand side */
-.book.is-open .leaf--cover {
-  transform: translateZ(calc(var(--t) - 4px)) rotateY(-180deg);
-}
-
-.book.is-open .leaf--flyleaf {
-  transform: translateZ(calc(var(--t) - 1px)) rotateY(-179.5deg);
-  transition-delay: var(--stagger);
-}
-
-/* Closing runs in reverse order: flyleaf first, then the cover */
-.book.is-closing .leaf--cover { transition-delay: var(--stagger); }
 
 .face {
   position: absolute;
@@ -419,47 +413,13 @@ body {
   background: linear-gradient(270deg, rgba(60, 45, 25, 0.5), rgba(60, 45, 25, 0.15));
 }
 
-.book.is-open .face--front::after { animation: shade-in var(--flip) var(--ease-flip) both; }
-.book.is-open .face--back::after { animation: shade-out var(--flip) var(--ease-flip) both; }
-.book.is-closing .face--front::after { animation: shade-out var(--flip) var(--ease-flip) both; }
-.book.is-closing .face--back::after { animation: shade-in var(--flip) var(--ease-flip) both; }
-
-.book.is-open .leaf--flyleaf .face::after { animation-delay: var(--stagger); }
-.book.is-closing .leaf--cover .face::after { animation-delay: var(--stagger); }
+.leaf.turn-fwd .face--front::after { animation: shade-in var(--dur) var(--ease-flip) var(--delay) both; }
+.leaf.turn-fwd .face--back::after { animation: shade-out var(--dur) var(--ease-flip) var(--delay) both; }
+.leaf.turn-back .face--front::after { animation: shade-out var(--dur) var(--ease-flip) var(--delay) both; }
+.leaf.turn-back .face--back::after { animation: shade-in var(--dur) var(--ease-flip) var(--delay) both; }
 
 @keyframes shade-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes shade-out { from { opacity: 1; } to { opacity: 0; } }
-
-/* Shadow a lifting page throws onto the page beneath it */
-.page--toc::before,
-.leaf--flyleaf .face--front::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0;
-  background: linear-gradient(90deg, rgba(60, 45, 25, 0.4), rgba(60, 45, 25, 0.12) 45%, transparent 80%);
-}
-
-.book.is-open .leaf--flyleaf .face--front::before,
-.book.is-closing .leaf--flyleaf .face--front::before {
-  animation: cast var(--flip) var(--ease-flip);
-}
-
-.book.is-open .page--toc::before,
-.book.is-closing .page--toc::before {
-  animation: cast var(--flip) var(--ease-flip);
-}
-
-.book.is-open .page--toc::before { animation-delay: var(--stagger); }
-.book.is-closing .leaf--flyleaf .face--front::before { animation-delay: var(--stagger); }
-
-@keyframes cast {
-  0% { opacity: 0; }
-  35% { opacity: 1; }
-  100% { opacity: 0; }
-}
 
 /* ---------- Front cover ---------- */
 
@@ -544,6 +504,7 @@ body {
 .polaroid__photo {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 1 / 1.08;
   object-fit: cover;
   border-radius: 0.6cqw;
@@ -644,8 +605,6 @@ body {
 
 /* ---------- Flyleaf front: bookplate ---------- */
 
-.leaf--flyleaf .face--front { border-radius: 0 6px 6px 0; }
-
 .bookplate {
   display: grid;
   place-items: center;
@@ -688,25 +647,7 @@ body {
   border-bottom: 0.4cqw solid rgba(58, 63, 74, 0.3);
 }
 
-.bookplate__return {
-  margin: 4cqw 0 0;
-  font-family: "Caveat", cursive;
-  font-size: 4.6cqw;
-  color: var(--ink-soft);
-}
-
 /* ---------- Flyleaf back: welcome note (left-hand page) ---------- */
-
-.page--welcome { border-radius: 6px 0 0 6px; }
-
-/* Gutter shadow: on this page the spine is on the right */
-.page--welcome .page__inner::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(270deg, rgba(90, 70, 40, 0.22), rgba(90, 70, 40, 0.06) 7%, transparent 16%);
-  pointer-events: none;
-}
 
 .page--welcome .page__inner { padding: 9cqw 11cqw 8cqw 9cqw; }
 
@@ -723,29 +664,6 @@ body {
   font-family: "Caveat", cursive;
   font-size: 5.6cqw;
   line-height: 1.25;
-}
-
-.hypothesis {
-  margin: 6cqw 0 0;
-  padding: 3cqw 4cqw;
-  background: #fff6c4;
-  border-radius: 1cqw;
-  transform: rotate(-1.5deg);
-  box-shadow: 0 0.6cqw 1.2cqw rgba(0, 0, 0, 0.08);
-}
-
-.hypothesis__label {
-  margin: 0;
-  font-size: 2.6cqw;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #9b8a3c;
-}
-
-.hypothesis__text {
-  margin: 0.8cqw 0 0;
-  font-family: "Caveat", cursive;
-  font-size: 5.4cqw;
 }
 
 .doodle {
@@ -850,6 +768,11 @@ body {
     transform: rotateX(var(--rx));
   }
 
+  /* Before zooming into a section, slide its left-hand page to the centre */
+  .book.is-open.is-left {
+    transform: translateX(100%) rotateX(var(--rx));
+  }
+
   .sticky-note {
     top: calc(50% + var(--h) / 2 + 36px);
     left: calc(50% - 75px);
@@ -867,24 +790,28 @@ body {
 
 
 /* Even out short handwritten lines so no single word is left on its own */
-.welcome__text,
-.hypothesis__text,
-.toc__note,
-.bookplate__return { text-wrap: balance; }
+.welcome__text { text-wrap: balance; }
 
 @media (prefers-reduced-motion: reduce) {
   .book,
   .leaf,
   .scene,
+  .camera,
   .sticky-note {
     animation: none !important;
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
   }
 
-  .face::after,
-  .face::before,
-  .page--toc::before {
+  .face::after {
     animation: none !important;
   }
+}
+
+/* Used for one frame when the book is put into a state without animating */
+.no-anim,
+.no-anim * {
+  transition: none !important;
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
 }
