@@ -17,9 +17,9 @@
   --desk: #f1e8d8;
   --desk-shade: #e2d5bf;
   --paper: #fdf9f0;
-  --grid: rgba(110, 150, 185, 0.17);
+  --grid: rgba(110, 150, 185, 0.11);
   --ink: #3a3f4a;
-  --ink-soft: #6c7180;
+  --ink-soft: #5c6170;
   --highlight: #ffe48a;
 
   /* Cover */
@@ -268,7 +268,7 @@ body {
 .toc__title {
   margin: 0 0 6cqw;
   font-family: "Caveat", cursive;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 10.5cqw;
   line-height: 1;
   color: var(--ink);
@@ -317,7 +317,7 @@ body {
 
 .toc__label {
   font-family: "Caveat", cursive;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 7.4cqw;
   line-height: 1.05;
 }
@@ -579,7 +579,7 @@ body {
 .label__name {
   margin: 1cqw 0 2.6cqw;
   font-family: "Caveat", cursive;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 11.5cqw;
   line-height: 1.05;
 }
@@ -624,10 +624,10 @@ body {
 
 .bookplate__ex {
   margin: 0;
-  font-family: "Fraunces", serif;
-  font-weight: 600;
+  font-family: "Newsreader", Georgia, serif;
+  font-weight: 400;
   font-style: italic;
-  font-size: 6cqw;
+  font-size: 6.6cqw;
   color: var(--cover-dark);
 }
 
@@ -642,7 +642,7 @@ body {
 .bookplate__name {
   margin: 0;
   font-family: "Caveat", cursive;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 10cqw;
   border-bottom: 0.4cqw solid rgba(58, 63, 74, 0.3);
 }
@@ -654,7 +654,7 @@ body {
 .welcome__title {
   margin: 0 0 3cqw;
   font-family: "Caveat", cursive;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 10cqw;
   line-height: 1;
 }
@@ -687,7 +687,7 @@ body {
   bottom: 9cqw;
   margin: 0;
   font-family: "Caveat", cursive;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 7cqw;
   color: var(--cover-dark);
 }
@@ -705,7 +705,7 @@ body {
   transform: rotate(5deg);
   font-family: "Caveat", cursive;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1;
   text-align: center;
   color: #5b4f2a;

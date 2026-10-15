@@ -10,7 +10,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,wght@0,300..500;1,300..400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,wght@0,300..500;1,300..400&display=swap"></noscript>
+  <link rel="preload" as="image" href="assets/jenna-chuan.jpg" fetchpriority="high">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="pages.css">
 </head>
@@ -197,6 +199,19 @@
             <li><a href="#building" data-go="building"><span class="mini-contents__num">II</span><span>Building</span><span class="mini-contents__page">p. 06</span></a></li>
             <li><a href="#community" data-go="community"><span class="mini-contents__num">III</span><span>Community</span><span class="mini-contents__page">p. 08</span></a></li>
           </ol>
+          <figure class="timeline" aria-label="Timeline">
+            <p class="cap timeline__title">Timeline</p>
+            <svg class="timeline__line" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M0 5H100" pathLength="1"/></svg>
+            <ol class="timeline__points">
+              <li style="--x: 0"><button type="button" class="timeline__dot">2020</button><span class="timeline__text">Started the Summer STEM Institute</span></li>
+              <li style="--x: 3"><button type="button" class="timeline__dot">2023</button><span class="timeline__text">Welch Summer Scholar</span></li>
+              <li style="--x: 4"><button type="button" class="timeline__dot">2024</button><span class="timeline__text">Started at UT Austin and the Freshman Research Initiative</span></li>
+              <li style="--x: 5"><button type="button" class="timeline__dot">2025</button><span class="timeline__text">President of PEA's executive board</span></li>
+              <li style="--x: 6"><button type="button" class="timeline__dot">2026</button><span class="timeline__text">Clinical research with MD Anderson and UTHealth Houston</span></li>
+              <li style="--x: 7"><button type="button" class="timeline__dot timeline__dot--future">2027</button><span class="timeline__text">HappyPEA launches</span></li>
+            </ol>
+            <p class="timeline__label" id="tl-label" aria-live="polite">Hover over or tap a year</p>
+          </figure>
           <span class="pg-num">3</span>
         </div></div>
       </article>
@@ -214,10 +229,7 @@
             <h3 class="entry__title"><button type="button" class="entry__toggle" aria-expanded="false">Goal-concordant care at LBJ Hospital</button></h3>
             <p class="cap entry__where">MD Anderson Cancer Center and LBJ Hospital · with Dr. Hilary Ma</p>
             <p class="entry__text">I'm adapting an MD Anderson questionnaire on goal-concordant care so LBJ Hospital can use it for quality improvement, and reviewing the literature on prognosis awareness.</p>
-            <div class="note-wrap">
-              <button type="button" class="note" aria-expanded="false">goal-concordant?</button>
-              <div class="note__card" hidden><p>Care that matches the goals a patient says matter most to them. The questionnaire asks patients about those goals so the care team can compare them with the plan.</p></div>
-            </div>
+            <button type="button" class="explain" data-deep="goal">Explain</button>
             <div class="preview">
               <figure class="pv pv--form" aria-label="Preview of the questionnaire">
                 <p class="pv__mast">LBJ Hospital · Quality improvement</p>
@@ -237,10 +249,7 @@
             <h3 class="entry__title"><button type="button" class="entry__toggle" aria-expanded="false">Interventional pain medicine</button></h3>
             <p class="cap entry__where">UTHealth Houston, Anesthesiology, Critical Care and Pain Medicine · with Dr. Jamal Hasoon</p>
             <p class="entry__text">I made the figures and drafted the diagnostic practices results for a national survey on interventional pain care. I co-authored 2 papers in <cite>Orthopedic Reviews</cite>: a case series on cocaine-positive urine drug screens and a study of telemedicine use after COVID-19.</p>
-            <div class="note-wrap">
-              <button type="button" class="note" aria-expanded="false">case series?</button>
-              <div class="note__card" hidden><p>A detailed report on a small group of patients, here 4, who share a clinical situation. It records how each case was handled so other clinicians can learn from it.</p></div>
-            </div>
+            <button type="button" class="explain" data-deep="pain">Explain</button>
             <div class="preview">
               <figure class="pv pv--paper" aria-label="Preview of the case series">
                 <p class="pv__mast">Orthopedic Reviews</p>
@@ -262,7 +271,7 @@
             <p class="cap entry__meta"><span>Entry 03</span> · 2024 to 2025</p>
             <h3 class="entry__title"><button type="button" class="entry__toggle" aria-expanded="false">Blue and pink pigments from algae</button></h3>
             <p class="cap entry__where">Freshman Research Initiative, Biomanufacturing Lab · with BioMADE</p>
-            <p class="entry__text">We extracted phycocyanin and phycoerythrin, 2 pigment-proteins from algae, and worked on their yield and colorfastness for textile dyes. I used freeze-thaw extraction, ammonium sulfate fractionation and SDS-PAGE, and presented the results as a poster.</p>
+            <p class="entry__text">We extracted phycocyanin and phycoerythrin, 2 pigment-proteins from algae, and worked on raising their yield and colorfastness as textile dyes. I presented the results as a poster.</p>
             <div class="pigments">
               <div class="pigments__chips">
                 <p class="pigment pigment--pc"><span class="pigment__chip"></span><span><span class="pigment__name">Phycocyanin</span><span class="cap">λ<sub>max</sub> ≈ 620 nm</span></span></p>
@@ -278,10 +287,7 @@
                 <figcaption class="cap">Absorbance peaks, sketched</figcaption>
               </figure>
             </div>
-            <div class="note-wrap">
-              <button type="button" class="note" aria-expanded="false">why blue and pink?</button>
-              <div class="note__card" hidden><p>The accent colors in this journal come from these 2 proteins. SDS-PAGE, a gel that sorts proteins by size, showed how pure each extract was.</p></div>
-            </div>
+            <button type="button" class="explain" data-deep="pigments">Explain</button>
             <div class="preview">
               <figure class="pv pv--poster" aria-label="Preview of the pigment poster">
                 <p class="pv__band">Maximizing the Yield and Colorfastness of Phycocyanin and Phycoerythrin Pigment-Protein Complexes</p>
@@ -307,10 +313,7 @@
             <h3 class="entry__title"><button type="button" class="entry__toggle" aria-expanded="false">U1 snRNA mutations and snRNP assembly</button></h3>
             <p class="cap entry__where">Welch Summer Scholar Program</p>
             <p class="entry__text">I studied how mutations at the U1C binding site of U1 snRNA change U1 snRNP formation and spliceosome assembly. The project won its category at UT's Fall Undergraduate Research Symposium in 2024.</p>
-            <div class="note-wrap">
-              <button type="button" class="note" aria-expanded="false">snRNP?</button>
-              <div class="note__card" hidden><p>Small nuclear ribonucleoprotein: a short RNA bound to proteins. U1 snRNP starts splicing by finding the place where a non-coding stretch of messenger RNA begins.</p></div>
-            </div>
+            <button type="button" class="explain" data-deep="splicing">Explain</button>
             <div class="preview">
               <figure class="pv pv--poster" aria-label="Preview of the U1 snRNA poster">
                 <p class="pv__band">Effect of U1 snRNA Mutations at the U1C Binding Site in U1 snRNP Biogenesis</p>
@@ -333,6 +336,7 @@
             <h3 class="entry__title"><button type="button" class="entry__toggle" aria-expanded="false">Modeling COVID-19 by county</button></h3>
             <p class="cap entry__where">Summer STEM Institute</p>
             <p class="entry__text">In high school I built a multiple linear regression model in Python to predict COVID-19 rates by county. The paper was published in the <cite>International Journal of High School Research</cite>.</p>
+            <button type="button" class="explain" data-deep="regression">Explain</button>
             <div class="preview">
               <figure class="pv pv--paper" aria-label="Preview of the COVID-19 paper">
                 <p class="pv__mast">Intl. Journal of High School Research</p>
@@ -380,10 +384,7 @@
               </button>
               <p class="pea__bubble" aria-live="polite">Hi from HappyPEA</p>
             </div>
-            <div class="note-wrap">
-              <button type="button" class="note" aria-expanded="false">why a pea?</button>
-              <div class="note__card" hidden><p>The name comes from PEA, the Personal Effectiveness Association.</p></div>
-            </div>
+            <button type="button" class="explain" data-deep="happypea">Explain</button>
           </div>
           <span class="pg-num">6</span>
         </div></div>
@@ -463,10 +464,7 @@
         <div class="pg pg--r"><div class="pg__in">
           <div class="log__head">
             <h3 class="cap log__title">Field log</h3>
-            <div class="note-wrap note-wrap--right">
-              <button type="button" class="note" aria-expanded="false">hola · 你好 · hi</button>
-              <div class="note__card" hidden><p>I've talked with patients and staff in English, Spanish, and Mandarin, including as a volunteer at Harris Health's Valbona clinic and Ben Taub Hospital in Houston.</p></div>
-            </div>
+            <button type="button" class="explain" data-deep="care">Explain</button>
           </div>
           <table class="log">
             <thead><tr><th scope="col">Place</th><th scope="col">What I do</th><th scope="col">When</th></tr></thead>
@@ -545,7 +543,191 @@
     </div>
   </div>
 
-  <script src="js/book.js"></script>
-  <script src="js/pages.js"></script>
+
+  <!-- ==================================================================
+       Explain: a loose sheet that opens over the journal with a deeper
+       write-up and an interactive figure. js/pages.js fills it from the
+       templates below.
+       ================================================================== -->
+  <dialog class="deep" aria-labelledby="deep-title">
+    <div class="deep__sheet">
+      <button type="button" class="deep__close" aria-label="Close">Close <span aria-hidden="true">×</span></button>
+      <div class="deep__body"></div>
+    </div>
+  </dialog>
+
+  <template id="deep-goal">
+    <p class="deep__kicker">Entry 01 · Explained</p>
+    <h2 class="deep__title" id="deep-title">Goal-concordant care</h2>
+    <p>Goal-concordant care means the treatment a patient receives matches what they say matters most to them. One person may want time at home and to avoid the ICU. Another may want to try every treatment available. The care is concordant when the plan follows that person's own priorities.</p>
+    <figure class="fig fig--goals" data-fig="goals">
+      <div class="goals__switch" role="group" aria-label="Choose a care plan">
+        <button type="button" class="chip is-on" data-plan="a">Plan A</button>
+        <button type="button" class="chip" data-plan="b">Plan B</button>
+      </div>
+      <ul class="goals">
+        <li><span class="goals__goal">Be at home</span><span class="goals__mark"></span><span class="goals__plan" data-a="Home hospice" data-b="Long hospital stay">Home hospice</span></li>
+        <li><span class="goals__goal">Avoid the ICU</span><span class="goals__mark"></span><span class="goals__plan" data-a="No ICU transfer" data-b="ICU if needed">No ICU transfer</span></li>
+        <li><span class="goals__goal">Stay comfortable</span><span class="goals__mark"></span><span class="goals__plan" data-a="Pain and symptom control" data-b="Pain and symptom control">Pain and symptom control</span></li>
+        <li><span class="goals__goal">Time with family</span><span class="goals__mark"></span><span class="goals__plan" data-a="Open visiting" data-b="Restricted visiting">Open visiting</span></li>
+      </ul>
+      <p class="goals__score" aria-live="polite">4 of 4 goals met</p>
+      <figcaption>Illustration. Switch plans to see the same goals met or missed.</figcaption>
+    </figure>
+    <p>Studies of patients with advanced cancer have found that many expect treatment to cure them when it can't. That gap makes it harder for care to follow a patient's goals, which is why I'm reading about prognosis awareness.</p>
+    <p>MD Anderson built a questionnaire that asks patients about their goals. I'm adapting it for LBJ Hospital, a public hospital run by Harris Health in Houston, so the team can use it for quality improvement.</p>
+  </template>
+
+  <template id="deep-pain">
+    <p class="deep__kicker">Entry 02 · Explained</p>
+    <h2 class="deep__title" id="deep-title">Monitoring long-term opioid therapy</h2>
+    <p>People who take opioids for chronic pain usually have regular urine drug screens. A screen confirms that the prescribed medicine is there and checks for substances that make opioids less safe, such as cocaine.</p>
+    <figure class="fig fig--loop" data-fig="loop">
+      <div class="loop__stage">
+        <svg viewBox="0 0 240 240" aria-hidden="true">
+          <circle class="loop__ring" cx="120" cy="120" r="78"/>
+          <circle class="loop__runner" r="5">
+            <animateMotion dur="6s" repeatCount="indefinite" path="M120 42a78 78 0 1 1 0 156a78 78 0 1 1 0-156"/>
+          </circle>
+        </svg>
+        <button type="button" class="loop__step" style="--x: 50%; --y: 17.5%" data-text="A treatment plan sets the dose, the goals, and how follow-up will work.">Prescribe</button>
+        <button type="button" class="loop__step" style="--x: 82.5%; --y: 50%" data-text="Urine drug screens check for the prescribed medicine and for substances that shouldn't be there.">Screen</button>
+        <button type="button" class="loop__step" style="--x: 50%; --y: 82.5%" data-text="An unexpected result, like cocaine, starts a conversation with the patient.">Review</button>
+        <button type="button" class="loop__step" style="--x: 17.5%; --y: 50%" data-text="The team decides whether to continue, taper, or change treatment.">Adjust</button>
+      </div>
+      <p class="loop__text" aria-live="polite">Tap a step to read it.</p>
+      <figcaption>The monitoring cycle, simplified.</figcaption>
+    </figure>
+    <p>Clinicians don't always agree on what to do after an unexpected result. Our case series follows 4 patients whose screens came back positive for cocaine and records how each care team responded, next to current guidelines.</p>
+    <p>The telemedicine study looks back at how an academic chronic pain practice used video and phone visits after the COVID-19 pandemic. For the national survey, I made the figures and drafted the results on diagnostic practices.</p>
+  </template>
+
+  <template id="deep-pigments">
+    <p class="deep__kicker">Entry 03 · Explained</p>
+    <h2 class="deep__title" id="deep-title">Phycocyanin and phycoerythrin</h2>
+    <p>Cyanobacteria and red algae make colored proteins called phycobiliproteins to catch light for photosynthesis. Phycocyanin absorbs orange-red light near 620 nm, so it looks blue. Phycoerythrin absorbs green light near 565 nm, so it looks pink. The color you see is the light the protein doesn't absorb.</p>
+    <figure class="fig fig--steps" data-fig="steps">
+      <div class="steps__tabs" role="group" aria-label="Purification steps">
+        <button type="button" class="chip is-on" data-step="0">1 · Freeze-thaw</button>
+        <button type="button" class="chip" data-step="1">2 · Ammonium sulfate</button>
+        <button type="button" class="chip" data-step="2">3 · SDS-PAGE</button>
+      </div>
+      <div class="steps__stage">
+        <svg class="steps__gel" viewBox="0 0 120 150" aria-hidden="true">
+          <rect x="2" y="2" width="116" height="146" rx="6" class="gel__bed"/>
+          <g class="steps__wells"><rect x="16" y="10" width="24" height="5" rx="1"/><rect x="48" y="10" width="24" height="5" rx="1"/><rect x="80" y="10" width="24" height="5" rx="1"/></g>
+          <g class="steps__ladder"><rect x="16" y="34" width="24" height="3"/><rect x="16" y="56" width="24" height="3"/><rect x="16" y="80" width="24" height="3"/><rect x="16" y="104" width="24" height="3"/><rect x="16" y="126" width="24" height="3"/></g>
+          <g class="steps__lane" data-lane="pc"><rect x="48" y="30" width="24" height="3"/><rect x="48" y="46" width="24" height="3"/><rect x="48" y="62" width="24" height="3"/><rect x="48" y="88" width="24" height="4" class="keep"/><rect x="48" y="96" width="24" height="4" class="keep"/><rect x="48" y="118" width="24" height="3"/></g>
+          <g class="steps__lane" data-lane="pe"><rect x="80" y="26" width="24" height="3"/><rect x="80" y="50" width="24" height="3"/><rect x="80" y="70" width="24" height="3"/><rect x="80" y="86" width="24" height="4" class="keep"/><rect x="80" y="100" width="24" height="4" class="keep"/><rect x="80" y="122" width="24" height="3"/></g>
+        </svg>
+        <p class="steps__text" aria-live="polite">Freezing and thawing cracks the cells open, so the pigments leak out along with many other proteins.</p>
+      </div>
+      <figcaption>Sketch of how the gel cleans up at each step. Not real data.</figcaption>
+    </figure>
+    <p>Synthetic textile dyes come from petrochemicals, and dye waste pollutes water. We were testing whether these natural pigments could be pulled out at a useful yield and hold their color on fabric, which is called colorfastness.</p>
+    <p>The blue and pink in this journal come from these 2 proteins.</p>
+  </template>
+
+  <template id="deep-splicing">
+    <p class="deep__kicker">Entry 04 · Explained</p>
+    <h2 class="deep__title" id="deep-title">Splicing and U1 snRNP</h2>
+    <p>Genes have stretches that code for protein, called exons, separated by stretches that don't, called introns. Before a messenger RNA leaves the nucleus, the introns are cut out and the exons are joined. That step is splicing.</p>
+    <figure class="fig fig--splice" data-fig="splice">
+      <svg viewBox="0 0 320 130" aria-hidden="true">
+        <g class="splice__intron">
+          <path class="splice__loop" d="M120 70 C 130 70, 140 70, 160 70 S 190 70, 200 70"/>
+          <text x="160" y="92" class="splice__label">intron</text>
+        </g>
+        <g class="splice__exon splice__exon--1"><rect x="30" y="58" width="90" height="24" rx="5"/><text x="75" y="74">Exon 1</text></g>
+        <g class="splice__exon splice__exon--2"><rect x="200" y="58" width="90" height="24" rx="5"/><text x="245" y="74">Exon 2</text></g>
+        <g class="splice__u1">
+          <circle cx="124" cy="40" r="16"/>
+          <text x="124" y="44">U1</text>
+          <circle class="splice__site" cx="134" cy="29" r="4"/>
+        </g>
+      </svg>
+      <div class="splice__controls">
+        <button type="button" class="chip" data-action="splice">Splice</button>
+        <button type="button" class="chip" data-action="reset">Reset</button>
+      </div>
+      <figcaption>U1 snRNP marks the start of the intron. The pink dot is roughly where the U1C protein binds.</figcaption>
+    </figure>
+    <p>U1 snRNP starts the process. Its RNA, U1 snRNA, pairs with the first few bases of each intron, called the 5′ splice site, and the rest of the spliceosome builds around it. The U1C protein helps the particle hold onto that site.</p>
+    <p>I studied mutations in U1 snRNA where U1C binds and analyzed whether mature U1 snRNP still formed and whether the spliceosome still assembled.</p>
+  </template>
+
+  <template id="deep-regression">
+    <p class="deep__kicker">Entry 05 · Explained</p>
+    <h2 class="deep__title" id="deep-title">Multiple linear regression</h2>
+    <p>A multiple linear regression predicts one number from several others by adding them up with weights. My model predicted each county's COVID-19 rate from socioeconomic, demographic, and chronic disease measures.</p>
+    <figure class="fig fig--fit" data-fig="fit">
+      <svg viewBox="0 0 300 180" aria-hidden="true">
+        <path class="fit__axis" d="M30 10V150H290"/>
+        <g class="fit__residuals"></g>
+        <g class="fit__points"></g>
+        <line class="fit__line" x1="30" x2="290" y1="80" y2="80"/>
+        <text x="160" y="172" class="fit__axis-label">one input, for example median income</text>
+        <text x="14" y="80" class="fit__axis-label fit__axis-label--y" transform="rotate(-90 14 80)">rate</text>
+      </svg>
+      <div class="fit__controls">
+        <button type="button" class="chip" data-action="fit">Fit the line</button>
+        <p class="fit__error" aria-live="polite">Squared error: <b>—</b></p>
+      </div>
+      <figcaption>Illustration with made-up points and one input. The real model used many inputs at once.</figcaption>
+    </figure>
+    <p>The model picks the weights that bring its predictions as close as it can to the real rates, by shrinking the squared gaps between them. A weight shows how strongly a factor moves with the rate. It can't show that the factor caused it.</p>
+  </template>
+
+  <template id="deep-happypea">
+    <p class="deep__kicker">Building · Explained</p>
+    <h2 class="deep__title" id="deep-title">HappyPEA and PEA's 3 pillars</h2>
+    <p>The Personal Effectiveness Association works on student mental health through fitness, nutrition, and community. HappyPEA brings that approach into an app for the students in our chapters. The name and the pea both come from PEA.</p>
+    <figure class="fig fig--pillars" data-fig="pillars">
+      <svg viewBox="0 0 260 220" aria-hidden="true">
+        <circle class="pillar pillar--fit" cx="96" cy="88" r="62"/>
+        <circle class="pillar pillar--food" cx="164" cy="88" r="62"/>
+        <circle class="pillar pillar--people" cx="130" cy="146" r="62"/>
+        <text x="72" y="74">Fitness</text>
+        <text x="188" y="74">Nutrition</text>
+        <text x="130" y="186">Community</text>
+        <text x="130" y="112" class="pillars__center">mental</text>
+        <text x="130" y="124" class="pillars__center">health</text>
+      </svg>
+      <div class="pillars__keys" role="group" aria-label="Pillars">
+        <button type="button" class="chip" data-pillar="fit">Fitness</button>
+        <button type="button" class="chip" data-pillar="food">Nutrition</button>
+        <button type="button" class="chip" data-pillar="people">Community</button>
+      </div>
+      <p class="pillars__text" aria-live="polite">Tap a pillar.</p>
+      <figcaption>Where the 3 overlap is the goal: student mental health.</figcaption>
+    </figure>
+    <p>We plan to launch in 2027.</p>
+  </template>
+
+  <template id="deep-care">
+    <p class="deep__kicker">Field log · Explained</p>
+    <h2 class="deep__title" id="deep-title">Hands-on care</h2>
+    <p>Most of my clinical time has been at the bedside or the front desk. These are the skills I use most. Tap one to see where I use it.</p>
+    <figure class="fig fig--care" data-fig="care">
+      <div class="care__skills" role="group" aria-label="Skills">
+        <button type="button" class="chip" data-places="david harris">Vitals</button>
+        <button type="button" class="chip" data-places="david">EKGs</button>
+        <button type="button" class="chip" data-places="david">Wound care</button>
+        <button type="button" class="chip" data-places="freeman harris">Scheduling</button>
+        <button type="button" class="chip" data-places="freeman">Health records</button>
+        <button type="button" class="chip" data-places="freeman">Procedure support</button>
+        <button type="button" class="chip" data-places="harris">Spanish and Mandarin</button>
+      </div>
+      <ul class="care__places">
+        <li data-place="david">St. David's Hospital, Austin <span>ER unit aide</span></li>
+        <li data-place="freeman">Freeman Medical Clinic, Austin <span>Certified medical assistant</span></li>
+        <li data-place="harris">Harris Health System, Houston <span>Volunteer</span></li>
+      </ul>
+    </figure>
+    <p>I'm a Certified Clinical Medical Assistant (CCMA) and certified in Basic Life Support. At Harris Health I talked with patients and staff in English, Spanish, and Mandarin.</p>
+  </template>
+
+  <script src="js/book.js" defer></script>
+  <script src="js/pages.js" defer></script>
 </body>
 </html>

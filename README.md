@@ -27,8 +27,12 @@ Then open http://localhost:5173.
 - `styles.css`: the desk, the 3D book, the cover, the contents and welcome pages. Book size and timing settings are at the top (`--w` page width, `--t` thickness, `--flip` turn time).
 - `pages.css`: the section pages and the reading view. Every size on a page is a multiple of `--u`, 1% of the page width, which is what lets a page look identical in the book and when zoomed in. The blue and pink accents are phycocyanin and phycoerythrin, the two algal pigments from entry 03.
 - `js/book.js`: opening, turning, zooming, tabs, deep links and the tilt.
-- `js/pages.js`: paper and poster previews on research titles, margin notes, the HappyPEA pea and copying the email address.
+- `js/pages.js`: paper and poster previews on research titles, the Explain sheets and their figures, the introduction timeline, the HappyPEA pea and copying the email address.
 - `assets/`: the portrait (`jenna-chuan.jpg`) and the résumé PDF.
+
+## Explain sheets
+
+Each research entry, HappyPEA and the field log has an **Explain** button. It opens a sheet with a deeper write-up and a small interactive figure. The write-ups live in `<template id="deep-…">` blocks at the bottom of `index.html`, and each figure's behavior is in the `FIGURES` object in `js/pages.js`. Figures that use example data say so in their captions.
 
 ## Fitting content on a page
 

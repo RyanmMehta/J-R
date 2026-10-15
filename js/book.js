@@ -26,18 +26,23 @@ const SPREAD_OF = { contents: 1, intro: 2, research: 3, building: 4, community: 
 const ORDER = ['contents', 'intro', 'research', 'building', 'community', 'appendix', 'contact'];
 
 const OPEN = { dur: 1150, stagger: 420 };    // the cover and first page
-const RIFFLE = { dur: 850, stagger: 150 };   // turning through sections
-const ZOOM_MS = 850;
-const ZOOM_EASE = 'cubic-bezier(0.6, 0.02, 0.25, 1)';
+const RIFFLE = { dur: 900, stagger: 140 };   // turning through sections
+const ZOOM_MS = 1150;
+const ZOOM_EASE = 'cubic-bezier(0.5, 0, 0.12, 1)';   // eases in, then settles slowly
+const OVERLAP_MS = 420;   // the zoom starts this long before the last page lands
+
+// Book geometry from styles.css, used to work out where a page will land
+const PERSPECTIVE = 2200;
+const ORIGIN_Y = 0.35;
+const INSET = 4;
+const THICKNESS = 0.065;
 
 let spread = -1;
 let mode = 'closed';      // 'closed' | 'book' | 'reading'
 let busy = false;
-let flatSince = 0;
 let zoomAnimation = null;
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, reducedMotion.matches ? 0 : ms));
-const nextFrame = () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
 /* ---------- Copy each reading page into its place in the book ---------- */
 
@@ -93,15 +98,13 @@ function setHash(id) {
 }
 
 function makeFlat() {
-  if (!book.classList.contains('is-flat')) {
-    book.classList.add('is-flat');
-    flatSince = performance.now();
-  }
+  book.classList.add('is-flat');
 }
 
 /* ---------- Turning leaves ---------- */
 
-function flipTo(target, timing) {
+// Resolves `early` ms before the last leaf lands, so the next move can overlap it.
+function flipTo(target, timing, early = 0) {
   const from = spread;
   if (target === from) return Promise.resolve();
 
@@ -124,9 +127,10 @@ function flipTo(target, timing) {
   book.dataset.spread = String(target);
 
   const total = (order.length - 1) * timing.stagger + timing.dur;
-  return wait(total + 40).then(() => {
+  wait(total + 40).then(() => {
     order.forEach((i) => leaves[i].classList.remove('turn-fwd', 'turn-back'));
   });
+  return wait(Math.max(0, total + 40 - early));
 }
 
 async function openBook() {
@@ -157,18 +161,33 @@ function unionRect(a, b) {
   return { left, top, width: Math.max(a.right, b.right) - left, height: Math.max(a.bottom, b.bottom) - top };
 }
 
-// Where the open spread sits in the book, measured with the camera at rest.
-// On phones the left-hand page slides to the centre while the camera zooms,
-// so its target is where it will end up, one page width to the right.
-function bookRect(n, { slidingLeft = false } = {}) {
-  const left = leaves[n].querySelector(':scope > .face--back').getBoundingClientRect();
-  if (slidingLeft) {
-    const shift = book.offsetWidth;
-    return { left: left.left + shift, top: left.top, width: left.width, height: left.height };
-  }
-  if (!wideReader.matches) return left;
-  const rightFace = n + 1 < leaves.length ? leaves[n + 1].querySelector(':scope > .face--front') : basePage;
-  return unionRect(left, rightFace.getBoundingClientRect());
+// Where spread n's pages will sit once the book lies flat, worked out from the
+// layout so the zoom can start before the pages have finished turning.
+// On phones the left-hand page slides one page width to the centre.
+function bookRect(n, { leftFocus = false } = {}) {
+  const scene = book.parentElement.getBoundingClientRect();
+  const w = scene.width;
+  const h = scene.height;
+  const t = w * THICKNESS;
+  const shift = phoneBook.matches ? (leftFocus ? w : 0) : w / 2;
+  const hinge = scene.left + shift;
+  const ox = scene.left + w / 2;
+  const oy = scene.top + h * ORIGIN_Y;
+
+  const project = (x0, x1, z) => {
+    const k = PERSPECTIVE / (PERSPECTIVE - z);
+    const top = oy + (scene.top + INSET - oy) * k;
+    const bottom = oy + (scene.top + h - INSET - oy) * k;
+    return { left: ox + (x0 - ox) * k, right: ox + (x1 - ox) * k, top, bottom };
+  };
+
+  const pageWidth = w - INSET;
+  const left = project(hinge - pageWidth, hinge, t - 6 + n * 0.7);
+  const rect = (r) => ({ left: r.left, top: r.top, width: r.right - r.left, height: r.bottom - r.top });
+  if (!wideReader.matches) return rect(left);
+
+  const right = project(hinge, hinge + pageWidth, n + 1 < leaves.length ? t - (n + 1) * 0.7 : t - 6.6);
+  return rect({ left: left.left, right: right.right, top: Math.min(left.top, right.top), bottom: Math.max(left.bottom, right.bottom) });
 }
 
 // Where the same pages sit in the reading view.
@@ -204,14 +223,10 @@ async function zoomIn(n) {
   const id = sectionId(n);
   const article = showSpread(id);
 
-  // The book needs to have finished lying flat before it is measured.
-  await wait(Math.max(0, 1000 - (performance.now() - flatSince)));
-  await nextFrame();
-
-  const slidingLeft = phoneBook.matches && !book.classList.contains('is-left');
-  const from = bookRect(n, { slidingLeft });
+  const leftFocus = phoneBook.matches;
+  const from = bookRect(n, { leftFocus });
   const to = readerRect(article);
-  if (slidingLeft) book.classList.add('is-left');
+  if (leftFocus) book.classList.add('is-left');
   startDrawings(id);
 
   zoomAnimation = camera.animate(
@@ -233,17 +248,18 @@ async function zoomIn(n) {
 async function zoomOut() {
   const article = document.getElementById(sectionId(spread));
   const to = readerRect(article);
+  const leftFocus = book.classList.contains('is-left');
+  const from = bookRect(spread, { leftFocus });
 
-  // Measure the book at rest, then put the camera exactly behind the page being read.
+  // Put the camera exactly behind the page being read, then pull back.
   if (zoomAnimation) zoomAnimation.cancel();
-  const from = bookRect(spread);
-  const zoomed = cameraTransform(from, to);
-
   reader.classList.remove('is-solid');
   camera.classList.remove('is-hidden');
+  const delay = reducedMotion.matches ? 0 : 260;
+  const duration = reducedMotion.matches ? 1 : ZOOM_MS;
   zoomAnimation = camera.animate(
-    [{ transform: zoomed }, { transform: 'none' }],
-    { duration: reducedMotion.matches ? 1 : ZOOM_MS, delay: reducedMotion.matches ? 0 : 280, easing: ZOOM_EASE, fill: 'both' },
+    [{ transform: cameraTransform(from, to) }, { transform: 'none' }],
+    { duration, delay, easing: ZOOM_EASE, fill: 'both' },
   );
   reader.classList.remove('is-visible');
   mode = 'book';
@@ -251,11 +267,15 @@ async function zoomOut() {
   closeButton.hidden = true;
 
   // On phones the book slides back to its right-hand page as the camera pulls out.
-  if (book.classList.contains('is-left')) setTimeout(() => book.classList.remove('is-left'), reducedMotion.matches ? 0 : 280);
+  if (leftFocus) setTimeout(() => book.classList.remove('is-left'), delay);
 
-  await zoomAnimation.finished;
-  zoomAnimation.cancel();
-  zoomAnimation = null;
+  const finished = zoomAnimation;
+  finished.finished.then(() => {
+    finished.cancel();
+    if (zoomAnimation === finished) zoomAnimation = null;
+  });
+  // Hand back a little early so the pages can start turning as the camera settles.
+  await wait(delay + duration - OVERLAP_MS);
 }
 
 /* ---------- Going somewhere ---------- */
@@ -283,7 +303,7 @@ async function goTo(id) {
     else book.classList.remove('is-flat');
 
     closeButton.hidden = true;
-    await flipTo(target, RIFFLE);
+    await flipTo(target, RIFFLE, target >= 2 ? OVERLAP_MS : 0);
 
     if (target >= 2) {
       await zoomIn(target);
@@ -357,8 +377,8 @@ closeButton.addEventListener('click', () => goTo('closed'));
 
 document.addEventListener('keydown', (event) => {
   if (busy) return;
-  // pages.js closes an open note or preview first
-  if (document.querySelector('.reader .note[aria-expanded="true"], .reader .entry.is-previewing')) return;
+  // pages.js closes an open explanation sheet or preview first
+  if (document.querySelector('dialog[open], .reader .entry.is-previewing')) return;
 
   if (event.key === 'Escape') {
     if (mode === 'reading') goTo('contents');
