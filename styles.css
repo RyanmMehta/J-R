@@ -5,6 +5,8 @@
    width), so the art and type scale together on any screen.
    ------------------------------------------------------------------ */
 
+@view-transition { navigation: auto; }
+
 @property --bob {
   syntax: "<length>";
   inherits: true;
@@ -99,6 +101,14 @@ body {
 
 @keyframes arrive {
   from { opacity: 0; transform: translateY(40px); }
+}
+
+/* Leaving for the journal: the open book lifts toward the reader and fades */
+.desk.is-leaving .scene { animation: lift-away 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.desk.is-leaving .close-journal { opacity: 0; transition: opacity 0.3s; }
+
+@keyframes lift-away {
+  to { opacity: 0; transform: translateY(-16px) scale(1.06); }
 }
 
 .book {

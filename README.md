@@ -1,6 +1,9 @@
 # R@JC
 
-A portfolio site styled as a research journal. It opens on a 3D lab notebook with the owner's photo and name on the cover. Clicking the book turns the cover and the first page, landing on the table of contents.
+Jenna Chuan's personal site, styled as a research journal.
+
+- `index.html` is the cover: a 3D lab notebook with her photo and name. Clicking it turns the cover and the first page, landing on a table of contents. Picking a chapter lifts the book away and opens the journal at that section.
+- `journal.html` is the journal: the opening (portrait, name, tagline), then three chapters (Research, Building, Community), an appendix of honors and certifications, and contact details.
 
 Plain HTML, CSS and JavaScript. There's no build step and nothing to install.
 
@@ -12,30 +15,22 @@ python3 -m http.server 5173
 
 Then open http://localhost:5173.
 
-## Changing the name, photo and tagline
+## Swapping in real images
 
-Edit the `JOURNAL` block at the top of `js/journal.js`:
-
-```js
-const JOURNAL = {
-  name: 'Jane Doe',
-  tagline: 'Scientist · Researcher · Curious Mind',
-  photo: 'assets/portrait-placeholder.svg',
-  volume: '01',
-};
-```
-
-Put the real photo in `assets/` (a square-ish portrait works best) and point `photo` at it. Also update the `<title>` and `alt` text in `index.html`, so the page reads right before the script runs.
+- **Portrait:** put the photo in `assets/` and point both pages at it: the `photo` field in `js/journal.js` (cover) and the `<img>` in the opening of `journal.html`.
+- **Paper and poster previews:** each research entry in `journal.html` has a `<figure class="pv">` drawn in HTML. Replace its contents with an `<img>` of the real poster or first page.
+- **Résumé:** `assets/Jenna-Chuan-Resume.pdf`.
 
 ## Where things live
 
-- `index.html`: the book's layers, from bottom to top: back cover, page edges, table of contents, the flyleaf (bookplate on the front, welcome note on the back), and the front cover.
-- `styles.css`: the desk, the 3D book, cover art, the page-turn shading and the inside pages. Size and timing settings are at the top (`--w` page width, `--t` thickness, `--flip` turn time, `--stagger` delay between the cover and the first page).
-- `js/journal.js`: the customer details, open and close, keyboard support and the mouse tilt.
+- `styles.css` and `js/journal.js`: the cover. Size and timing settings are at the top of `styles.css` (`--w` page width, `--t` thickness, `--flip` turn time).
+- `journal.css` and `js/pages.js`: the journal. Colors and fonts are tokens at the top of `journal.css`. The blue and pink accents are phycocyanin and phycoerythrin, the two algal pigments from her Freshman Research Initiative project.
 
-## Behaviour
+## Interactions in the journal
 
-- Click the book, or focus it and press Enter or Space, to open it. Close it with the "Close journal" button or Escape.
-- On phones the right-hand page (the table of contents) stays centred and the left page swings off to the side.
-- If the visitor's device asks for reduced motion, the book opens without animating.
-- The table of contents links are placeholders until the inner pages are built.
+- Hovering over a research title shows a preview of the paper or poster. Clicking or tapping pins it open (on phones it opens under the entry).
+- The handwritten notes in the margin open a short explanation.
+- Images and project art settle into place as they scroll into view. The maze traces its path and the regression line draws itself.
+- The pea next to HappyPEA bounces and says something when clicked.
+- The running head at the top shows the current chapter and its page number from the table of contents.
+- If the visitor's device asks for reduced motion, everything appears without animating.

@@ -1,8 +1,8 @@
-// The customer's details. Change these and every place they appear on the
-// site (cover, bookplate, sign-off, browser tab) updates to match.
+// Change these and every place they appear on the cover (label, bookplate,
+// sign-off, browser tab) updates to match.
 const JOURNAL = {
-  name: 'Jane Doe',
-  tagline: 'Scientist · Researcher · Curious Mind',
+  name: 'Jenna Chuan',
+  tagline: 'Biology · Dean\'s Scholars · UT Austin',
   photo: 'assets/portrait-placeholder.svg',
   volume: '01',
 };
@@ -25,7 +25,7 @@ function fillDetails() {
   const firstName = JOURNAL.name.split(' ')[0];
   const values = {
     name: JOURNAL.name,
-    'first-name': `— ${firstName}`,
+    'first-name': firstName,
     tagline: JOURNAL.tagline,
     volume: JOURNAL.volume,
   };
@@ -101,10 +101,16 @@ book.addEventListener('click', (event) => {
     openBook();
     return;
   }
-  // Placeholder until the inner pages exist: keep the address bar clean.
+  // Picking a chapter: the book lifts away, then the journal opens at that section.
   const link = event.target.closest('.toc a');
-  if (link) event.preventDefault();
+  if (!link) return;
+  event.preventDefault();
+  desk.classList.add('is-leaving');
+  setTimeout(() => { window.location.href = link.href; }, reducedMotion.matches ? 0 : 520);
 });
+
+// Coming back with the browser's back button can restore the faded-out page.
+window.addEventListener('pageshow', () => desk.classList.remove('is-leaving'));
 
 book.addEventListener('keydown', (event) => {
   if (book.classList.contains('is-open')) return;
