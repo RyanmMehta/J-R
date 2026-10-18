@@ -15,6 +15,7 @@
   <link rel="preload" as="image" href="assets/jenna-chuan.jpg" fetchpriority="high">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="figures.css">
 </head>
 <body>
   <main class="desk">
@@ -336,7 +337,7 @@
             <p class="cap entry__meta"><span>Entry 05</span> · 2020 to 2023</p>
             <h3 class="entry__title"><button type="button" class="entry__toggle" aria-expanded="false">Modeling COVID-19 by county</button></h3>
             <p class="cap entry__where">Summer STEM Institute</p>
-            <p class="entry__text">In high school I built a multiple linear regression model in Python to predict COVID-19 rates by county. The paper was published in the <cite>International Journal of High School Research</cite>.</p>
+            <p class="entry__text">In high school I built a multiple linear regression model in Python to predict COVID-19 cases by county. The paper was published in the <cite>International Journal of High School Research</cite>.</p>
             <button type="button" class="explain" data-deep="regression">Explain</button>
             <div class="preview">
               <figure class="pv pv--paper" aria-label="Preview of the COVID-19 paper">
@@ -348,7 +349,7 @@
                   <g class="dots"><circle cx="16" cy="42" r="1.6"/><circle cx="24" cy="38" r="1.6"/><circle cx="30" cy="40" r="1.6"/><circle cx="38" cy="33" r="1.6"/><circle cx="46" cy="35" r="1.6"/><circle cx="54" cy="28" r="1.6"/><circle cx="62" cy="30" r="1.6"/><circle cx="70" cy="22" r="1.6"/><circle cx="80" cy="24" r="1.6"/><circle cx="88" cy="17" r="1.6"/><circle cx="98" cy="15" r="1.6"/><circle cx="106" cy="10" r="1.6"/></g>
                   <path d="M12 43L110 10" class="fit"/>
                 </svg>
-                <figcaption class="pv__cap">Published paper, IJHSR</figcaption>
+                <figcaption class="pv__cap">doi 10.36838/v5i1.12</figcaption>
               </figure>
             </div>
           </div>
@@ -487,7 +488,7 @@
             <li><span class="biblio__year">2026</span><p>Utilization of Telemedicine Services in an Academic Chronic Pain Practice Following the COVID-19 Pandemic: A Retrospective Study. <cite>Orthopedic Reviews</cite>, October 2026.</p></li>
             <li><span class="biblio__year">2026</span><p>Clinical Responses to Cocaine-Positive Urine Drug Screens in Patients Receiving Chronic Opioid Therapy: A Four-Patient Case Series. <cite>Orthopedic Reviews</cite>, September 2026. <a href="https://doi.org/10.52965/001c.171215" target="_blank" rel="noopener">doi:10.52965/001c.171215</a></p></li>
             <li><span class="biblio__year">2023</span><p>Effect of U1 snRNA Mutations at the U1C Binding Site in U1 snRNP Biogenesis. Welch Summer Scholar Program Bound Volumes, The Welch Foundation, 2023.</p></li>
-            <li><span class="biblio__year">2023</span><p>Modeling Socioeconomic, Demographic, and Chronic Medical Conditions Correlated with COVID-19 Incidence. <cite>International Journal of High School Research</cite> 5(1), 2023.</p></li>
+            <li><span class="biblio__year">2023</span><p>Modeling Socioeconomic, Demographic, and Chronic Medical Conditions Correlated with COVID-19 Incidence. <cite>International Journal of High School Research</cite> 5(1), 2023. <a href="https://doi.org/10.36838/v5i1.12" target="_blank" rel="noopener">doi:10.36838/v5i1.12</a></p></li>
           </ol>
           <span class="pg-num">10</span>
         </div></div>
@@ -550,127 +551,418 @@
     </div>
   </dialog>
 
+  <!-- Each sheet: a short version up top, then sections with figures.
+       Terms with a dotted underline open a short definition.
+       Figure behavior lives in js/figures.js, keyed by data-fig. -->
+
   <template id="deep-goal">
     <p class="deep__kicker">Entry 01 · Explained</p>
     <h2 class="deep__title" id="deep-title">Goal-concordant care</h2>
-    <p>Goal-concordant care means the treatment a patient receives matches what they say matters most to them, whether that is time at home or every treatment available.</p>
+    <p class="deep__lede">Goal-concordant care means the treatment a patient gets matches what they say matters most to them. For one person that's time at home. For another it's every treatment available.</p>
+    <aside class="deep__short">
+      <p class="deep__short-label">In short</p>
+      <p>I'm helping LBJ Hospital adapt a questionnaire that asks people with serious illness what they want from their care, so the hospital can check whether the care it gives matches.</p>
+    </aside>
+
+    <h3 class="deep__h"><span>1</span>Same goals, different plans</h3>
+    <p>There's no single right plan for someone with advanced cancer. The right plan depends on the person. Pick up to 3 goals below and watch how well each plan fits them.</p>
     <figure class="fig fig--goals" data-fig="goals">
-      <div class="goals__switch" role="group" aria-label="Choose a care plan">
-        <button type="button" class="chip is-on" data-plan="a">Plan A</button>
-        <button type="button" class="chip" data-plan="b">Plan B</button>
-      </div>
-      <ul class="goals">
-        <li><span class="goals__goal">Be at home</span><span class="goals__mark"></span><span class="goals__plan" data-a="Home hospice" data-b="Long hospital stay">Home hospice</span></li>
-        <li><span class="goals__goal">Avoid the ICU</span><span class="goals__mark"></span><span class="goals__plan" data-a="No ICU transfer" data-b="ICU if needed">No ICU transfer</span></li>
-        <li><span class="goals__goal">Stay comfortable</span><span class="goals__mark"></span><span class="goals__plan" data-a="Pain and symptom control" data-b="Pain and symptom control">Pain and symptom control</span></li>
-        <li><span class="goals__goal">Time with family</span><span class="goals__mark"></span><span class="goals__plan" data-a="Open visiting" data-b="Restricted visiting">Open visiting</span></li>
-      </ul>
-      <p class="goals__score" aria-live="polite">4 of 4 goals met</p>
-      <figcaption>Illustration. The same 4 goals under 2 different plans.</figcaption>
+      <p class="fig__label">Try it</p>
+      <p class="fig__title">What matters most to you?</p>
+      <div class="goals__picks" role="group" aria-label="Goals, pick up to 3"></div>
+      <div class="goals__plans"></div>
+      <p class="goals__note" aria-live="polite"></p>
+      <figcaption>Illustration, simplified. Real plans are often a mix, and a person's goals can change over time.</figcaption>
     </figure>
-    <p>Studies of patients with advanced cancer have found that many expect treatment to cure them when it can't. That gap makes it harder for care to follow a patient's goals, which is why I'm reading about prognosis awareness.</p>
-    <p>MD Anderson built a questionnaire that asks patients about their goals. I'm adapting it for LBJ Hospital, a public hospital run by Harris Health in Houston, so the team can use it for quality improvement.</p>
+    <p>A plan is goal-concordant when it fits the person it's for. The only way to know what someone's goals are is to ask them, and to write the answer down where the whole care team can see it.</p>
+
+    <h3 class="deep__h"><span>2</span>The awareness gap</h3>
+    <p>Choosing care that fits your goals is hard if you don't know what treatment can do. A large study of patients with <button type="button" class="term" data-def="Cancer that has spread from where it started to distant parts of the body. Also called metastatic cancer.">stage 4</button> lung or colorectal cancer asked whether they understood that their chemotherapy was unlikely to cure them.</p>
+    <figure class="fig fig--aware" data-fig="aware">
+      <p class="fig__label">From a published study</p>
+      <div class="aware__switch" role="group" aria-label="Cancer type">
+        <button type="button" class="chip" data-group="lung">Lung cancer</button>
+        <button type="button" class="chip" data-group="colorectal">Colorectal cancer</button>
+      </div>
+      <div class="aware__body">
+        <div class="waffle" aria-hidden="true"></div>
+        <div class="aware__words">
+          <p class="aware__num" aria-hidden="true">0</p>
+          <p class="aware__text" aria-live="polite"></p>
+          <p class="aware__key"><i class="is-on"></i> didn't report understanding <i></i> did</p>
+        </div>
+      </div>
+      <figcaption>Weeks and colleagues, New England Journal of Medicine, 2012. 1,193 patients with stage 4 lung or colorectal cancer.</figcaption>
+    </figure>
+    <p>The same study found something surprising. Patients who rated their doctor's communication most highly were more likely to have this gap. Talking more doesn't always mean a patient comes away understanding their <button type="button" class="term" data-def="A forecast of how an illness is likely to go, including how long a person may live.">prognosis</button>, which is why I'm reviewing research on prognostic awareness.</p>
+
+    <h3 class="deep__h"><span>3</span>From answers to better care</h3>
+    <p>MD Anderson built a questionnaire that asks patients about their goals. I'm adapting it for LBJ Hospital, a public hospital run by Harris Health in Houston, so the team can use it for <button type="button" class="term" data-def="A hospital's routine of measuring how care is going, changing something, and measuring again to see if it helped.">quality improvement</button>.</p>
+    <figure class="fig fig--qi" data-fig="qi">
+      <p class="fig__label">Tap each step</p>
+      <p class="fig__title">How a questionnaire feeds quality improvement</p>
+      <ol class="qi">
+        <li><button type="button" class="qi__step" data-text="Patients answer questions about what matters most to them and how they want their care to go."><span>1</span>Ask</button></li>
+        <li><button type="button" class="qi__step" data-text="Their answers go into the medical record, where everyone on the care team can see them."><span>2</span>Record</button></li>
+        <li><button type="button" class="qi__step" data-text="The team checks whether the care patients received matched the goals they named."><span>3</span>Compare</button></li>
+        <li><button type="button" class="qi__step" data-text="Where care and goals didn't match, the hospital looks for why, changes how it works, and then measures again."><span>4</span>Improve</button></li>
+      </ol>
+      <p class="qi__again" aria-hidden="true">and measure again ↺</p>
+      <p class="walk__text" aria-live="polite"></p>
+      <figcaption>The general idea, simplified.</figcaption>
+    </figure>
   </template>
 
   <template id="deep-pain">
     <p class="deep__kicker">Entry 02 · Explained</p>
     <h2 class="deep__title" id="deep-title">Monitoring long-term opioid therapy</h2>
-    <p>People who take opioids for chronic pain usually have regular urine drug screens. A screen confirms that the prescribed medicine is there and checks for substances that make opioids less safe, such as cocaine.</p>
-    <figure class="fig fig--loop" data-fig="loop">
-      <div class="loop__stage">
-        <svg viewBox="0 0 240 240" aria-hidden="true">
-          <circle class="loop__ring" cx="120" cy="120" r="78"/>
-          <circle class="loop__runner" r="5">
-            <animateMotion dur="6s" repeatCount="indefinite" path="M120 42a78 78 0 1 1 0 156a78 78 0 1 1 0-156"/>
-          </circle>
-        </svg>
-        <button type="button" class="loop__step" style="--x: 50%; --y: 17.5%" data-text="A treatment plan sets the dose, the goals, and how follow-up will work.">Prescribe</button>
-        <button type="button" class="loop__step" style="--x: 82.5%; --y: 50%" data-text="Urine drug screens check for the prescribed medicine and for substances that shouldn't be there.">Screen</button>
-        <button type="button" class="loop__step" style="--x: 50%; --y: 82.5%" data-text="An unexpected result, like cocaine, starts a conversation with the patient.">Review</button>
-        <button type="button" class="loop__step" style="--x: 17.5%; --y: 50%" data-text="The team decides whether to continue, taper, or change treatment.">Adjust</button>
+    <p class="deep__lede">People who take opioids for chronic pain usually have regular <button type="button" class="term" data-def="A quick test of a urine sample that checks for a list of drugs or the compounds the body breaks them down into.">urine drug screens</button>. A screen confirms that the prescribed medicine is there and checks for substances that make opioids less safe, such as cocaine.</p>
+    <aside class="deep__short">
+      <p class="deep__short-label">In short</p>
+      <p>Our case series follows 4 patients on long-term opioids whose screens came back positive for cocaine, and how each one's care changed.</p>
+    </aside>
+
+    <h3 class="deep__h"><span>1</span>What a screen picks up</h3>
+    <p>For cocaine, the screen looks for <button type="button" class="term" data-def="The main compound the body breaks cocaine down into. It stays in urine much longer than cocaine itself.">benzoylecgonine</button>. After a single use it usually stays detectable for about 2 to 4 days, and longer after heavy, repeated use. A screen counts as positive only when the level is above the lab's cutoff.</p>
+    <figure class="fig fig--window" data-fig="window">
+      <p class="fig__label">Try it</p>
+      <p class="fig__title">Would the screen be positive?</p>
+      <div class="fig__row" role="group" aria-label="Pattern of use">
+        <button type="button" class="chip" data-use="single">Single use</button>
+        <button type="button" class="chip" data-use="heavy">Heavy, repeated use</button>
       </div>
-      <p class="loop__text" aria-live="polite">Tap a step.</p>
-      <figcaption>The monitoring cycle, simplified.</figcaption>
+      <svg viewBox="0 0 340 196" role="img" aria-label="Level of a cocaine metabolite in urine falling over 6 days, compared with the lab cutoff"></svg>
+      <label class="slider"><span>Day of the test</span><input type="range" min="0" max="6" step="0.1" value="1.5"></label>
+      <p class="window__read readout" aria-live="polite"></p>
+      <figcaption>Illustration of the usual pattern. Real levels depend on the dose, the person, how dilute the urine is, and the lab's cutoff.</figcaption>
     </figure>
-    <p>Clinicians don't always agree on what to do after an unexpected result. Our case series follows 4 patients whose screens came back positive for cocaine and records how each care team responded, next to current guidelines.</p>
+    <p>A screen is a quick antibody test. When a result is unexpected, it can be confirmed with <button type="button" class="term" data-def="A lab method that separates the compounds in a sample and identifies each one by its exact mass. It's slower and more exact than a screen.">mass spectrometry</button>, which identifies the exact compound.</p>
+
+    <h3 class="deep__h"><span>2</span>4 patients, 4 paths</h3>
+    <p>Clinicians don't always agree on what to do after a cocaine-positive screen. Each patient in our series was handled differently.</p>
+    <figure class="fig fig--cases" data-fig="cases">
+      <p class="fig__label">From the paper · tap a case</p>
+      <div class="cases__chips" role="group" aria-label="Cases"></div>
+      <svg viewBox="0 0 400 200" role="img" aria-label="4 patients on opioid therapy, each with a cocaine-positive screen. 2 were tapered and stopped, 1 switched to buprenorphine and naloxone, 1 declined and left the practice."></svg>
+      <div class="cases__card" aria-live="polite"></div>
+      <figcaption>From the 4 cases in the paper. <button type="button" class="term" data-word="MME" data-def="Morphine milligram equivalents: a way to compare doses of different opioids by converting each to the matching dose of morphine.">MME</button> is calculated here from CDC conversion factors. The paper doesn't report it.</figcaption>
+    </figure>
+
+    <h3 class="deep__h"><span>3</span>Why switch to buprenorphine?</h3>
+    <p>Hydrocodone and oxycodone are full <button type="button" class="term" data-def="A drug that switches a receptor on. A full agonist can switch it on all the way. A partial agonist can only switch it on part of the way.">agonists</button> at the opioid receptor. The more you take, the stronger the effect, including slower breathing, which is what makes an overdose deadly. Buprenorphine is a partial agonist. Its effect on breathing levels off at higher doses, which is called a ceiling effect.</p>
+    <figure class="fig fig--agonist" data-fig="agonist">
+      <p class="fig__label">Try it</p>
+      <p class="fig__title">Raise the dose</p>
+      <svg viewBox="0 0 340 186" role="img" aria-label="As the dose rises, a full agonist keeps slowing breathing more, while buprenorphine levels off at a ceiling"></svg>
+      <label class="slider"><span>Dose</span><input type="range" min="0" max="100" step="1" value="30"></label>
+      <p class="agonist__read readout" aria-live="polite"></p>
+      <figcaption>Shapes are illustrative. The ceiling applies to buprenorphine taken alone. Mixing it with sedatives such as alcohol or benzodiazepines still raises the risk.</figcaption>
+    </figure>
+    <p>The <button type="button" class="term" data-def="A drug that blocks opioid receptors. On its own it reverses opioid overdoses.">naloxone</button> in buprenorphine/naloxone does very little when the tablet or film dissolves under the tongue. If someone injects it, the naloxone blocks the opioid, which discourages misuse. Buprenorphine doesn't treat cocaine use. In case 3 it was a safer way to keep treating pain.</p>
+
+    <h3 class="deep__h"><span>4</span>What we suggest after a positive screen</h3>
+    <p>The 2022 CDC guideline on opioids for pain advises against dismissing patients from care over a result like this. Our paper treats a cocaine-positive screen as a sign of higher risk, not proof of opioid misuse, and lays out these steps.</p>
+    <figure class="fig fig--path" data-fig="path">
+      <p class="fig__label">From the paper · step through it</p>
+      <ol class="path">
+        <li><button type="button" class="path__step" data-text="Is the result reliable? Was it confirmed, and could anything else explain it?"><span>1</span>Check the result</button></li>
+        <li><button type="button" class="path__step" data-text="Share the result openly and hear the patient's side."><span>2</span>Talk with the patient</button></li>
+        <li><button type="button" class="path__step" data-text="Is the opioid still helping more than it could harm?"><span>3</span>Weigh risks and benefits</button></li>
+        <li><button type="button" class="path__step" data-text="Check for a substance use disorder, and make sure treatment is available if there is one."><span>4</span>Assess for addiction</button></li>
+        <li><button type="button" class="path__step" data-text="More frequent screens and visits. The CDC guideline also recommends offering naloxone, which reverses overdoses."><span>5</span>Monitor more closely</button></li>
+        <li><button type="button" class="path__step" data-text="Taper the opioid, switch to a different medicine, or try another plan. Each patient in our series took a different route."><span>6</span>Choose a plan</button></li>
+      </ol>
+      <p class="walk__text" aria-live="polite"></p>
+      <div class="fig__row fig__row--end">
+        <button type="button" class="chip" data-move="back">← Back</button>
+        <button type="button" class="chip chip--go" data-move="next">Next →</button>
+      </div>
+    </figure>
+    <p>I also co-authored a retrospective study of how our academic pain practice used telemedicine after the COVID-19 pandemic, and I made the figures and drafted the diagnostic practices results for a national survey on interventional pain care.</p>
   </template>
 
   <template id="deep-pigments">
     <p class="deep__kicker">Entry 03 · Explained</p>
     <h2 class="deep__title" id="deep-title">Phycocyanin and phycoerythrin</h2>
-    <p>Cyanobacteria and red algae make colored proteins called phycobiliproteins to catch light for photosynthesis. Phycocyanin absorbs orange-red light near 620 nm, so it looks blue. Phycoerythrin absorbs green light near 565 nm, so it looks pink.</p>
+    <p class="deep__lede"><button type="button" class="term" data-def="Bacteria that photosynthesize, like plants. Spirulina is one.">Cyanobacteria</button> and red algae make brightly colored proteins called <button type="button" class="term" data-def="Proteins with a light-catching molecule, a bilin, attached. They collect light for photosynthesis.">phycobiliproteins</button>. Phycocyanin is blue and phycoerythrin is pink, and both are used as natural colorings.</p>
+    <aside class="deep__short">
+      <p class="deep__short-label">In short</p>
+      <p>We pulled these 2 pigment-proteins out of algae and worked on getting more of them out, and on making their color last on fabric.</p>
+    </aside>
+
+    <h3 class="deep__h"><span>1</span>Why blue looks blue</h3>
+    <p>A pigment's color is the light it doesn't absorb. Phycocyanin soaks up orange and red light, so the light that bounces back looks blue. Both pigments also glow: they give some absorbed energy back as light of a longer wavelength, called fluorescence.</p>
+    <figure class="fig fig--light" data-fig="light">
+      <p class="fig__label">Try it · move across the spectrum</p>
+      <div class="fig__row fig__row--split">
+        <div class="fig__row" role="group" aria-label="Pigment">
+          <button type="button" class="chip chip--pc" data-pigment="pc">Phycocyanin</button>
+          <button type="button" class="chip chip--pe" data-pigment="pe">Phycoerythrin</button>
+        </div>
+        <div class="fig__row" role="group" aria-label="Light">
+          <button type="button" class="chip" data-mode="room">Absorbs</button>
+          <button type="button" class="chip" data-mode="glow">Glows</button>
+        </div>
+      </div>
+      <div class="light__stage">
+        <svg viewBox="0 0 360 176" role="img" aria-label="The visible spectrum from 400 to 700 nanometers with the pigment's absorbance or glow drawn over it"></svg>
+        <div class="vial" aria-hidden="true"><span></span></div>
+      </div>
+      <p class="light__read readout" aria-live="polite"></p>
+      <p class="light__text"></p>
+      <figcaption>Curve shapes are sketched from typical published spectra of C-phycocyanin and R-phycoerythrin.</figcaption>
+    </figure>
+
+    <h3 class="deep__h"><span>2</span>What the pigments are for</h3>
+    <p>In the cell, these proteins are stacked into a light-collecting antenna called a <button type="button" class="term" data-def="A large antenna of phycobiliproteins attached to the photosynthetic membrane. It catches light that chlorophyll alone would miss.">phycobilisome</button>. It catches green and orange light that chlorophyll absorbs poorly, and passes the energy inward. Each hand-off goes to a pigment that absorbs a slightly longer, lower-energy wavelength, so the energy flows one way, toward <button type="button" class="term" data-def="The protein complex that uses light energy to split water and start photosynthesis. Its chlorophyll absorbs near 680 nm.">photosystem II</button>.</p>
+    <figure class="fig fig--antenna" data-fig="antenna">
+      <p class="fig__label">Try it</p>
+      <svg viewBox="0 0 360 212" role="img" aria-label="A phycobilisome: rods of phycoerythrin on the outside and phycocyanin inside, attached to an allophycocyanin core that sits on photosystem II in the membrane"></svg>
+      <ul class="antenna__key">
+        <li><i class="k-pe"></i>Phycoerythrin · 565 nm</li>
+        <li><i class="k-pc"></i>Phycocyanin · 620 nm</li>
+        <li><i class="k-apc"></i>Allophycocyanin · 650 nm</li>
+        <li><i class="k-chl"></i>Chlorophyll · 680 nm</li>
+      </ul>
+      <p class="antenna__text readout" aria-live="polite">Press the button to send in light.</p>
+      <div class="fig__row"><button type="button" class="chip chip--go" data-action="send">Send in light</button></div>
+      <figcaption>Simplified drawing of a phycobilisome, not to scale.</figcaption>
+    </figure>
+
+    <h3 class="deep__h"><span>3</span>Getting them out</h3>
+    <p>To use the pigments, they have to be separated from everything else in the cell.</p>
     <figure class="fig fig--steps" data-fig="steps">
-      <div class="steps__tabs" role="group" aria-label="Purification steps">
-        <button type="button" class="chip is-on" data-step="0">1 · Freeze-thaw</button>
-        <button type="button" class="chip" data-step="1">2 · Ammonium sulfate</button>
-        <button type="button" class="chip" data-step="2">3 · SDS-PAGE</button>
+      <p class="fig__label">Step through it</p>
+      <div class="fig__row" role="group" aria-label="Purification steps">
+        <button type="button" class="chip" data-step="0">1 · Break the cells</button>
+        <button type="button" class="chip" data-step="1">2 · Salt out</button>
+        <button type="button" class="chip" data-step="2">3 · Check purity</button>
       </div>
       <div class="steps__stage">
-        <svg class="steps__gel" viewBox="0 0 120 150" aria-hidden="true">
-          <rect x="2" y="2" width="116" height="146" rx="6" class="gel__bed"/>
-          <g class="steps__wells"><rect x="16" y="10" width="24" height="5" rx="1"/><rect x="48" y="10" width="24" height="5" rx="1"/><rect x="80" y="10" width="24" height="5" rx="1"/></g>
-          <g class="steps__ladder"><rect x="16" y="34" width="24" height="3"/><rect x="16" y="56" width="24" height="3"/><rect x="16" y="80" width="24" height="3"/><rect x="16" y="104" width="24" height="3"/><rect x="16" y="126" width="24" height="3"/></g>
-          <g class="steps__lane" data-lane="pc"><rect x="48" y="30" width="24" height="3"/><rect x="48" y="46" width="24" height="3"/><rect x="48" y="62" width="24" height="3"/><rect x="48" y="88" width="24" height="4" class="keep"/><rect x="48" y="96" width="24" height="4" class="keep"/><rect x="48" y="118" width="24" height="3"/></g>
-          <g class="steps__lane" data-lane="pe"><rect x="80" y="26" width="24" height="3"/><rect x="80" y="50" width="24" height="3"/><rect x="80" y="70" width="24" height="3"/><rect x="80" y="86" width="24" height="4" class="keep"/><rect x="80" y="100" width="24" height="4" class="keep"/><rect x="80" y="122" width="24" height="3"/></g>
+        <svg class="tube" viewBox="0 0 70 170" aria-hidden="true">
+          <path class="tube__glass" d="M14 6h42M18 6v126a17 17 0 0 0 34 0V6"/>
+          <clipPath id="tube-clip"><path d="M18 6v126a17 17 0 0 0 34 0V6z"/></clipPath>
+          <g clip-path="url(#tube-clip)">
+            <rect class="tube__liquid" x="18" y="40" width="34" height="130"/>
+            <g class="tube__debris"><circle cx="26" cy="70" r="2.2"/><circle cx="40" cy="84" r="1.8"/><circle cx="31" cy="100" r="2.4"/><circle cx="45" cy="112" r="2"/><circle cx="24" cy="124" r="1.6"/><circle cx="38" cy="58" r="1.6"/><circle cx="46" cy="134" r="2.2"/><circle cx="29" cy="140" r="1.8"/></g>
+            <ellipse class="tube__pellet" cx="35" cy="146" rx="15" ry="7"/>
+          </g>
+          <text class="tube__note" x="35" y="166">extract</text>
         </svg>
-        <p class="steps__text" aria-live="polite">Freezing and thawing cracks the cells open, so the pigments leak out along with many other proteins.</p>
+        <svg class="gel" viewBox="0 0 150 170" aria-hidden="true">
+          <rect class="gel__bed" x="30" y="2" width="118" height="152" rx="6"/>
+          <g class="gel__kda"><text x="24" y="31">75</text><text x="24" y="53">50</text><text x="24" y="73">37</text><text x="24" y="97">25</text><text x="24" y="129">15</text><text x="24" y="150">kDa</text></g>
+          <g class="gel__wells"><rect x="40" y="10" width="26" height="5" rx="1"/><rect x="76" y="10" width="26" height="5" rx="1"/><rect x="112" y="10" width="26" height="5" rx="1"/></g>
+          <g class="gel__ladder"><rect x="40" y="28" width="26" height="3"/><rect x="40" y="50" width="26" height="3"/><rect x="40" y="70" width="26" height="3"/><rect x="40" y="94" width="26" height="3"/><rect x="40" y="126" width="26" height="3"/></g>
+          <g class="gel__lane gel__lane--crude"><rect x="76" y="24" width="26" height="3"/><rect x="76" y="38" width="26" height="3"/><rect x="76" y="46" width="26" height="2.5"/><rect x="76" y="60" width="26" height="3"/><rect x="76" y="78" width="26" height="3"/><rect x="76" y="88" width="26" height="2.5"/><rect class="sub" x="76" y="108" width="26" height="4"/><rect class="sub" x="76" y="115" width="26" height="4"/><rect x="76" y="134" width="26" height="3"/></g>
+          <g class="gel__lane gel__lane--clean"><rect class="faint" x="112" y="60" width="26" height="2.5"/><rect class="faint" x="112" y="88" width="26" height="2"/><rect class="sub" x="112" y="108" width="26" height="4"/><rect class="sub" x="112" y="115" width="26" height="4"/></g>
+          <g class="gel__lanes"><text x="53" y="166">ladder</text><text x="89" y="166">crude</text><text x="125" y="166">salted</text></g>
+          <path class="gel__arrow" d="M146 112h-4"/>
+        </svg>
+        <div class="steps__side">
+          <p class="steps__text" aria-live="polite"></p>
+          <p class="gel__note">The 2 bands near 17 to 20 kDa are the pigment's 2 subunits, α and β.</p>
+        </div>
       </div>
-      <figcaption>Sketch of how the gel cleans up at each step. Not real data.</figcaption>
+      <div class="purity">
+        <p class="purity__label">Purity ratio, A620 ÷ A280: <b class="purity__value">0.5</b></p>
+        <div class="purity__track">
+          <span class="purity__fill"></span>
+          <span class="purity__marker"></span>
+          <span class="purity__tick" style="--at: 0.14"><i>food grade · 0.7</i></span>
+          <span class="purity__tick purity__tick--up" style="--at: 0.78"><i>reagent grade · 3.9</i></span>
+        </div>
+      </div>
+      <figcaption>Sketch with example values, not our data. The grade cutoffs are the ones commonly used for phycocyanin. Phycoerythrin uses its own peak, near 565 nm.</figcaption>
     </figure>
-    <p>Synthetic textile dyes come from petrochemicals, and dye waste pollutes water. We were testing whether these natural pigments could be pulled out at a useful yield and hold their color on fabric, which is called colorfastness.</p>
+
+    <h3 class="deep__h"><span>4</span>Making the color last</h3>
+    <p>Synthetic textile dyes come from petrochemicals, and dye waste pollutes water. Natural pigments are a cleaner option, but phycocyanin loses its color with heat, strong light, and acid. A dye's ability to hold its color through washing and sunlight is called <button type="button" class="term" data-def="How well a dyed material keeps its color through washing, light, rubbing, sweat and heat. It's rated against a standard gray scale.">colorfastness</button>, and that's what our lab was trying to raise.</p>
+    <figure class="fig fig--fade" data-fig="fade">
+      <p class="fig__label">Try it</p>
+      <p class="fig__title">Put a dyed swatch through a test</p>
+      <div class="fig__row" role="group" aria-label="Test">
+        <button type="button" class="chip" data-test="wash">Washing</button>
+        <button type="button" class="chip" data-test="sun">Sunlight</button>
+        <button type="button" class="chip" data-test="heat">Heat</button>
+      </div>
+      <div class="fade__stage">
+        <div class="fade__pair">
+          <div class="fade__swatch fade__swatch--before" aria-hidden="true"></div>
+          <p>before</p>
+        </div>
+        <div class="fade__pair">
+          <div class="fade__swatch" aria-hidden="true"></div>
+          <p>after</p>
+        </div>
+        <div class="fade__controls">
+          <label class="slider"><span class="fade__label">0 washes</span><input type="range" min="0" max="20" step="1" value="0"></label>
+          <p class="fade__rating readout" aria-live="polite"></p>
+        </div>
+      </div>
+      <figcaption>Illustration of fading, not measured data. Labs rate color change against a gray scale from 5 (no change) to 1 (severe change).</figcaption>
+    </figure>
   </template>
 
   <template id="deep-splicing">
     <p class="deep__kicker">Entry 04 · Explained</p>
     <h2 class="deep__title" id="deep-title">Splicing and U1 snRNP</h2>
-    <p>Genes have stretches that code for protein, called exons, separated by stretches that don't, called introns. Before a messenger RNA leaves the nucleus, the introns are cut out and the exons are joined. That step is splicing.</p>
-    <figure class="fig fig--splice" data-fig="splice">
-      <svg viewBox="0 0 320 130" aria-hidden="true">
-        <g class="splice__intron">
-          <path class="splice__loop" d="M120 70 C 130 70, 140 70, 160 70 S 190 70, 200 70"/>
-          <text x="160" y="92" class="splice__label">intron</text>
-        </g>
-        <g class="splice__exon splice__exon--1"><rect x="30" y="58" width="90" height="24" rx="5"/><text x="75" y="74">Exon 1</text></g>
-        <g class="splice__exon splice__exon--2"><rect x="200" y="58" width="90" height="24" rx="5"/><text x="245" y="74">Exon 2</text></g>
-        <g class="splice__u1">
-          <circle cx="124" cy="40" r="16"/>
-          <text x="124" y="44">U1</text>
-          <circle class="splice__site" cx="134" cy="29" r="4"/>
-        </g>
-      </svg>
-      <div class="splice__controls">
-        <button type="button" class="chip" data-action="splice">Splice</button>
-        <button type="button" class="chip" data-action="reset">Reset</button>
+    <p class="deep__lede">Genes have stretches that code for protein, called <button type="button" class="term" data-def="The parts of a gene that stay in the finished mRNA and code for protein.">exons</button>, separated by stretches that don't, called <button type="button" class="term" data-def="The parts of a gene that are copied into RNA and then cut out before the RNA is used.">introns</button>. Before a messenger RNA leaves the nucleus, the introns are cut out and the exons are joined. That step is splicing.</p>
+    <aside class="deep__short">
+      <p class="deep__short-label">In short</p>
+      <p>I made mutations in U1 snRNA, the RNA that starts splicing, at the spot where a protein called U1C binds. Then I tested whether the U1 particle still matured and whether the splicing machine still assembled.</p>
+    </aside>
+
+    <h3 class="deep__h"><span>1</span>The splicing machine</h3>
+    <p>Splicing is done by the <button type="button" class="term" data-def="The large molecular machine that removes introns. It's built from 5 snRNPs and many other proteins.">spliceosome</button>, which builds itself on each intron from 5 particles called <button type="button" class="term" data-word="snRNPs" data-def="Small nuclear ribonucleoproteins, said “snurps.” Each is a short RNA (a snRNA) bound to a set of proteins.">snRNPs</button>: U1, U2, U4, U5 and U6.</p>
+    <figure class="fig fig--sp" data-fig="spliceosome">
+      <p class="fig__label">Step through it, or press play</p>
+      <p class="sp__title"></p>
+      <svg viewBox="0 0 360 160" role="img" aria-label="The spliceosome assembling on a pre-mRNA, cutting out the intron as a lariat, and joining the 2 exons"></svg>
+      <div class="sp__pips"></div>
+      <p class="sp__text readout" aria-live="polite"></p>
+      <div class="fig__row fig__row--end">
+        <button type="button" class="chip" data-move="play">Play</button>
+        <button type="button" class="chip" data-move="back">← Back</button>
+        <button type="button" class="chip chip--go" data-move="next">Next →</button>
       </div>
-      <figcaption>U1 snRNP marks the start of the intron. The pink dot is roughly where the U1C protein binds.</figcaption>
+      <figcaption>Simplified. The real spliceosome has more than 100 proteins and goes through more steps.</figcaption>
     </figure>
-    <p>U1 snRNP starts the process. Its RNA, U1 snRNA, pairs with the first few bases of each intron, called the 5′ splice site, and the rest of the spliceosome builds around it. The U1C protein helps the particle hold onto that site.</p>
-    <p>I studied mutations in U1 snRNA where U1C binds and analyzed whether mature U1 snRNP still formed and whether the spliceosome still assembled.</p>
+
+    <h3 class="deep__h"><span>2</span>How U1 finds the start of an intron</h3>
+    <p>The first bases of U1 snRNA <button type="button" class="term" data-word="base-pair" data-def="When 2 RNA strands line up and their bases stick together: G with C (3 hydrogen bonds), A with U (2), and G with U, a weaker wobble pair.">base-pair</button> with the first bases of the intron, the 5′ splice site. Tap the bases on the bottom strand to change them and see how well U1 can still grab on.</p>
+    <figure class="fig fig--pair" data-fig="pairing">
+      <p class="fig__label">Try it · tap a base to change it</p>
+      <div class="pair">
+        <p class="pair__end">3′</p>
+        <div class="pair__u1"></div>
+        <p class="pair__end pair__end--right">5′</p>
+        <p class="pair__name">U1 snRNA</p>
+        <div class="pair__bonds" aria-hidden="true"></div>
+        <p class="pair__end">5′</p>
+        <div class="pair__rna"></div>
+        <p class="pair__end pair__end--right">3′</p>
+        <p class="pair__name">pre-mRNA</p>
+        <div class="pair__boundary" aria-hidden="true"><span>exon</span><span>intron</span></div>
+      </div>
+      <div class="pair__meter" data-level="high"><span></span></div>
+      <p class="pair__read readout" aria-live="polite"></p>
+      <div class="fig__row">
+        <button type="button" class="chip" data-action="reset">Perfect match</button>
+        <button type="button" class="chip" data-action="shuffle">Random site</button>
+      </div>
+      <figcaption>Simplified. Binding strength here is scored by counting hydrogen bonds. Real binding also depends on how the bases stack and on the proteins around them.</figcaption>
+    </figure>
+    <p>Most real splice sites aren't perfect matches. U1C helps here: it touches the paired region and steadies it, which helps U1 hold onto sites with a mismatch or 2.</p>
+
+    <h3 class="deep__h"><span>3</span>U1 snRNP up close</h3>
+    <figure class="fig fig--u1" data-fig="u1">
+      <p class="fig__label">Tap a part</p>
+      <svg viewBox="0 0 370 190" role="img" aria-label="U1 snRNP: U1 snRNA folded into 4 stem-loops, with the proteins U1-70K, U1A, U1C and the Sm ring bound to it"></svg>
+      <div class="fig__row" role="group" aria-label="Parts of U1 snRNP">
+        <button type="button" class="chip chip--small" data-part="u1c">U1C</button>
+        <button type="button" class="chip chip--small" data-part="end">5′ end</button>
+        <button type="button" class="chip chip--small" data-part="k70">U1-70K</button>
+        <button type="button" class="chip chip--small" data-part="u1a">U1A</button>
+        <button type="button" class="chip chip--small" data-part="sm">Sm ring</button>
+        <button type="button" class="chip chip--small" data-part="loops">Stem-loops</button>
+        <button type="button" class="chip chip--small" data-part="cap">Cap</button>
+      </div>
+      <p class="u1__text readout" aria-live="polite"></p>
+      <figcaption>Schematic. In the real particle the stem-loops fold into a compact shape.</figcaption>
+    </figure>
+
+    <h3 class="deep__h"><span>4</span>How U1 snRNP gets built</h3>
+    <p>U1 snRNP is assembled in a round trip out of the nucleus and back. My project asked whether the mutant U1 snRNA could still make this trip and mature.</p>
+    <figure class="fig fig--journey" data-fig="journey">
+      <p class="fig__label">Follow it</p>
+      <svg viewBox="0 0 360 220" role="img" aria-label="U1 snRNA is made in the nucleus, leaves for the cytoplasm where the Sm ring is added and the cap is changed, and returns to the nucleus where the U1-specific proteins join"></svg>
+      <div class="fig__row" role="group" aria-label="Stops">
+        <button type="button" class="chip chip--small" data-stop>1 · Made</button>
+        <button type="button" class="chip chip--small" data-stop>2 · Exported</button>
+        <button type="button" class="chip chip--small" data-stop>3 · Sm ring</button>
+        <button type="button" class="chip chip--small" data-stop>4 · Cap and trim</button>
+        <button type="button" class="chip chip--small" data-stop>5 · Imported</button>
+        <button type="button" class="chip chip--small" data-stop>6 · Finished</button>
+      </div>
+      <p class="journey__text readout" aria-live="polite"></p>
+      <div class="fig__row fig__row--end"><button type="button" class="chip chip--go" data-move="next">Next stop →</button></div>
+      <figcaption>Simplified, with some steps left out.</figcaption>
+    </figure>
+    <p>I studied mutations in U1 snRNA at U1C's binding site and analyzed whether mature U1 snRNP still formed and whether the spliceosome still assembled. The project won the Gene Expression and Regulation category at UT's Fall Undergraduate Research Symposium in 2024.</p>
   </template>
 
   <template id="deep-regression">
     <p class="deep__kicker">Entry 05 · Explained</p>
     <h2 class="deep__title" id="deep-title">Multiple linear regression</h2>
-    <p>A multiple linear regression predicts one number from several others by adding them up with weights. My model predicted each county's COVID-19 rate from socioeconomic, demographic, and chronic disease measures.</p>
+    <p class="deep__lede">A multiple linear regression predicts one number from several others by adding them up with weights. My model predicted the number of COVID-19 cases in each U.S. county from socioeconomic, demographic, and chronic disease measures.</p>
+    <aside class="deep__short">
+      <p class="deep__short-label">In short</p>
+      <p>With 16 months of data from 2,662 counties, my model explained 71% of the variation in case counts. Multi-unit housing, population density, urban status, and social vulnerability mattered most.</p>
+    </aside>
+
+    <h3 class="deep__h"><span>1</span>Fitting a line</h3>
+    <p>Each gap between a point and the line is a <button type="button" class="term" data-def="The difference between a real value and the model's prediction for it.">residual</button>. Square each one, add them up, and you get the error. Least squares picks the line with the smallest total. Drag the ends of the line and try to beat it.</p>
     <figure class="fig fig--fit" data-fig="fit">
-      <svg viewBox="0 0 300 180" aria-hidden="true">
-        <path class="fit__axis" d="M30 10V150H290"/>
-        <g class="fit__residuals"></g>
-        <g class="fit__points"></g>
-        <line class="fit__line" x1="30" x2="290" y1="80" y2="80"/>
-        <text x="160" y="172" class="fit__axis-label">one input, for example median income</text>
-        <text x="14" y="80" class="fit__axis-label fit__axis-label--y" transform="rotate(-90 14 80)">rate</text>
-      </svg>
+      <p class="fig__label">Try it · drag the 2 ends</p>
+      <svg viewBox="0 0 350 200" role="img" aria-label="Points with a line through them. Each point's squared distance from the line is drawn as a square."></svg>
       <div class="fit__controls">
-        <button type="button" class="chip" data-action="fit">Fit the line</button>
-        <p class="fit__error" aria-live="polite">Squared error: <b>—</b></p>
+        <p class="fit__score">Your error: <b class="fit__yours">—</b> <span class="fit__best"></span></p>
+        <button type="button" class="chip chip--go" data-action="fit">Show the best fit</button>
       </div>
-      <figcaption>Illustration with made-up points and one input. The real model used many inputs at once.</figcaption>
+      <figcaption>Made-up points and one input. The real model used 10 inputs at once, which is the same idea in more dimensions.</figcaption>
     </figure>
-    <p>The model picks the weights that bring its predictions as close as it can to the real rates, by shrinking the squared gaps between them. A weight shows how strongly a factor moves with the rate. It can't show that the factor caused it.</p>
+
+    <h3 class="deep__h"><span>2</span>Building the model</h3>
+    <p><button type="button" class="term" data-word="R²" data-def="The share of the differences between counties that the model accounts for. 0% means it explains nothing; 100% means it explains everything.">R²</button> shows how much of the variation between counties a model explains. Step through how mine went from 52% to 71%.</p>
+    <figure class="fig fig--build" data-fig="build">
+      <p class="fig__label">From the paper · step through it</p>
+      <div class="build__tabs fig__row" role="group" aria-label="Stages"></div>
+      <div class="build__stage">
+        <div>
+          <div class="build__dots" aria-hidden="true"></div>
+          <p class="build__key"><i class="k-train"></i>train <i class="k-test"></i>test <i class="k-out"></i>removed · 1 dot ≈ 23 counties</p>
+        </div>
+        <div class="build__ring" aria-hidden="true"><p><b class="build__r2">—</b><span>R²</span></p></div>
+      </div>
+      <p class="build__text readout" aria-live="polite"></p>
+      <figcaption>Numbers from the paper (Chuan, International Journal of High School Research, 2023).</figcaption>
+    </figure>
+
+    <h3 class="deep__h"><span>3</span>Unskewing the data</h3>
+    <p>Regression works best when the outcome looks roughly like a bell curve. County case counts don't: by mid-2021 most counties had a few thousand cases, and a handful had hundreds of thousands or more. The <button type="button" class="term" data-def="A family of transforms, (y^λ − 1) ÷ λ. λ = 1 leaves data as it is, λ = 0.5 is close to a square root, and λ = 0 is a log. The method picks the λ that makes the data most bell-shaped.">Box-Cox</button> method finds the power, λ, that makes the data most symmetric.</p>
+    <figure class="fig fig--bc" data-fig="boxcox">
+      <p class="fig__label">Try it · slide λ</p>
+      <svg viewBox="0 0 360 172" role="img" aria-label="Histogram of skewed counts that becomes bell-shaped as lambda moves toward zero"></svg>
+      <label class="slider"><span>λ = <b class="bc__lambda">1</b> · skew <b class="bc__skew">0</b></span><input type="range" min="-0.5" max="1" step="0.001" value="1"></label>
+      <div class="fig__row">
+        <button type="button" class="chip chip--small" data-lambda="1">No change (λ = 1)</button>
+        <button type="button" class="chip chip--small" data-lambda="0.5">About a square root (λ = 0.5)</button>
+        <button type="button" class="chip chip--small" data-lambda="-0.022">My λ (−0.022)</button>
+      </div>
+      <figcaption>Simulated, skewed counts, not the real county data. Skew near 0 means the data are about symmetric.</figcaption>
+    </figure>
+    <p>My best λ was −0.022, very close to 0, so the transform was almost a log.</p>
+
+    <h3 class="deep__h"><span>4</span>What mattered</h3>
+    <p>Each weight shows how strongly a factor moved with case counts while the other factors were held steady. A <button type="button" class="term" data-word="correlation" data-def="A number, r, from −1 to 1 that shows how closely 2 things rise and fall together, looking at just those 2.">correlation</button> looks at one factor at a time. Switch between them and watch some bars change direction.</p>
+    <figure class="fig fig--coef" data-fig="coef">
+      <p class="fig__label">From the paper · tap a bar</p>
+      <div class="fig__row" role="group" aria-label="Measure">
+        <button type="button" class="chip" data-mode="w">In the model (weights)</button>
+        <button type="button" class="chip" data-mode="r">On its own (correlation)</button>
+      </div>
+      <p class="coef__legend"><i class="k-up"></i>more cases <i class="k-down"></i>fewer cases</p>
+      <div class="coef__chart"></div>
+      <div class="coef__axis" aria-hidden="true"></div>
+      <p class="coef__read readout" aria-live="polite"></p>
+      <figcaption>Weights from Table 3 and correlations from Table 4 of the paper. Factors were rescaled before fitting so their weights can be compared. All 10 were statistically significant (p &lt; 0.05).</figcaption>
+    </figure>
+    <p>A weight shows that a factor moves with case counts. It can't show that the factor caused them. The model also counted total cases, not cases per person, so bigger counties carried more weight, and early in the pandemic tests were hard to get in some places.</p>
   </template>
 
   <script src="js/book.js" defer></script>
+  <script src="js/figures.js" defer></script>
   <script src="js/pages.js" defer></script>
 </body>
 </html>
