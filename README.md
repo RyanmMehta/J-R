@@ -6,7 +6,7 @@ Plain HTML, CSS and JavaScript. There's no build step and nothing to install.
 
 ## How it works
 
-1. **Cover.** The closed book follows the mouse, the same amount in every direction. On phones it leans a little as the phone tilts, and a finger dragged across the screen turns it too. iPhones ask once for permission to use motion, the first time someone touches the page anywhere other than the book. Clicking the book turns the cover and the first page to the table of contents.
+1. **Cover.** The closed book follows the mouse, or a finger dragged across a phone screen, and moves the same distance in every direction. The book rests turned to one side, so each direction has its own angle (`REACH` in `js/book.js`). Clicking it turns the cover and the first page to the table of contents.
 2. **Turning to a section.** Picking a chapter turns the pages forward to that section's two-page spread. The book lies flat and the camera zooms in until the spread fills the screen.
 3. **Reading.** Once zoomed in, the real text takes over, so it's sharp, selectable and scrollable. The pages in the 3D book are copies of these same pages, so the hand-off is seamless.
 4. **Index tabs.** Clicking a tab on the page edge (along the bottom on phones) zooms back out, turns forward or back to that section, and zooms in again. Contents goes back to the table of contents. Escape and the arrow keys work too.
