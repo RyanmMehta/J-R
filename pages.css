@@ -109,21 +109,24 @@
 
 /* ---------- Introduction ---------- */
 
-.portrait {
-  width: calc(var(--u) * 74);
-  max-width: 100%;
-  margin: calc(var(--u) * 4) auto 0;
+.intro__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(var(--u) * 27);
+  gap: calc(var(--u) * 5);
+  align-items: center;
+  margin: calc(var(--u) * 1) 0 calc(var(--u) * 3);
 }
 
-.portrait__frame {
+.snapshot {
   position: relative;
-  padding: calc(var(--u) * 2.4);
+  margin: 0;
+  padding: calc(var(--u) * 1.4) calc(var(--u) * 1.4) calc(var(--u) * 4.2);
   background: #fffdf8;
-  box-shadow: 0 calc(var(--u) * 2.4) calc(var(--u) * 5) calc(var(--u) * -2.4) rgba(29, 36, 32, 0.45), 0 0 0 1px var(--j-rule);
-  transform: rotate(-1.2deg);
+  box-shadow: 0 calc(var(--u) * 1.6) calc(var(--u) * 3.6) calc(var(--u) * -1.6) rgba(29, 36, 32, 0.45), 0 0 0 1px var(--j-rule);
+  transform: rotate(3deg);
 }
 
-.portrait__frame img {
+.snapshot img {
   display: block;
   width: 100%;
   height: auto;
@@ -131,24 +134,21 @@
   object-fit: cover;
 }
 
-/* Photo corners */
-.portrait__frame::before,
-.portrait__frame::after {
+/* A strip of tape across the top */
+.snapshot::before {
   content: "";
   position: absolute;
-  width: calc(var(--u) * 8);
-  height: calc(var(--u) * 8);
-  background: #e6dcc6;
-  filter: drop-shadow(0 1px 1px rgba(29, 36, 32, 0.18));
+  top: calc(var(--u) * -1.6);
+  left: 50%;
+  width: calc(var(--u) * 13);
+  height: calc(var(--u) * 3.4);
+  background: repeating-linear-gradient(45deg, #f4b6c2 0 calc(var(--u) * 1.2), #f8d3da calc(var(--u) * 1.2) calc(var(--u) * 2.4));
+  opacity: 0.85;
+  transform: translateX(-50%) rotate(-4deg);
 }
 
-.portrait__frame::before { top: calc(var(--u) * 1); left: calc(var(--u) * 1); clip-path: polygon(0 0, 100% 0, 0 100%); }
-.portrait__frame::after { bottom: calc(var(--u) * 1); right: calc(var(--u) * 1); clip-path: polygon(100% 0, 100% 100%, 0 100%); }
-
-.portrait figcaption { margin-top: calc(var(--u) * 3); text-align: center; }
-
 .intro__name {
-  margin: calc(var(--u) * 3) 0 calc(var(--u) * 3.5) !important;
+  margin: 0 !important;
   font-weight: 300 !important;
   font-size: calc(var(--u) * 10.5);
   line-height: 0.95;
@@ -720,6 +720,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-gutter: stable;
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.28s, visibility 0s 0.28s;
@@ -782,29 +783,44 @@
   scrollbar-width: none;
 }
 
+/* The button never moves, so the pointer can't slip off it mid-hover.
+   Only its paper (::before) and its label slide. */
 .tab {
   all: unset;
+  position: relative;
+  z-index: 0;
   flex: none;
   cursor: pointer;
   padding: 9px 14px;
-  border-radius: 10px;
-  background: var(--tab);
   font: 500 11px/1 var(--mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--j-ink-2);
-  box-shadow: 0 1px 2px rgba(70, 50, 30, 0.12);
-  transition: transform 0.25s var(--ease-out), background-color 0.2s, color 0.2s;
+  transition: color 0.2s;
 }
+
+.tab::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: 10px;
+  background: var(--tab);
+  box-shadow: 0 1px 2px rgba(70, 50, 30, 0.12);
+  transition: transform 0.25s var(--ease-out), background-color 0.2s, box-shadow 0.2s;
+}
+
+.tab > span { display: inline-block; transition: transform 0.25s var(--ease-out); }
 
 .tab:hover { color: var(--j-ink); }
 .tab:focus-visible { outline: 2px solid var(--j-green); outline-offset: 2px; }
-.tab[aria-current="true"] { background: #fdf9f0; color: var(--j-green); box-shadow: inset 0 -2px 0 var(--pe), 0 1px 2px rgba(70, 50, 30, 0.12); }
+.tab[aria-current="true"] { color: var(--j-green); }
+.tab[aria-current="true"]::before { background: #fdf9f0; box-shadow: inset 0 -2px 0 var(--pe), 0 1px 2px rgba(70, 50, 30, 0.12); }
 
 /* Wide screens: a true two-page spread, fixed page shape, tabs on the fore-edge */
 @media (min-width: 1180px) {
   .reader__inner {
-    --sw: min(1320px, calc(100vw - 210px));
+    --sw: min(1320px, calc(100vw - 260px));
     margin: 24px auto;
   }
 
@@ -847,7 +863,7 @@
     bottom: auto;
     z-index: -1;
     flex-direction: column;
-    gap: 7px;
+    gap: 0;
     overflow: visible;
     padding: 0;
     background: none;
@@ -856,14 +872,26 @@
     border: 0;
   }
 
-  .tab {
-    padding: 11px 16px 11px 20px;
+  /* Hit areas touch top to bottom; the visible gap comes from the paper's inset */
+  .tab { padding: 14.5px 14px 14.5px 20px; }
+
+  .tab::before {
+    inset: 3.5px 0;
     border-radius: 0 10px 10px 0;
     box-shadow: 2px 2px 6px rgba(70, 50, 30, 0.14);
   }
 
-  .tab:hover { transform: translateX(4px); }
-  .tab[aria-current="true"] { transform: translateX(8px); box-shadow: inset 3px 0 0 var(--pe), 2px 2px 6px rgba(70, 50, 30, 0.14); }
+  .tab:hover::before,
+  .tab:hover > span { transform: translateX(4px); }
+  .tab[aria-current="true"]::before,
+  .tab[aria-current="true"] > span { transform: translateX(8px); }
+  .tab[aria-current="true"]::before { box-shadow: inset 3px 0 0 var(--pe), 2px 2px 6px rgba(70, 50, 30, 0.14); }
+}
+
+/* Narrow screens: the snapshot sits above the name */
+@media (max-width: 1179px) {
+  .intro__head { grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 4); }
+  .snapshot { order: -1; width: calc(var(--u) * 32); margin: calc(var(--u) * 2) 0 0 calc(var(--u) * 1); }
 }
 
 /* Phones: stack the two-column blocks */
@@ -927,7 +955,21 @@
 .log__head .explain { margin-top: 0; }
 
 /* Timeline on the introduction page */
-.timeline { position: relative; margin: calc(var(--u) * 6) 0 0; }
+.timeline { position: relative; margin: calc(var(--u) * 7) 0 0; }
+
+/* At a glance */
+.glance { margin: 0; display: grid; }
+.glance div {
+  display: grid;
+  grid-template-columns: calc(var(--u) * 15) 1fr;
+  gap: calc(var(--u) * 2);
+  align-items: baseline;
+  padding: calc(var(--u) * 1.5) 0;
+  border-bottom: 1px solid var(--j-rule);
+}
+.glance div:first-child { border-top: 1px solid var(--j-rule); }
+.glance dt { color: var(--j-ink-3); }
+.glance dd { margin: 0; font-size: calc(var(--u) * 2.6); line-height: 1.35; }
 .timeline__title { margin-bottom: calc(var(--u) * 2.2) !important; color: var(--j-green); }
 
 .timeline__line {

@@ -288,7 +288,7 @@ body {
   padding: 0;
 }
 
-.toc li + li { margin-top: 2.6cqw; }
+/* No gaps between links: the spacing is padding, so the pointer never drops out */
 
 .toc a {
   display: flex;
@@ -297,17 +297,21 @@ body {
   color: inherit;
   text-decoration: none;
   border-radius: 1.5cqw;
-  padding: 0.6cqw 1.2cqw;
-  margin: 0 -1.2cqw;
-  transition: background-color 0.2s, transform 0.2s;
+  padding: 1.9cqw 1.2cqw;
+  margin: -1.3cqw -1.2cqw;
+  transition: background-color 0.2s;
 }
 
 .toc a:hover,
 .toc a:focus-visible {
   background: rgba(147, 176, 150, 0.2);
-  transform: translateX(1cqw);
   outline: none;
 }
+
+/* The label nudges over; the link itself stays put under the pointer */
+.toc__label { transition: transform 0.2s; }
+.toc a:hover .toc__label,
+.toc a:focus-visible .toc__label { transform: translateX(1cqw); }
 
 .toc__num {
   font-size: 2.8cqw;
@@ -394,6 +398,10 @@ body {
   inset: 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  /* Each page is flat and gets its own stacking layer. Without this, Chrome
+     hit-tests the page itself instead of the links on it, so real mouse
+     clicks on the contents never reached them. */
+  isolation: isolate;
 }
 
 .face--back { transform: rotateY(180deg); }

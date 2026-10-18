@@ -40,6 +40,7 @@ const THICKNESS = 0.065;
 let spread = -1;
 let mode = 'closed';      // 'closed' | 'book' | 'reading'
 let busy = false;
+let queued = null;        // a section picked while the book was still moving
 let zoomAnimation = null;
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, reducedMotion.matches ? 0 : ms));
@@ -193,7 +194,8 @@ function bookRect(n, { leftFocus = false } = {}) {
 // Where the same pages sit in the reading view.
 function readerRect(article) {
   const el = wideReader.matches ? article : article.querySelector('.pg--l');
-  return el.getBoundingClientRect();
+  const r = el.getBoundingClientRect();
+  return { left: r.left, top: r.top, width: r.width, height: r.height };
 }
 
 function cameraTransform(from, to) {
@@ -240,7 +242,6 @@ async function zoomIn(n) {
   reader.classList.add('is-visible');
   await wait(300);
   reader.classList.add('is-solid');
-  camera.classList.add('is-hidden');
   article.setAttribute('tabindex', '-1');
   article.focus({ preventScroll: true });
 }
@@ -248,6 +249,11 @@ async function zoomIn(n) {
 async function zoomOut() {
   const article = document.getElementById(sectionId(spread));
   const to = readerRect(article);
+  // On stacked pages the reader may have scrolled far down. Pull back from the
+  // top of the page instead, so the camera doesn't swing in from off screen.
+  if (!wideReader.matches && reader.scrollTop > 0) {
+    to.top += reader.scrollTop;
+  }
   const leftFocus = book.classList.contains('is-left');
   const from = bookRect(spread, { leftFocus });
 
@@ -281,9 +287,10 @@ async function zoomOut() {
 /* ---------- Going somewhere ---------- */
 
 async function goTo(id) {
-  if (busy) return;
   const target = id === 'closed' ? -1 : SPREAD_OF[id];
   if (target === undefined) return;
+  // Mid-move: remember the latest pick and go there as soon as this move ends.
+  if (busy) { queued = id; return; }
   if (mode === 'reading' && target === spread) return;
   if (mode === 'book' && target === spread && target === 1) return;
 
@@ -316,6 +323,11 @@ async function goTo(id) {
     setHash(id);
   } finally {
     busy = false;
+    if (queued) {
+      const next = queued;
+      queued = null;
+      goTo(next);
+    }
   }
 }
 
@@ -339,7 +351,6 @@ function jumpTo(id) {
     showSpread(id);
     startDrawings(id);
     reader.classList.add('is-visible', 'is-solid');
-    camera.classList.add('is-hidden');
     mode = 'reading';
   } else {
     mode = 'book';
