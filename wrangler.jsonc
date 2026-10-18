@@ -1,0 +1,9 @@
+{
+  // Cloudflare Worker that serves this folder as a static website.
+  // The name must match the Worker in the Cloudflare dashboard.
+  "name": "j-r",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./"
+  }
+}
