@@ -6,7 +6,7 @@ Plain HTML, CSS and JavaScript. There's no build step and nothing to install.
 
 ## How it works
 
-1. **Cover.** The closed book follows the mouse, a finger dragged across a phone screen, or the tilt of an Android phone. Clicking it turns the cover and the first page to the table of contents.
+1. **Cover.** The closed book follows the mouse, the same amount in every direction. On phones it leans a little as the phone tilts, and a finger dragged across the screen turns it too. iPhones ask once for permission to use motion, the first time someone touches the page anywhere other than the book. Clicking the book turns the cover and the first page to the table of contents.
 2. **Turning to a section.** Picking a chapter turns the pages forward to that section's two-page spread. The book lies flat and the camera zooms in until the spread fills the screen.
 3. **Reading.** Once zoomed in, the real text takes over, so it's sharp, selectable and scrollable. The pages in the 3D book are copies of these same pages, so the hand-off is seamless.
 4. **Index tabs.** Clicking a tab on the page edge (along the bottom on phones) zooms back out, turns forward or back to that section, and zooms in again. Contents goes back to the table of contents. Escape and the arrow keys work too.
@@ -28,11 +28,11 @@ Then open http://localhost:5173.
 - `pages.css`: the section pages and the reading view. Every size on a page is a multiple of `--u`, 1% of the page width, which is what lets a page look identical in the book and when zoomed in. The blue and pink accents are phycocyanin and phycoerythrin, the two algal pigments from entry 03.
 - `js/book.js`: opening, turning, zooming, tabs, deep links and the tilt.
 - `js/pages.js`: paper and poster previews on research titles, the Explain sheets and their figures, the introduction timeline, the HappyPEA pea and copying the email address.
-- `assets/`: the portrait (`jenna-chuan.jpg`) and the résumé PDF.
+- `assets/`: the portrait (`jenna-chuan.jpg`).
 
 ## Explain sheets
 
-Each research entry, HappyPEA and the field log has an **Explain** button. It opens a sheet with a deeper write-up and a small interactive figure. The write-ups live in `<template id="deep-…">` blocks at the bottom of `index.html`, and each figure's behavior is in the `FIGURES` object in `js/pages.js`. Figures that use example data say so in their captions.
+Each research entry has an **Explain** button. It opens a sheet with a deeper write-up and a small interactive figure. The write-ups live in `<template id="deep-…">` blocks at the bottom of `index.html`, and each figure's behavior is in the `FIGURES` object in `js/pages.js`. Figures that use example data say so in their captions.
 
 ## Fitting content on a page
 

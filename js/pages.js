@@ -51,7 +51,6 @@ const peaLines = [
   'Drink some water today',
   'Take a stretch break',
   'Check in with a friend',
-  'Launching in 2027',
   'Hi from HappyPEA',
 ];
 let peaIndex = 0;
@@ -276,39 +275,5 @@ const FIGURES = {
     };
     button.addEventListener('click', () => animateTo(progress > 0.5 ? 0 : 1));
     render();
-  },
-
-  // HappyPEA's 3 pillars.
-  pillars(fig) {
-    const words = {
-      fit: 'Exercise as one way to support mental health.',
-      food: 'Eating well as part of feeling well.',
-      people: 'Chapters and friends to lean on.',
-    };
-    const buttons = [...fig.querySelectorAll('[data-pillar]')];
-    const text = fig.querySelector('.pillars__text');
-    const show = (key) => {
-      fig.dataset.on = key;
-      pick(buttons, buttons.find((b) => b.dataset.pillar === key));
-      text.textContent = words[key];
-    };
-    buttons.forEach((button) => button.addEventListener('click', () => show(button.dataset.pillar)));
-    fig.querySelectorAll('.pillar').forEach((circle) => {
-      const key = [...circle.classList].find((c) => c.startsWith('pillar--')).slice(8);
-      circle.style.cursor = 'pointer';
-      circle.addEventListener('click', () => show(key));
-    });
-  },
-
-  // Hands-on care: each skill lights up the places it's used.
-  care(fig) {
-    const buttons = [...fig.querySelectorAll('[data-places]')];
-    const places = [...fig.querySelectorAll('[data-place]')];
-    buttons.forEach((button) => button.addEventListener('click', () => {
-      const on = !button.classList.contains('is-on');
-      pick(buttons, on ? button : null);
-      const where = on ? button.dataset.places.split(' ') : [];
-      places.forEach((place) => place.classList.toggle('is-on', where.includes(place.dataset.place)));
-    }));
   },
 };

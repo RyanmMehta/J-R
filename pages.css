@@ -189,28 +189,6 @@
   text-wrap: pretty;
 }
 
-.mini-contents {
-  list-style: none;
-  margin: calc(var(--u) * 5) 0 0;
-  padding: 0;
-  border-top: 1px solid var(--j-rule);
-}
-
-.mini-contents a {
-  display: grid;
-  grid-template-columns: calc(var(--u) * 6) 1fr auto;
-  align-items: baseline;
-  padding: calc(var(--u) * 1.7) 0;
-  border-bottom: 1px solid var(--j-rule);
-  font-size: calc(var(--u) * 3);
-  text-decoration: none;
-  transition: padding 0.3s var(--ease-out), color 0.2s;
-}
-
-.mini-contents a:hover { padding-left: calc(var(--u) * 1.5); color: var(--j-green); }
-.mini-contents__num { font-style: italic; color: var(--pe); }
-.mini-contents__page { font: 500 calc(var(--u) * 1.75) var(--mono); color: var(--j-ink-3); }
-
 /* ---------- Research entries ---------- */
 
 .entry {
@@ -577,17 +555,7 @@
 
 .is-in .peas i { transform: none; transition: transform 0.45s var(--ease-out); transition-delay: calc(var(--n, 0) * 22ms + 300ms); }
 
-.peas__key { letter-spacing: 0.05em; text-transform: none; }
 .pea-org__role { margin-top: calc(var(--u) * 4.5) !important; }
-
-.log__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: calc(var(--u) * 1) calc(var(--u) * 3);
-  margin-bottom: calc(var(--u) * 2);
-}
 
 .log__title { color: var(--j-green); }
 
@@ -952,7 +920,6 @@
 .explain:hover { background: var(--j-green); color: #fbf8f1; border-color: var(--j-green); }
 .explain:focus-visible { outline: 2px solid var(--j-green); outline-offset: 3px; }
 .feature .explain { margin-top: calc(var(--u) * 2.4); }
-.log__head .explain { margin-top: 0; }
 
 /* Timeline on the introduction page */
 .timeline { position: relative; margin: calc(var(--u) * 7) 0 0; }
@@ -1268,37 +1235,6 @@
 .fit__controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
 .fit__error { font: 500 13px var(--mono); color: var(--j-ink-2); }
 .fit__error b { color: var(--pe); font-weight: 500; }
-
-/* Pillars */
-.fig--pillars svg { max-width: 320px; margin: 0 auto; }
-.pillar { fill-opacity: 0.22; stroke-width: 1.5; transition: fill-opacity 0.3s, transform 0.4s var(--ease-out); transform-box: fill-box; transform-origin: center; }
-.pillar--fit { fill: var(--pc); stroke: var(--pc); }
-.pillar--food { fill: var(--pea); stroke: var(--pea-dark); }
-.pillar--people { fill: var(--pe); stroke: var(--pe); }
-.fig--pillars text { font: 500 11px var(--mono); fill: var(--j-ink); text-anchor: middle; letter-spacing: 0.05em; text-transform: uppercase; }
-.fig--pillars .pillars__center { font: italic 400 13px var(--serif); text-transform: none; letter-spacing: 0; fill: var(--j-green); }
-.fig--pillars[data-on="fit"] .pillar--fit,
-.fig--pillars[data-on="food"] .pillar--food,
-.fig--pillars[data-on="people"] .pillar--people { fill-opacity: 0.55; transform: scale(1.04); }
-.pillars__keys { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
-.pillars__text { min-height: 2.8em; margin-top: 10px !important; text-align: center; font-style: italic; font-size: 15px; color: var(--j-ink-2); }
-
-/* Hands-on care */
-.care__skills { display: flex; flex-wrap: wrap; gap: 8px; }
-.care__places { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 6px; }
-.care__places li {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 12px;
-  border-radius: 6px;
-  background: #f6f0e3;
-  font-size: 15px;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s var(--ease-out);
-}
-.care__places li span { font: 500 11px/1.9 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--j-ink-3); }
-.care__places li.is-on { background: var(--j-green); color: #fbf8f1; transform: translateX(6px); }
-.care__places li.is-on span { color: #cfe0d4; }
 
 @media (max-width: 560px) {
   .deep__sheet { padding: 36px 22px 28px; }

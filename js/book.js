@@ -410,11 +410,13 @@ window.addEventListener('hashchange', () => {
 
 /* ---------- The closed book turns to follow the pointer ---------- */
 
-const MAX_TURN = 22;   // degrees left and right
-const MAX_TIP = 14;    // degrees up and down
+const MAX_TILT = 18;        // degrees, the same in every direction
+const MAX_DEVICE_TILT = 7;  // phones only lean the book a little
+const DEVICE_RANGE = 18;    // degrees of phone tilt that give the full lean
 const target = { x: 0, y: 0 };
 const current = { x: 0, y: 0 };
 let tiltFrame = null;
+let tiltScale = MAX_TILT;
 let touchActive = false;
 let usingDeviceTilt = false;
 let dragDistance = 0;
@@ -422,10 +424,18 @@ let dragStart = null;
 
 const canTilt = () => !reducedMotion.matches && mode === 'closed' && !busy;
 
-function aimAt(clientX, clientY) {
-  target.x = Math.max(-1, Math.min(1, (clientX / window.innerWidth - 0.5) * 2));
-  target.y = Math.max(-1, Math.min(1, (clientY / window.innerHeight - 0.5) * 2));
+// Keep the aim inside a circle so a diagonal leans as far as a straight move.
+function aim(x, y, scale) {
+  const length = Math.hypot(x, y);
+  const squeeze = length > 1 ? 1 / length : 1;
+  target.x = x * squeeze;
+  target.y = y * squeeze;
+  tiltScale = scale;
   startTilt();
+}
+
+function aimAt(clientX, clientY) {
+  aim((clientX / window.innerWidth - 0.5) * 2, (clientY / window.innerHeight - 0.5) * 2, MAX_TILT);
 }
 
 function startTilt() {
@@ -439,8 +449,8 @@ function stepTilt() {
   if (!canTilt()) { stopTilt(); return; }
   current.x += (target.x - current.x) * 0.12;
   current.y += (target.y - current.y) * 0.12;
-  book.style.setProperty('--tilt-x', `${(current.x * MAX_TURN).toFixed(2)}deg`);
-  book.style.setProperty('--tilt-y', `${(-current.y * MAX_TIP).toFixed(2)}deg`);
+  book.style.setProperty('--tilt-x', `${(current.x * tiltScale).toFixed(2)}deg`);
+  book.style.setProperty('--tilt-y', `${(-current.y * tiltScale).toFixed(2)}deg`);
   const settled = Math.abs(target.x - current.x) < 0.002 && Math.abs(target.y - current.y) < 0.002;
   if (!settled) tiltFrame = requestAnimationFrame(stepTilt);
 }
@@ -475,17 +485,14 @@ function releaseTouch() {
   if (!touchActive) return;
   touchActive = false;
   dragStart = null;
-  if (!usingDeviceTilt) { target.x = 0; target.y = 0; startTilt(); }
+  if (!usingDeviceTilt) aim(0, 0, tiltScale);
 }
 
 window.addEventListener('pointerup', releaseTouch);
 window.addEventListener('pointercancel', releaseTouch);
 
 document.documentElement.addEventListener('pointerleave', () => {
-  if (usingDeviceTilt) return;
-  target.x = 0;
-  target.y = 0;
-  startTilt();
+  if (!usingDeviceTilt) aim(0, 0, tiltScale);
 });
 
 // A drag across the closed book should not count as a tap that opens it.
@@ -496,14 +503,57 @@ book.addEventListener('click', (event) => {
   }
 }, true);
 
-// Android browsers send device tilt freely; iOS asks permission, so iPhones use the drag.
-window.addEventListener('deviceorientation', (event) => {
+/* ---------- Phones: the book leans a little as the phone tilts ----------
+   The first reading is the resting position, and the rest point drifts
+   slowly toward however the phone is held, so the book always settles
+   back to center. */
+
+let rest = null;
+
+const wrap = (degrees) => ((degrees + 540) % 360) - 180;
+
+function onDeviceTilt(event) {
   if (event.gamma === null || event.beta === null || touchActive) return;
+  const angle = screen.orientation?.angle ?? window.orientation ?? 0;
+  // Sideways and forward lean in screen terms, whichever way the phone is turned.
+  let side = event.gamma;
+  let forward = event.beta;
+  if (angle === 90) { side = event.beta; forward = -event.gamma; }
+  else if (angle === -90 || angle === 270) { side = -event.beta; forward = event.gamma; }
+  else if (angle === 180) { side = -event.gamma; forward = -event.beta; }
+
+  if (!rest || rest.angle !== angle) rest = { side, forward, angle };
+  let dx = wrap(side - rest.side);
+  let dy = wrap(forward - rest.forward);
+  // Past straight up the readings flip, so start over from the new position.
+  if (Math.abs(dx) > 60 || Math.abs(dy) > 60) {
+    rest = { side, forward, angle };
+    dx = dy = 0;
+  }
+  rest.side += dx * 0.006;
+  rest.forward += dy * 0.006;
+
   usingDeviceTilt = true;
-  target.x = Math.max(-1, Math.min(1, event.gamma / 30));
-  target.y = Math.max(-1, Math.min(1, (event.beta - 45) / 30));
-  startTilt();
-});
+  aim(dx / DEVICE_RANGE, dy / DEVICE_RANGE, MAX_DEVICE_TILT);
+}
+
+window.addEventListener('deviceorientation', onDeviceTilt);
+
+// iPhones only send tilt after the visitor allows it, and Safari only asks
+// in response to a touch. Ask on the first touch that isn't the tap that
+// opens the book, so the question never covers the opening.
+const needsPermission = typeof DeviceOrientationEvent !== 'undefined'
+  && typeof DeviceOrientationEvent.requestPermission === 'function';
+
+if (needsPermission) {
+  const askForTilt = (event) => {
+    if (mode !== 'closed' || usingDeviceTilt) return;
+    if (dragDistance <= 12 && event.target.closest?.('.book')) return;
+    window.removeEventListener('touchend', askForTilt);
+    DeviceOrientationEvent.requestPermission().catch(() => {});
+  };
+  window.addEventListener('touchend', askForTilt);
+}
 
 /* ---------- Start ---------- */
 
