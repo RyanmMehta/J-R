@@ -190,6 +190,28 @@
           </div>
           <p class="intro__tagline">Exploring <span class="stroke">health<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 13c38-7 92-10 194-5" pathLength="1"/></svg></span> through research, technology, and community.</p>
           <p class="intro__lede">I study biology in the Dean's Scholars Honors Program at UT Austin, with a minor in business. I do clinical research in Houston, I'm co-founding a wellness app for students, and I lead a nonprofit that supports student mental health.</p>
+          <figure class="doodle-fig cell" aria-label="Doodle of an animal cell with labeled parts">
+            <svg class="cell__art" viewBox="0 0 200 150" aria-hidden="true">
+              <path class="cell__membrane" d="M100 8c40 0 86 18 92 60 5 38-34 72-86 74C52 144 10 118 8 78 6 36 52 8 100 8z" data-part="membrane"/>
+              <g data-part="er"><path class="cell__er" d="M58 52c-8 10-10 26-4 40M48 48c-10 14-12 34-4 50M38 46c-12 18-12 42-2 58"/><g class="cell__dots"><circle cx="46" cy="60" r="1.6"/><circle cx="42" cy="80" r="1.6"/><circle cx="52" cy="70" r="1.6"/><circle cx="36" cy="66" r="1.6"/><circle cx="40" cy="96" r="1.6"/></g></g>
+              <g data-part="nucleus"><circle class="cell__nucleus" cx="88" cy="74" r="28"/><circle class="cell__nucleolus" cx="94" cy="68" r="8"/></g>
+              <g data-part="mito"><ellipse class="cell__mito" cx="150" cy="54" rx="22" ry="11" transform="rotate(-18 150 54)"/><path class="cell__cristae" d="M134 58l6-10 6 10 6-10 6 10 6-10" transform="rotate(-18 150 54)"/></g>
+              <g data-part="golgi"><path class="cell__golgi" d="M128 96c10-6 30-6 40 2M126 104c12-6 34-6 44 2M128 112c10-5 28-5 38 2"/></g>
+              <g data-part="ribo" class="cell__ribo"><circle cx="112" cy="122" r="2.2"/><circle cx="120" cy="128" r="2.2"/><circle cx="70" cy="118" r="2.2"/><circle cx="150" cy="80" r="2.2"/><circle cx="168" cy="96" r="2.2"/><circle cx="104" cy="32" r="2.2"/></g>
+            </svg>
+            <div class="cell__side">
+              <p class="cap cell__title">Doodle · a cell</p>
+              <div class="cell__parts">
+                <button type="button" class="tag" data-part="nucleus" data-text="Holds the DNA. Genes are copied into RNA and spliced here, the step in entry 04.">Nucleus</button>
+                <button type="button" class="tag" data-part="mito" data-text="Makes most of the cell's energy, in the form of ATP.">Mitochondrion</button>
+                <button type="button" class="tag" data-part="ribo" data-text="Read mRNA and build proteins from it.">Ribosomes</button>
+                <button type="button" class="tag" data-part="er" data-text="The rough ER is dotted with ribosomes and folds proteins the cell will send out.">ER</button>
+                <button type="button" class="tag" data-part="golgi" data-text="Sorts and packages proteins, then ships them where they need to go.">Golgi</button>
+                <button type="button" class="tag" data-part="membrane" data-text="A thin layer of fat and protein that controls what goes in and out.">Membrane</button>
+              </div>
+              <p class="cell__text" aria-live="polite">Tap a part.</p>
+            </div>
+          </figure>
           <span class="pg-num">2</span>
         </div></div>
         <div class="pg pg--r"><div class="pg__in">
@@ -213,6 +235,24 @@
               <li style="--x: 7"><button type="button" class="timeline__dot timeline__dot--future">2027</button><span class="timeline__text">HappyPEA launches</span></li>
             </ol>
             <p class="timeline__label" id="tl-label" aria-live="polite">Hover over or tap a year</p>
+          </figure>
+          <figure class="doodle-fig ekg" aria-label="Doodle of one heartbeat on an EKG, with the P wave, QRS complex and T wave labeled">
+            <p class="cap ekg__title">Field sketch · one heartbeat</p>
+            <svg class="ekg__art" viewBox="0 0 300 80" aria-hidden="true">
+              <path class="ekg__grid" d="M0 20H300M0 40H300M0 60H300M30 0V80M60 0V80M90 0V80M120 0V80M150 0V80M180 0V80M210 0V80M240 0V80M270 0V80"/>
+              <path class="ekg__line" pathLength="1" d="M0 50H40c4 0 6-10 10-10s6 10 10 10h14l4 6 8-46 8 52 4-12h18c6 0 10-18 18-18s12 18 18 18h40c4 0 6-10 10-10s6 10 10 10h14l4 6 8-46 8 52 4-12h32"/>
+              <g class="ekg__marks">
+                <text x="50" y="34" data-wave="p">P</text>
+                <text x="86" y="8" data-wave="qrs">QRS</text>
+                <text x="138" y="28" data-wave="t">T</text>
+              </g>
+            </svg>
+            <div class="ekg__waves">
+              <button type="button" class="tag" data-wave="p" data-text="P wave: the electrical signal spreads through the upper chambers, the atria, and they squeeze.">P wave</button>
+              <button type="button" class="tag" data-wave="qrs" data-text="QRS complex: the signal races through the lower chambers, the ventricles, and they squeeze blood out to the body and lungs.">QRS</button>
+              <button type="button" class="tag" data-wave="t" data-text="T wave: the ventricles reset electrically, ready for the next beat.">T wave</button>
+            </div>
+            <p class="ekg__text" aria-live="polite">I record EKGs as an ER unit aide. Tap a wave.</p>
           </figure>
           <span class="pg-num">3</span>
         </div></div>
@@ -455,6 +495,18 @@
             <p class="cap pea-org__role">Executive board president · 2025 to now</p>
             <h3 class="feature__title">Personal Effectiveness Association</h3>
             <p class="feature__text">PEA is a 501(c)(3) nonprofit that supports student mental health through fitness, nutrition, and community. As executive board president, I oversee its chapters.</p>
+            <div class="stamps" aria-label="PEA highlights">
+              <p class="cap stamps__title">PEA highlights</p>
+              <div class="stamps__row">
+                <button type="button" class="stamp" data-text="Featured in the DeBakey High School newsletter (2023), River Oaks Stroll (2024), West University Buzz (2024), and Canvas Rebel Magazine (2025).">4 press features</button>
+                <button type="button" class="stamp" data-text="A $1,000 NASSP Student Service Grant for Understanding Your Teen 101, a PEA initiative.">$1,000 grant</button>
+                <button type="button" class="stamp" data-text="At the 2024 Houston Health &amp; Wellness Fair, PEA talked with almost 100 Houstonians and raised over $200.">Wellness fair</button>
+                <button type="button" class="stamp" data-text="Chapters have started in Bellaire, Cypress, Fulshear, Memorial and Southwest Houston, and on Long Island, New York.">6 chapters</button>
+                <button type="button" class="stamp" data-text="Partners include the DeBakey Running Club, a HOSA nutrition team, and HWS, which hosts PEA events.">Partners</button>
+              </div>
+              <p class="stamps__text" aria-live="polite">Tap a stamp.</p>
+              <a class="stamps__link" href="https://www.happypea.org/home" target="_blank" rel="noopener">happypea.org <span aria-hidden="true">↗</span></a>
+            </div>
           </div>
           <span class="pg-num">8</span>
         </div></div>
@@ -489,6 +541,21 @@
             <li><span class="biblio__year">2023</span><p>Effect of U1 snRNA Mutations at the U1C Binding Site in U1 snRNP Biogenesis. Welch Summer Scholar Program Bound Volumes, The Welch Foundation, 2023.</p></li>
             <li><span class="biblio__year">2023</span><p>Modeling Socioeconomic, Demographic, and Chronic Medical Conditions Correlated with COVID-19 Incidence. <cite>International Journal of High School Research</cite> 5(1), 2023. <a href="https://doi.org/10.36838/v5i1.12" target="_blank" rel="noopener">doi:10.36838/v5i1.12</a></p></li>
           </ol>
+          <h3 class="cap list-title">Toolkit</h3>
+          <div class="toolkit">
+            <button type="button" class="tag" data-text="Checking protein purity · Entry 03">SDS-PAGE</button>
+            <button type="button" class="tag" data-text="Salting out pigment-proteins · Entry 03">Ammonium sulfate precipitation</button>
+            <button type="button" class="tag" data-text="Breaking open algae cells · Entry 03">Freeze-thaw extraction</button>
+            <button type="button" class="tag" data-text="Modeling COVID-19 cases by county · Entry 05">Multiple linear regression</button>
+            <button type="button" class="tag" data-text="Since my first model in 2020 · Entry 05">Python</button>
+            <button type="button" class="tag" data-text="Post Graduate Program, Texas McCombs · 2026">Machine learning</button>
+            <button type="button" class="tag" data-text="Prognosis awareness · Entry 01">Literature review</button>
+            <button type="button" class="tag" data-text="Goal-concordant care at LBJ Hospital · Entry 01">Questionnaire design</button>
+            <button type="button" class="tag" data-text="National survey on interventional pain care · Entry 02">Scientific figures</button>
+            <button type="button" class="tag" data-text="Cocaine-positive drug screens · Entry 02">Case series</button>
+            <button type="button" class="tag" data-text="ER unit aide, St. David's Hospital">Vitals and EKGs</button>
+          </div>
+          <p class="toolkit__text" aria-live="polite">Tap a tool to see where I used it.</p>
           <span class="pg-num">10</span>
         </div></div>
 
@@ -515,18 +582,60 @@
       <article class="spread" id="contact" data-title="Correspondence" aria-label="Correspondence">
         <div class="pg pg--l"><div class="pg__in">
           <p class="pg-meta"><span>Correspondence</span><span>Contact</span></p>
-          <h2 class="contact__title">Say hello.</h2>
+          <h2 class="contact__title"><button type="button" class="hello" aria-label="Say hello. Tap to switch language." data-words="Say hello.|Di hola.|打个招呼。">Say hello.</button></h2>
           <p class="ch-intro">I'm glad to talk about research, clinical work, or student wellness.</p>
           <ul class="contact__links">
             <li><button type="button" class="contact__email" data-email="jpc4223@utexas.edu"><span class="contact__value">jpc4223@utexas.edu</span><span class="cap contact__hint">copy</span></button></li>
             <li><a href="https://www.linkedin.com/in/jenna-chuan/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a></li>
           </ul>
+          <h3 class="cap list-title">Ask me about</h3>
+          <div class="asks">
+            <a class="tag" href="mailto:jpc4223@utexas.edu?subject=Clinical%20research">Clinical research</a>
+            <a class="tag" href="mailto:jpc4223@utexas.edu?subject=Student%20wellness%20and%20PEA">Student wellness and PEA</a>
+            <a class="tag" href="mailto:jpc4223@utexas.edu?subject=Pre-med%20at%20UT%20Austin">Pre-med at UT Austin</a>
+            <a class="tag" href="mailto:jpc4223@utexas.edu?subject=Research%20as%20a%20student">Starting research as a student</a>
+            <a class="tag" href="mailto:jpc4223@utexas.edu?subject=HappyPEA">HappyPEA</a>
+          </div>
+          <svg class="margin-doodles" viewBox="0 0 220 70" aria-hidden="true">
+            <g class="md md--helix"><path d="M10 10c0 12 24 12 24 25S10 48 10 60M34 10c0 12-24 12-24 25s24 13 24 25"/><path d="M14 18h16M13 35h18M14 52h16"/></g>
+            <g class="md md--flask"><path d="M74 8v18L60 56a5 5 0 0 0 4 7h34a5 5 0 0 0 4-7L88 26V8M70 8h22M64 46h34"/><circle class="md__bubble" cx="76" cy="54" r="2.5"/><circle class="md__bubble" cx="86" cy="50" r="2"/></g>
+            <g class="md md--atom"><ellipse cx="146" cy="35" rx="24" ry="9"/><ellipse cx="146" cy="35" rx="24" ry="9" transform="rotate(60 146 35)"/><ellipse cx="146" cy="35" rx="24" ry="9" transform="rotate(-60 146 35)"/><circle class="md__fill" cx="146" cy="35" r="3"/></g>
+            <g class="md md--pea"><circle cx="198" cy="40" r="14"/><path d="M198 26c0-6 4-10 10-11-1 6-5 9-10 11z" class="md__fill"/><path d="M193 44q5 4 10 0"/></g>
+          </svg>
           <span class="pg-num">12</span>
         </div></div>
 
         <div class="pg pg--r"><div class="pg__in">
           <h3 class="cap list-title">Off the clock</h3>
           <p class="contact__off">Pilates, mangoes, banana bread, doodling, brain teasers, NYT Connections, and <cite>The Greatest Showman</cite>.</p>
+          <div class="conn" aria-label="A Connections puzzle made from this journal">
+            <p class="cap conn__title">Lab Connections</p>
+            <p class="conn__intro">Find 4 groups of 4 words from this journal.</p>
+            <div class="conn__solved" aria-live="polite"></div>
+            <div class="conn__grid">
+              <button type="button" class="conn__tile" data-g="0">Lariat</button>
+              <button type="button" class="conn__tile" data-g="2">Naloxone</button>
+              <button type="button" class="conn__tile" data-g="3">Residual</button>
+              <button type="button" class="conn__tile" data-g="1">Phyco&shy;cyanin</button>
+              <button type="button" class="conn__tile" data-g="3">Outlier</button>
+              <button type="button" class="conn__tile" data-g="0">Exon</button>
+              <button type="button" class="conn__tile" data-g="1">Cyano&shy;bacteria</button>
+              <button type="button" class="conn__tile" data-g="2">Oxy&shy;codone</button>
+              <button type="button" class="conn__tile" data-g="1">Phyco&shy;bilisome</button>
+              <button type="button" class="conn__tile" data-g="3">R²</button>
+              <button type="button" class="conn__tile" data-g="2">Bupre&shy;norphine</button>
+              <button type="button" class="conn__tile" data-g="0">Intron</button>
+              <button type="button" class="conn__tile" data-g="2">Hydro&shy;codone</button>
+              <button type="button" class="conn__tile" data-g="0">Splice&shy;osome</button>
+              <button type="button" class="conn__tile" data-g="3">Box-Cox</button>
+              <button type="button" class="conn__tile" data-g="1">Phyco&shy;erythrin</button>
+            </div>
+            <div class="conn__bar">
+              <p class="conn__msg" aria-live="polite">Mistakes left: <span class="conn__lives">● ● ● ●</span></p>
+              <button type="button" class="conn__btn" data-action="shuffle">Shuffle</button>
+              <button type="button" class="conn__btn conn__btn--go" data-action="submit" disabled>Submit</button>
+            </div>
+          </div>
           <p class="contact__sign">Jenna</p>
           <h3 class="cap list-title">Colophon</h3>
           <p class="colophon">The blue and pink in this journal are phycocyanin and phycoerythrin, the pigments from entry 03.</p>
