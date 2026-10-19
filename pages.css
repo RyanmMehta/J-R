@@ -97,8 +97,6 @@
   text-wrap: pretty;
 }
 
-.hint { margin-top: calc(var(--u) * 2) !important; }
-
 .list-title {
   margin: calc(var(--u) * 4.5) 0 calc(var(--u) * 1.4) !important;
   color: var(--j-green);
